@@ -1,0 +1,441 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f8f9fa;
+    padding: 20px;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h1 {
+    color: #2c3e50;
+    margin-bottom: 30px;
+    font-size: 2.2em;
+    border-bottom: 3px solid #8e44ad;
+    padding-bottom: 10px;
+    display: inline-block;
+}
+
+h2 {
+    color: #34495e;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+}
+
+/* ===== FORM STYLES ===== */
+.form-container {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    margin-bottom: 40px;
+    border: 1px solid #eef2f7;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 0.95em;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    background: #fafafa;
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: #8e44ad;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(142, 68, 173, 0.1);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+small {
+    display: block;
+    margin-top: 5px;
+    color: #7f8c8d;
+    font-size: 0.85em;
+}
+
+/* ===== BUTTON STYLES ===== */
+button {
+    background: #8e44ad;
+    color: white;
+    border: none;
+    padding: 14px 30px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 6px rgba(142, 68, 173, 0.2);
+}
+
+button:hover {
+    background: #9b59b6;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(142, 68, 173, 0.3);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+#addProduct {
+    width: 100%;
+    font-size: 1.1em;
+    padding: 15px;
+}
+
+/* ===== PRODUCTS GRID ===== */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 25px;
+    margin-top: 25px;
+}
+
+/* ===== PRODUCT CARD ===== */
+.product-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    border: 1px solid #f0f0f0;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(142, 68, 173, 0.15);
+    border-color: #8e44ad;
+}
+
+/* ===== FIXED IMAGE SIZES ===== */
+.product-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover; /* This ensures images cover the area without stretching */
+    object-position: center;
+    border-bottom: 3px solid #8e44ad;
+    background: #f8f9fa; /* Background color while loading */
+}
+
+/* Alternative if you want consistent image sizes without cropping */
+.product-image.contain {
+    object-fit: contain;
+    background: #f8f9fa;
+    padding: 10px;
+}
+
+.product-info {
+    padding: 20px;
+    flex: 1;
+}
+
+.product-name {
+    font-size: 1.2em;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.product-price {
+    color: #8e44ad;
+    font-weight: 700;
+    font-size: 1.4em;
+    margin: 12px 0;
+    display: inline-block;
+    background: #f3e8ff;
+    padding: 5px 15px;
+    border-radius: 50px;
+}
+
+.product-category {
+    color: #7f8c8d;
+    font-size: 0.9em;
+    margin: 10px 0;
+    padding: 5px 0;
+    border-top: 1px dashed #e0e0e0;
+    border-bottom: 1px dashed #e0e0e0;
+}
+
+.product-category strong {
+    color: #34495e;
+}
+
+.product-description {
+    color: #555;
+    font-size: 0.95em;
+    line-height: 1.5;
+    margin: 12px 0;
+}
+
+/* ===== PRODUCT ACTIONS ===== */
+.product-actions {
+    display: flex;
+    gap: 12px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-top: 1px solid #eef2f7;
+}
+
+.edit-btn {
+    background: #3498db;
+    flex: 1;
+    padding: 10px;
+    font-size: 0.95em;
+    box-shadow: 0 4px 6px rgba(52, 152, 219, 0.2);
+}
+
+.edit-btn:hover {
+    background: #2980b9;
+}
+
+.delete-btn {
+    background: #e74c3c;
+    flex: 1;
+    padding: 10px;
+    font-size: 0.95em;
+    box-shadow: 0 4px 6px rgba(231, 76, 60, 0.2);
+}
+
+.delete-btn:hover {
+    background: #c0392b;
+}
+
+/* ===== MODAL STYLES ===== */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background: white;
+    padding: 35px;
+    border-radius: 20px;
+    max-width: 550px;
+    width: 95%;
+    max-height: 85vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+    border: 1px solid #8e44ad20;
+}
+
+.close-btn {
+    position: absolute;
+    right: 25px;
+    top: 20px;
+    font-size: 28px;
+    cursor: pointer;
+    color: #95a5a6;
+    transition: all 0.3s ease;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.close-btn:hover {
+    color: #e74c3c;
+    background: #fee;
+    transform: rotate(90deg);
+}
+
+.modal h2 {
+    margin-bottom: 25px;
+    color: #2c3e50;
+    border-bottom: 2px solid #8e44ad;
+    padding-bottom: 10px;
+}
+
+/* ===== MODAL BUTTONS ===== */
+.update-btn {
+    background: #f39c12;
+    width: 48%;
+    margin-right: 4%;
+    box-shadow: 0 4px 6px rgba(243, 156, 18, 0.2);
+}
+
+.update-btn:hover {
+    background: #e67e22;
+}
+
+.cancel-btn {
+    background: #95a5a6;
+    width: 48%;
+    box-shadow: 0 4px 6px rgba(149, 165, 166, 0.2);
+}
+
+.cancel-btn:hover {
+    background: #7f8c8d;
+}
+
+/* ===== LOADING & EMPTY STATES ===== */
+.loading {
+    text-align: center;
+    padding: 50px;
+    color: #7f8c8d;
+    font-size: 1.2em;
+    background: white;
+    border-radius: 12px;
+    grid-column: 1 / -1;
+}
+
+.no-products {
+    text-align: center;
+    padding: 60px;
+    color: #95a5a6;
+    font-size: 1.2em;
+    background: white;
+    border-radius: 12px;
+    grid-column: 1 / -1;
+    border: 2px dashed #8e44ad40;
+}
+
+/* ===== FORM IN MODAL ===== */
+#editForm .form-group {
+    margin-bottom: 20px;
+}
+
+#editForm label {
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+
+    .form-container {
+        padding: 20px;
+    }
+
+    .products-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .product-image {
+        height: 200px;
+    }
+
+    .modal-content {
+        padding: 25px;
+        width: 95%;
+        margin: 10px;
+    }
+
+    .update-btn, .cancel-btn {
+        width: 100%;
+        margin: 5px 0;
+    }
+
+    .product-actions {
+        flex-direction: column;
+    }
+}
+
+/* ===== ADD THESE IF YOU WANT DIFFERENT IMAGE STYLES ===== */
+/* Option 1: Square images */
+.product-card.square .product-image {
+    height: 250px;
+    aspect-ratio: 1/1;
+}
+
+/* Option 2: Landscape images */
+.product-card.landscape .product-image {
+    height: 180px;
+    aspect-ratio: 16/9;
+}
+
+/* Option 3: Rounded images */
+.product-card.rounded .product-image {
+    border-radius: 12px 12px 0 0;
+}
+
+/* ===== CUSTOM SCROLLBAR ===== */
+.modal-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background: #8e44ad;
+    border-radius: 10px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+    background: #9b59b6;
+}
+
+/* ===== BADGE FOR NEW PRODUCTS ===== */
+.product-card.new {
+    position: relative;
+}
+
+.product-card.new::after {
+    content: "NEW";
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #8e44ad;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: bold;
+    z-index: 1;
+}

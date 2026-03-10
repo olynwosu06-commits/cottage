@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Confirmed - Cottage</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+        
+        .confirmation-box {
+            background: white;
+            padding: 50px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 500px;
+            margin: 20px;
+        }
+        
+        .checkmark {
+            font-size: 80px;
+            color: #28a745;
+            margin-bottom: 20px;
+            line-height: 1;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        p {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .order-btn {
+            background: #667eea;
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            transition: background 0.3s;
+        }
+        
+        .order-btn:hover {
+            background: #5a67d8;
+        }
+    </style>
+</head>
+<body>
+    <div class="confirmation-box">
+        <div class="checkmark">✓</div>
+        <h1>Order Confirmed!</h1>
+        <p>Thank you for your purchase. We'll send you a confirmation email shortly.</p>
+        <a href="shop.html" class="order-btn">Continue Shopping</a>
+    </div>
+
+    <!-- Clear cart first, then load other scripts -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+        import { 
+            getAuth, 
+            onAuthStateChanged 
+        } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+        import { 
+            getFirestore, 
+            doc, 
+            updateDoc 
+        } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB4Hy_sEEH1twq0GDzKi5E1CZD5dVHn4Kk",
+            authDomain: "cottage-9fa0c.firebaseapp.com",
+            projectId: "cottage-9fa0c",
+            storageBucket: "cottage-9fa0c.firebasestorage.app",
+            messagingSenderId: "346971937714",
+            appId: "1:346971937714:web:0f453c14862de16bede2ab"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        async function clearCart() {
+            console.log("Clearing cart...");
+            
+            // Clear localStorage
+            localStorage.removeItem('cart');
+            localStorage.removeItem('checkoutCart');
+            
+            // Clear from Firestore if user is logged in
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    try {
+                        const userDocRef = doc(db, "users", user.uid);
+                        await updateDoc(userDocRef, { cart: [] });
+                        console.log("✅ Cart cleared from Firestore for user:", user.uid);
+                    } catch (err) {
+                        console.error("Error clearing Firestore cart:", err);
+                    }
+                } else {
+                    console.log("✅ Cart cleared from localStorage (guest mode)");
+                }
+            });
+        }
+
+        // Clear cart immediately when page loads
+        await clearCart();
+    </script>
+
+    <!-- Load other scripts after cart is cleared -->
+    <script type="module" src="../SHOP_FOLDER/shop.js"></script>
+    <script type="module" src="../SHOP_FOLDER/checkout.js"></script>
+</body>
+</html>

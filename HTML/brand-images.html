@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../CSS/style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="../CSS/brand-imges.css">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <nav class="faq">
+            <ul class="list">
+                <li><a href="#">FAQ</a></li>
+                <li><a href="shop.html?category=bath">Bath & Body</a></li>
+                <li><a href="#">Become a Distributor</a></li>
+                <li><a href="#">Contact Helpdesk</a></li>
+                <li><a href="#">Support Center</a></li>
+            </ul>
+        </nav>
+
+        <nav class="navbar">
+            <div class="nav-links">
+
+                <div class="close-icon">&times;</div>
+
+                <div class="nav-links-img">
+                    <img class="brandName" src="../IMAGES/brand name.svg" alt="">
+                </div>
+
+                <div class="nav-links-text">
+                    <h4>MAIN MENU</h4>
+                    <ul>
+                        <li onclick="window.location.href = '../HTML/brand-images.html'">Brands</li>
+                        <li onclick="window.location.href='../SHOP_FOLDER/shop.html?category=bath'">Bath & Body</li>
+                        <li onclick="window.location.href='../SHOP_FOLDER/shop.html?category=serum'">Serum</li>
+                        <li onclick="window.location.href='../SHOP_FOLDER/shop.html?category=baby'">Baby Skin</li>
+                        <li onclick="window.location.href = '../SHOP_FOLDER/shop.html'">Shop all</li>
+                    </ul>
+                </div>
+
+                <p>@ 2026 Cottage Cosmetics / All Rights Reserved</p>
+            </div>
+
+            <div class="overlay"></div> 
+
+            <i class='bx bx-menu' id="menu-icon"></i>
+        </nav>
+
+        <nav class="nav2">
+            <div class="brand-img">
+                <img class="brandName" src="../IMAGES/brand name.svg" alt="">
+            </div>
+
+            <div class="brand-search">
+                <span><input type="text" name="search" placeholder="Search for products" id="name"></span>
+                <span><button type="submit"><i class='bx bx-search'></i></button></span>
+            </div>
+
+            <div class="user-cart">
+                <span class="accountIcon"><i class='bx bx-user-circle'></i></span>
+                <span class="accountIcon">Sign in <span>Account</span></span>
+                 <span><i class='bx bx-heart' ></i></span>
+                <span id="addToCart" class="cart-icon"><i class='bx bx-cart-alt'></i>
+                    <span id="cartCount" class="cart-count">0</span>
+                </span>          
+            </div>
+        </nav>
+
+        <nav class ="nav3">
+            <ul class="navbar-list">
+                <li class="brand">Brands
+                    <div class="brands">
+                        <div class="brandss">
+                            <h2>Brands</h2>
+                            <ul>
+                                <li>CeraVe</li>
+                                <li>Zaron</li>
+                                <li>Dior</li>
+                                <li>RevLon</li>
+                                <li>Maybelline</li>
+                                <li>Sukin</li>
+                                <li>Dr. Teal's</li>
+                                <li>Nutrogena</li>
+                                <li>Cetaphil</li>
+                                <li>Simple</li>
+                                <li>MAC</li>
+                                <li>SheaMoisture</li>
+                                <li>NARS</li>
+                                <li>e.i.f</li>
+                                <li>Huda Beauty</li>
+                            </ul>
+                            <a href="#">View all</a>
+                        </div>
+                        <div>
+                            <img src="../IMAGES/image.png" alt="Nivea Body Milk">
+                            <img src="../IMAGES/image.png" alt="Nivea Body Milk">
+                        </div>
+                    </div>
+                </li>
+
+                <li class="bath">Bath & Body
+                    <div class="baths">
+                        <div class="baths1">
+                            <h2>Bath & Body</h2>
+                            <ul>
+                                <li>Acne treatment</li>
+                                <li>Bath Socks and Bubble bath</li>
+                                <li>Beauty Supplements</li>
+                                <li>Body oils</li>
+                                <li>Body wash</li>
+                                <li>Moisturizers and lotion</li>
+                                <li>Essential oils</li>
+                                <li>Feet care</li>
+                                <li>Scrubs and Exfoliatants</li>
+                                <li></li>
+                            </ul>
+                        </div>
+
+                        
+                        <div class="baths1">
+                            <h2>Specific Concerns</h2>
+                            <ul>
+                                <li>Acne, Pimples and Blackheads</li>
+                                <li>Sensitive Skin</li>
+                                <li>Anti-aging</li>
+                                <li>Normal and Combination skin</li>
+                                <li>Dark Spots & hyperpigmentation</li>
+                                <li>dry Skin / Hydration</li>
+                                <li>Dull Skin</li>
+                                <li>Oily Skin</li>
+                            </ul>
+                        </div>
+
+                        <div class="baths1">
+                            <ul>
+                                <h2>Hand Care</h2>
+                                <li>Hand creams and masks</li>
+                            </ul>
+
+                            <ul>
+                                <h2>Feet Care</h2>
+                                <li>Foot creams and Exfoliatants</li>
+                            </ul>
+
+                            <ul>
+                                <h2>Oral Care</h2>
+                                <li>Tooth brushes and tooth pastes</li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+
+                <li>Serum</li>
+
+                <li class="deal">Deals
+                    <div class="deals">
+                        <p>Under 5k</p>
+                        <p>Best Sellers</p>
+                        <p>On Sale</p>
+                        <p>Back in Stock</p>
+                        <p>Gift Cards</p>
+                    </div>
+                </li>
+
+                <li>Bundle</li>
+
+                <li>Yet</li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="down-icons">
+        <span><i class='bx bx-store-alt bx-tada' ></i></span>
+        <span><i class='bx bx-search bx-flashing' ></i></i></span>
+        <span><i class='bx bx-heart bx-burst' ></i></span>
+        <span class="accountIcon"><i class='bx bx-user-circle bx-tada' ></i></span>
+    </section>
+
+    <main>
+        <section class="down-icons">
+                <span><i class='bx bx-store-alt bx-tada' ></i></span>
+                <span><i class='bx bx-search bx-flashing' ></i></i></span>
+                <span><i class='bx bx-heart bx-burst' ></i></span>
+                <span class="accountIcon"><i class='bx bx-user-circle bx-tada' ></i></span>
+        </section>
+
+        <section class="beauty-brand">
+            <div class="beauty-brand1">
+                <h1>Brands</h1>
+                <div>
+                    <p>Shop top beauty brands from the US, UK, and Korea. Discover affordable, high-quality products tailored to your unique needs — because looking and feeling great shouldn’t cost a fortune.</p>
+                    <h1>Trusted Global Beauty Brands</h1>
+                    <p>At Cottage Cosmetics Store, we curate globally loved skincare and beauty essentials from brands like Nivea, COSRX, Garnier, Jumisco, Neutrogena, The Ordinary, Cantu, Carmex, Eucerin, and more — delivering authentic, affordable beauty tailored just for you</p>
+                </div>
+            </div>
+
+            <div class="beauty-brand2">
+                <div>
+                    <a href="#">Follow on Tiktok</a>
+                    <a href="https://www.facebook.com/cottagecosmetics247">Follow on Facebook</a>
+                </div>
+
+                <div>
+                    <img src="../IMAGES/purple-giseng.jpeg" alt="">
+                    <img src="../IMAGES/coffeti.jpeg" alt="">
+                    <img src="../IMAGES/rollon.jpg" alt="">
+                    <img src="../IMAGES/vaselin.jpg" alt="">
+                    <img src="../IMAGES/cofetti2.jpeg" alt="">
+                    <img src="../IMAGES/cerave.jpg" alt="">
+                    <img src="../IMAGES/radiance-bottle.jpeg" alt="">
+                    <img src="../IMAGES/dove.jpeg" alt="">
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+    <footer>
+        <section class="footer1">
+            <div class="cottage-cosmetics">
+                <img class="brandName" src="../IMAGES/brand name.svg" alt="">
+                <p>Cottage Cosmetics | Premium Skincare & Beauty Essentials in Nigeria
+                    We curate authentic skincare and beauty products, sourced directly from trusted manufacturers and certified distributors to ensure exceptional quality, safety, and results you can rely on</p>
+            </div>
+
+            <div class="numbers-links">
+                <div>
+                    <h4>Quick Actions</h4>
+                    <ul>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Book a Consultation</a></li>
+                        <li><a href="#">Shipping</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Store Locator</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="#">Brands</a></li>
+                        <li><a href="#">Baths & Body</a></li>
+                        <li><a href="#">Skincare</a></li>
+                        <li><a href="#">Baby Skin</a></li>
+                        <li><a href="#">Body oil</a></li>
+                        <li><a href="#">Face</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="#">hello@cottagecosmetics.com</a></li>
+                        <li><a href="#">Wholesale (+234)8154969674</a></li>
+                        <li><a href="#">(+234)0704095243</a></li>
+                        <li><a href="#">(+234)9049953986</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <hr>
+
+        <div class="footer2">
+            <p>2026, All Rights Reserved</p>
+            <ul>
+                <li><a href="#">Terms</a></li>
+                <li><a href="#">Refunds</a></li>
+                <li><a href="#">Privacys</a></li>
+                <li><span>Designed by</span> <a href="#">Ema</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script src="../JS/brand-images.js"></script>
+</body>
+</html>

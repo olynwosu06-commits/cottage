@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../CSS/style.css">
+    <link rel="icon" href="../IMAGES/brand name.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Cottage Cosmetics</title>
+</head>
+<body>  
+    <header>
+        <nav class="faq">
+            <ul class="list">
+                <li><a href="#">FAQ</a></li>
+                <li><a href="shop.html?category=bath">Bath & Body</a></li>
+                <li><a href="#">Become a Distributor</a></li>
+                <li><a href="#">Contact Helpdesk</a></li>
+                <li><a href="#">Support Center</a></li>
+            </ul>
+        </nav>
+
+        <nav class="navbar">
+            <div class="nav-links">
+
+                <div class="close-icon">&times;</div>
+
+                <div class="nav-links-img">
+                    <img class="brandName" src="../IMAGES/brand name.svg" alt="">
+                </div>
+
+                <div class="nav-links-text">
+                    <h4>MAIN MENU</h4>
+                    <ul>
+                        <li onclick="window.location.href = './brand-images.html'">Brands</li>
+                        <li onclick="window.location.href='../SHOP_FOLDER/shop.html?category=bath'">Bath & Body</li>
+                        <li onclick="window.location.href='../SHOP_FOLDER/shop.html?category=serum'">Serum</li>
+                        <li onclick="window.location.href = '../SHOP_FOLDER/shop.html?category=baby'">Baby Skin</li>
+                        <li><a href="../SHOP_FOLDER/shop.html">Shop all</a></li>
+                    </ul>
+                </div>
+
+                <p>@ 2026 Cottage Cosmetics / All Rights Reserved</p>
+            </div>
+
+            <div class="overlay"></div> 
+
+            <i class='bx bx-menu' id="menu-icon"></i>
+        </nav>
+
+        <nav class="nav2">
+            <div class="brand-img">
+                <img class="brandName" src="../IMAGES/brand name.svg" alt="">
+            </div>
+
+            <div class="brand-search">
+                <div class="search-wrapper">
+                    <input type="text" id="name" placeholder="Search products..." autocomplete="off">
+                    <button type="button" class="clear-btn" title="Clear">×</button>
+                </div>
+                <button type="submit" class="search-btn">
+                    <i class="bx bx-search"></i>
+                </button>
+                <!-- suggestions will be added here by JS -->
+            </div>
+
+            <div class="user-cart">
+                <span class="accountIcon"><i class='bx bx-user-circle'></i></span>
+                <span class="accountIcon">Sign in <span>Account</span></span>
+                 <span><i class='bx bx-heart' ></i></span>
+                <span id="addToCart" class="cart-icon"><i class='bx bx-cart-alt' ></i>
+                    <span id="cartCount" class="cart-count">0</span>
+                </span>          
+            </div>
+        </nav>
+
+        <nav class ="nav3">
+            <ul class="navbar-list">
+                <li class="brand" onclick="window.location.href = './brand-images.html'">Brands
+                    <div class="brands">
+                        <div class="brandss">
+                            <h2></h2>
+                            <ul>
+                                <li>CeraVe</li>
+                                <li>Zaron</li>
+                                <li>Dior</li>
+                                <li>RevLon</li>
+                                <li>Maybelline</li>
+                                <li>Sukin</li>
+                                <li>Dr. Teal's</li>
+                                <li>Nutrogena</li>
+                                <li>Cetaphil</li>
+                                <li>Simple</li>
+                                <li>MAC</li>
+                                <li>SheaMoisture</li>
+                                <li>NARS</li>
+                                <li>e.i.f</li>
+                                <li>Huda Beauty</li>
+                            </ul>
+                            <a href="#">View all</a>
+                        </div>
+                        <div>
+                            <img src="../IMAGES/image.png" alt="Nivea Body Milk">
+                            <img src="../IMAGES/image.png" alt="Nivea Body Milk">
+                        </div>
+                    </div>
+                </li>
+
+                <li class="bath" onclick="window.location.href = '../SHOP_FOLDER/shop.html?category=bath'">Bath & Body
+                    <div class="baths">
+                        <div class="baths1">
+                            <h2>Bath & Body</h2>
+                            <ul>
+                                <li>Acne treatment</li>
+                                <li>Bath Socks and Bubble bath</li>
+                                <li>Beauty Supplements</li>
+                                <li>Body oils</li>
+                                <li>Body wash</li>
+                                <li>Moisturizers and lotion</li>
+                                <li>Essential oils</li>
+                                <li>Feet care</li>
+                                <li>Scrubs and Exfoliatants</li>
+                                <li></li>
+                            </ul>
+                        </div>
+
+                        
+                        <div class="baths1">
+                            <h2>Specific Concerns</h2>
+                            <ul>
+                                <li>Acne, Pimples and Blackheads</li>
+                                <li>Sensitive Skin</li>
+                                <li>Anti-aging</li>
+                                <li>Normal and Combination skin</li>
+                                <li>Dark Spots & hyperpigmentation</li>
+                                <li>dry Skin / Hydration</li>
+                                <li>Dull Skin</li>
+                                <li>Oily Skin</li>
+                            </ul>
+                        </div>
+
+                        <div class="baths1">
+                            <ul>
+                                <h2>Hand Care</h2>
+                                <li>Hand creams and masks</li>
+                            </ul>
+
+                            <ul>
+                                <h2>Feet Care</h2>
+                                <li>Foot creams and Exfoliatants</li>
+                            </ul>
+
+                            <ul>
+                                <h2>Oral Care</h2>
+                                <li>Tooth brushes and tooth pastes</li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+
+                <li>Serum</li>
+
+                <li class="deal">Deals
+                    <div class="deals">
+                        <p>Under 5k</p>
+                        <p>Best Sellers</p>
+                        <p>On Sale</p>
+                        <p>Back in Stock</p>
+                        <p>Gift Cards</p>
+                    </div>
+                </li>
+
+                <li>Bundle</li>
+
+                <li onclick="window.location.href = '../SHOP_FOLDER/shop.html'">Shop all</li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        <section class="down-icons">
+            <span><i class='bx bx-store-alt bx-tada' ></i></span>
+            <span><i class='bx bx-search bx-flashing' ></i></i></span>
+            <span><i class='bx bx-heart bx-burst' ></i></span>
+            <span class="accountIcon"><i class='bx bx-user-circle bx-tada' ></i></span>
+        </section>
+
+        <div class="slider">
+            <div class="slides">
+
+                <div class="slide slide1 active">
+                    <div class="slide-text">
+                        <h1>Glow Beyond Expectations</h1>
+                        <p>Elevate your routine with gentle, results-driven formulars.</p>
+                        <button type="submit">Shop now <i class='bx bx-right-arrow-alt bx-spin' onclick="location.href = '../SHOP_FOLDER/shop.html'"></i></button>
+                    </div>
+                </div>
+
+                <div class="slide slide2">
+                    <div class="slide-text">
+                        <h1>Unapologetically Radiant</h1>
+                        <p>High-performance skincare for real transformation.</p>
+                        <button type="submit">Shop now <i class='bx bx-right-arrow-alt bx-tada' onclick="location.href = '../SHOP_FOLDER/shop.html'"></i></button>
+                    </div>
+                </div>
+
+                <div class="slide slide3">
+                    <div class="slide-text">
+                        <h1>Because Your Skin Deserves More</h1>
+                        <p>Thoughtfully made for everyday glow.</p>
+                        <button type="submit">Shop now <i class='bx bx-right-arrow-alt bx-tada' onclick="location.href = '../SHOP_FOLDER/shop.html'"></i></button>
+                    </div>
+                </div>
+
+                <div class="slide slide4">
+                    <div class="slide-text">
+                        <h1>Radiance, Refined</h1>
+                        <p>Experience skincare crafted for luminous, balanced beauty.</p>
+                        <button type="submit">Shop now <i class='bx bx-right-arrow-alt bx-tada' onclick="location.href = '../SHOP_FOLDER/shop.html'"></i></button>
+                    </div>
+                </div>
+
+                <div class="slide slide5">
+                    <div class="slide-text">
+                        <h1>Glow Beyond Expectations</h1>
+                        <p>Elevate your routine with gentle, results-driven formulars.</p>
+                        <button type="submit">Shop now <i class='bx bx-right-arrow-alt bx-tada' onclick="location.href = '../SHOP_FOLDER/shop.html'"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="images">
+            <div class="track" id="track">
+                <!-- Original images -->
+                <img class="beautyBrands" src="../IMAGES2/nivea-logo.png" alt="">
+                <img class="beautyBrands" src="../IMAGES2/jumisco-logo.webp" alt="">
+                <img class="beautyBrands" src="../IMAGES2/neutrogena-logo-removebg-preview.png" alt="">
+                <img class="beautyBrands" src="../IMAGES2/cpsrx-logo-removebg-preview.png" alt="">
+                <img class="beautyBrands" src="../IMAGES2/la_roche-removebg-preview.png" alt="">
+                <img class="beautyBrands" src="../IMAGES2/Frame-4397.jpg" alt="">
+                <img class="beautyBrands" src="../IMAGES2/garnier.jpg" alt="">
+                <!-- Duplicate images (VERY IMPORTANT for seamless loop) -->
+                <img class="beautyBrands" src="../IMAGES2/nivea-logo.png" alt="">
+                <img class="beautyBrands" src="../IMAGES2/jumisco-logo.webp" alt="">
+                <img class="beautyBrands" src="../IMAGES2/neutrogena-logo-removebg-preview.png" alt="">
+                <img class="beautyBrands" src="../IMAGES2/cpsrx-logo-removebg-preview.png" alt="">
+                <img class="beautyBrands" src="../IMAGES2/la_roche-removebg-preview.png" alt="">
+                <img class="beautyBrands" src="../IMAGES2/Frame-4397.jpg" alt="">
+                <img class="beautyBrands" src="../IMAGES2/garnier.jpg" alt="">
+    
+            </div>
+        </div>
+
+
+        <section class="threeimages">
+            <div class="threeimages-text"><h1>“Glow with us, every step <br> of the way.”</h1></div>
+
+            <div class="threeimages-img">
+                <div>
+                    <img src="../IMAGES/WhatsApp Image 2026-02-13 at 13.14.306.jpeg" alt="">
+                    <p>“Luxury care, one strand at a time.”</p>
+                    <a href="../SHOP_FOLDER/shop.html">Shop now</a>
+                </div>
+
+                <div>
+                    <p>“Stand Out. Shield Up.”</p>
+                    <a href="../SHOP_FOLDER/shop.html">Shop now</a>
+                    <img src="../IMAGES/WhatsApp Image 2026-02-13 at 13.14.306.jpeg" alt="">
+                </div>
+
+                <div>
+                    <img src="../IMAGES/Frame-2087327144.webp" alt="">
+                    <p>“Power in Every Drop.”</p>
+                    <a href="../SHOP_FOLDER/shop.html ">Shop now</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="new-arrivals">
+            <div class="view-all">
+                <h1>New Arrivals</h1>
+                <a href="">View all➡️</a>
+            </div>
+
+            <div class="new-arrivals2">
+                <div>
+                    <a href=""><i class='bx bx-heart'></i></a>
+                    <img src="https://res.cloudinary.com/daaiil1ah/image/upload/v1772190197/allure3-removebg-preview_w0vsnf.png" alt="">
+                    <div>
+                        <p>Body lotion</p>
+                        <h3>Olay Retinol24 Body Lotion</h3>
+                        <h1>$20,000</h1>
+                    </div>
+                    <button class="add-to-cart">Add to Cart 🛒</button>
+                    <!-- Alternative button style (uncomment to use) -->
+                    <!-- <button class="add-to-cart-alt">Add to Cart</button> -->
+                </div>
+
+                <div>
+                    <a href=""><i class='bx bx-heart'></i></a>
+                    <img src="https://res.cloudinary.com/daaiil1ah/image/upload/v1772019011/IMG-removebg-preview_vj6hzh.png" alt="">
+                    <div>
+                        <p>Face</p>
+                        <h3>Uncover Argan Hydrating Moisturiser</h3>
+                        <h1>$16,340</h1>
+                    </div>
+                    <button class="add-to-cart">Add to Cart 🛒</button>
+                </div>
+
+                <div>
+                    <a href=""><i class='bx bx-heart'></i></a>
+                    <img src="https://res.cloudinary.com/daaiil1ah/image/upload/v1772019005/FACIAL-SERUM-600x600-removebg-preview_fh8com.png" alt="">
+                    <div>
+                        <p>Face</p>
+                        <h3>Face Facts Vitamin C Brightening Facial Serum 30ml</h3>
+                        <h1>$5,924</h1>
+                    </div>
+                    <button class="add-to-cart">Add to Cart 🛒</button>
+                </div>
+
+                <div>
+                    <a href=""><i class='bx bx-heart'></i></a>
+                    <img src="https://res.cloudinary.com/daaiil1ah/image/upload/v1772050512/Screenshot_930387-500x500-removebg-preview_w6ncij.png" alt="">
+                    <div>
+                        <p>Scrub</p>
+                        <h3>Tree Hut Tangerine Shea Sugar scrub</h3>
+                        <h1>$29,937</h1>
+                    </div>
+                    <button class="add-to-cart">Add to Cart 🛒</button>
+                </div>
+
+                <div>
+                    <a href=""><i class='bx bx-heart'></i></a>
+                    <img src="https://res.cloudinary.com/daaiil1ah/image/upload/v1772051200/baby-dove-600x600-removebg-preview_logcfz.png" alt="">
+                    <div>
+                        <p>Baby Skin</p>
+                        <h3>Baby Dove Rich Moisture Hypoallergenic Wash 20oz</h3>
+                        <h1>$28,975</h1>
+                    </div>
+                    <button class="add-to-cart">Add to Cart 🛒</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="shop-by-category">
+            <div class="shop1">
+                <h1>Where Skincare Meets Confidence</h1>
+                <p>At Cottage Cosmetics, we curate quality skincare and beauty products designed to elevate your everyday routine. Discover trusted formulas, radiant finishes, and fragrances that leave a lasting impression.</p>
+                <h3>Shop by Category</h3>
+            </div>
+
+
+            <div class="shop2">
+                <div onclick="window.location.href='../SHOP_FOLDER/shop.html?category=bath'">
+                    <img src="../IMAGES/shop-by-category-bath&body2.jpeg" alt="BATH & BODY">
+                    <p>Bath & Body</p>
+                </div>
+
+                <div onclick="window.location.href='../SHOP_FOLDER/shop.html?category=baby'">
+                    <img src="../IMAGES/shop-by-category2.jpeg" alt="">
+                    <p>Baby Skin</p>
+                </div>
+
+                <div onclick="window.location.href='../SHOP_FOLDER/shop.html?category=skincare'">
+                    <img src="../IMAGES/shop-by-category-skincare.jpeg" alt="Skincare">
+                    <p>Skincare</p>
+                </div>
+
+                <div onclick="window.location.href='../SHOP_FOLDER/shop.html?category=face'">
+                    <img src="../IMAGES/shop-by-category-face.jpeg" alt="">
+                    <p>Face</p>
+                </div>
+
+                <div onclick="window.location.href='../SHOP_FOLDER/shop.html?category=babyOil'">
+                    <img src="../IMAGES/shop-by-category-oil.jpeg" alt="">
+                    <p>Baby Oil</p>
+                </div>
+
+                <div onclick="window.location.href='../SHOP_FOLDER/shop.html?category=oil'">
+                    <img src="../IMAGES/shop-by-category-oil.jpeg" alt="">
+                    <p>Body oil</p>
+                </div>
+            </div>
+    </section>
+
+    <section class="fourimages">
+            <div class="fourimages-div">
+                <h1>Everyday Glowing</h1>
+                <p>Essential care for beautifully healthy skin.</p>
+                <button onclick="window.location.href='../SHOP_FOLDER/shop.html?category=bath'">Shop now</button>
+            </div>
+            <div class="fourimages-div">
+                <h1>Hydration Boost </h1>
+                <p>Restores hydration and revives dull skin</p>
+                <button onclick="window.location.href='../SHOP_FOLDER/shop.html?category=skincare'">Shop now</button>
+            </div>
+            <div class="fourimages-div">
+                <h1>Skin Detox Mask </h1>
+                <p>Draws out impurities for clearer, refreshed skin</p>
+                <button onclick="window.location.href='../SHOP_FOLDER/shop.html?category=face'">Shop now</button>
+            </div>
+            <div class="fourimages-div">
+                <h1>Restore & Shine </h1>
+                <p>Strengthens and restores for brilliant shine</p>
+                <button onclick="window.location.href='../SHOP_FOLDER/shop.html?category=serum'">Shop now</button>
+            </div>
+        </section>
+
+    </main>
+
+
+
+    <footer>
+        <section class="footer1">
+            <div class="cottage-cosmetics">
+                <img class="brandName" src="../IMAGES/brand name.svg" alt="">
+                <p>Cottage Cosmetics | Premium Skincare & Beauty Essentials in Nigeria
+                    We curate authentic skincare and beauty products, sourced directly from trusted manufacturers and certified distributors to ensure exceptional quality, safety, and results you can rely on</p>
+            </div>
+
+            <div class="numbers-links">
+                <div>
+                    <h4>Quick Actions</h4>
+                    <ul>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Book a Consultation</a></li>
+                        <li><a href="#">Shipping</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Store Locator</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="#">Brands</a></li>
+                        <li><a href="#">Baths & Body</a></li>
+                        <li><a href="#">Skincare</a></li>
+                        <li><a href="#">Baby Skin</a></li>
+                        <li><a href="#">Body oil</a></li>
+                        <li><a href="#">Face</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="#">hello@cottagecosmetics.com</a></li>
+                        <li><a href="#">Wholesale (+234)8154969674</a></li>
+                        <li><a href="#">(+234)0704095243</a></li>
+                        <li><a href="#">(+234)9049953986</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <hr>
+
+        <div class="footer2">
+            <p>2026, All Rights Reserved</p>
+            <ul>
+                <li><a href="#">Terms</a></li>
+                <li><a href="#">Refunds</a></li>
+                <li><a href="#">Privacys</a></li>
+                <li><span>Designed by</span> <a href="#">Ema</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script>
+    // Update user display on homepage
+    function updateUserDisplay() {
+        const userName = localStorage.getItem('userName');
+        
+        // Find the "Sign in Account" element - it's in a span within .user-cart
+        const userCartSpan = document.querySelector('.user-cart span:nth-child(2)');
+        
+        if (userName && userCartSpan) {
+            // Change "Sign in Account" to show the user's name
+            userCartSpan.innerHTML = `Hi, <span style="color: #8424e3; font-weight: 600;">${userName}</span>`;
+        }
+    }
+    
+    // Run when page loads
+    document.addEventListener('DOMContentLoaded', updateUserDisplay);
+    
+    // Run when page becomes visible (user comes back to tab)
+    document.addEventListener('visibilitychange', function() {
+        if (!document.hidden) updateUserDisplay();
+    });
+    
+    // Run when localStorage changes (logged in from another tab)
+    window.addEventListener('storage', function(e) {
+        if (e.key === 'userName') updateUserDisplay();
+    });
+</script>
+
+<script type="module">
+    // Import the functions you actually need
+    import { initCartCounts } from "./cart-helper.js";   // adjust path if needed
+
+    // Run initialization when the page is ready
+    document.addEventListener("DOMContentLoaded", () => {
+        initCartCounts();
+    });
+</script>
+
+    <!-- Search functionality for cart page & Mobile Search -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+
+    // Your Firebase config - SINGLE INSTANCE
+    const firebaseConfig = {
+        apiKey: "AIzaSyB4Hy_sEEH1twq0GDzKi5E1CZD5dVHn4Kk",
+        authDomain: "cottage-9fa0c.firebaseapp.com",
+        projectId: "cottage-9fa0c",
+        storageBucket: "cottage-9fa0c.firebasestorage.app",
+        messagingSenderId: "346971937714",
+        appId: "1:346971937714:web:0f453c14862de16bede2ab"
+    };
+
+    // Initialize Firebase once
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    
+    // Make db available globally
+    window.db = window.db || db;
+
+    // ==================== SHARED VARIABLES ====================
+    let allProductsCache = [];
+    let searchTimeout;
+    
+    // Category display names
+    const categoryDisplayNames = {
+        'all': 'All Products',
+        'bath': 'Bath & Body',
+        'body1': 'Body Lotion',
+        'face': 'Face',
+        'faceMask': 'Face Mask',
+        'faceWash': 'FaceWash',
+        'baby': 'Baby Skin',
+        'babyLotion': 'Baby Lotion',
+        'babyWash': 'Baby Wash',
+        'babyOil': 'Baby Oil',
+        'babyPowder': 'Baby Powder',
+        'cream': 'Cream',
+        'serum': 'Serum',
+        'skincare': 'Skin Care',
+        'sunScreen': 'Sun Screen',
+        'scrubs': 'Scrubs'
+    };
+
+    // Shared helper function
+    function getCategoryDisplayName(category) {
+        return categoryDisplayNames[category] || category || 'Product';
+    }
+
+    // ==================== LOAD PRODUCTS (SINGLE FUNCTION) ====================
+    async function loadProductsCache() {
+        try {
+            if (allProductsCache.length === 0) {
+                const querySnapshot = await getDocs(collection(db, "products"));
+                querySnapshot.forEach((doc) => {
+                    allProductsCache.push({
+                        id: doc.id,
+                        ...doc.data()
+                    });
+                });
+                console.log(`Loaded ${allProductsCache.length} products`);
+            }
+            return allProductsCache;
+        } catch (error) {
+            console.error("Error loading products cache:", error);
+            return [];
+        }
+    }
+
+    // ==================== DESKTOP SEARCH ====================
+    async function initializeDesktopSearch() {
+        const searchInput = document.getElementById('name');
+        const searchBtn = document.querySelector('.brand-search .search-btn');
+        const clearBtn = document.querySelector('.clear-btn');
+        
+        // Create suggestions container if it doesn't exist
+        const searchWrapper = document.querySelector('.search-wrapper');
+        if (searchWrapper && !document.getElementById('searchSuggestions')) {
+            const suggestionsContainer = document.createElement('div');
+            suggestionsContainer.id = 'searchSuggestions';
+            suggestionsContainer.className = 'search-suggestions';
+            searchWrapper.appendChild(suggestionsContainer);
+        }
+
+        // Load products cache
+        await loadProductsCache();
+
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                if (clearBtn) {
+                    clearBtn.classList.toggle('visible', e.target.value.trim().length > 0);
+                }
+                
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    showSearchSuggestions(e.target.value);
+                }, 300);
+            });
+
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    performSearch(searchInput.value);
+                }
+            });
+        }
+
+        if (searchBtn) {
+            searchBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                performSearch(searchInput?.value || '');
+            });
+        }
+
+        if (clearBtn) {
+            clearBtn.addEventListener('click', () => {
+                if (searchInput) {
+                    searchInput.value = '';
+                    clearBtn.classList.remove('visible');
+                    searchInput.focus();
+                }
+                hideSuggestions();
+            });
+        }
+
+        document.addEventListener('click', (e) => {
+            const suggestions = document.getElementById('searchSuggestions');
+            if (suggestions && !e.target.closest('.brand-search')) {
+                suggestions.classList.remove('show');
+            }
+        });
+    }
+
+    // Show desktop suggestions
+    async function showSearchSuggestions(searchTerm) {
+        const suggestionsContainer = document.getElementById('searchSuggestions');
+        if (!suggestionsContainer) return;
+        
+        if (!searchTerm || searchTerm.trim().length < 2) {
+            suggestionsContainer.classList.remove('show');
+            return;
+        }
+        
+        try {
+            const searchTermLower = searchTerm.toLowerCase().trim();
+            
+            if (allProductsCache.length === 0) {
+                await loadProductsCache();
+            }
+            
+            const suggestions = allProductsCache
+                .filter(product => {
+                    const text = `
+                        ${(product.name || '').toLowerCase()}
+                        ${(product.description || '').toLowerCase()}
+                        ${(product.category || '').toLowerCase()}
+                    `;
+                    
+                    const display = getCategoryDisplayName(product.category || '').toLowerCase();
+                    
+                    return (
+                        text.includes(searchTermLower) ||
+                        display.includes(searchTermLower) ||
+                        display.replace(/ & /g, ' ').includes(searchTermLower) ||
+                        display.replace(/ & /g, '').includes(searchTermLower) ||
+                        display.replace(/\s+/g, '').includes(searchTermLower)
+                    );
+                })
+                .slice(0, 6);
+            
+            if (suggestions.length === 0) {
+                suggestionsContainer.classList.remove('show');
+                return;
+            }
+            
+            let html = '';
+            suggestions.forEach(product => {
+                const regex = new RegExp(`(${searchTerm})`, 'gi');
+                const highlightedName = product.name.replace(regex, '<span class="suggestion-highlight">$1</span>');
+                const category = getCategoryDisplayName(product.category);
+                
+                html += `
+                    <div class="suggestion-item" onclick="goToProductPage('${product.id}')">
+                        <div class="suggestion-content">
+                            <span class="suggestion-name">${highlightedName}</span>
+                            <span class="suggestion-category">${category}</span>
+                        </div>
+                        <span class="suggestion-price">$${product.price ? product.price.toFixed(2) : '0.00'}</span>
+                    </div>
+                `;
+            });
+            
+            suggestionsContainer.innerHTML = html;
+            suggestionsContainer.classList.add('show');
+            
+        } catch (error) {
+            console.error("Error showing suggestions:", error);
+            suggestionsContainer.classList.remove('show');
+        }
+    }
+
+    // ==================== MOBILE SEARCH ====================
+    function createMobileSearchOverlay() {
+        if (document.getElementById('mobileSearchOverlay')) return;
+
+        const overlayHTML = `
+            <div class="mobile-search-overlay" id="mobileSearchOverlay">
+                <div class="mobile-search-header">
+                    <button class="mobile-search-back" id="mobileSearchBack">
+                        <i class='bx bx-arrow-back'></i>
+                    </button>
+                    <h3>Search Products</h3>
+                </div>
+                <div class="mobile-search-content">
+                    <div class="mobile-search-input-wrapper">
+                        <i class='bx bx-search'></i>
+                        <input type="text" id="mobileSearchInput" placeholder="Search for products..." autocomplete="off">
+                        <button class="mobile-clear-btn" id="mobileClearBtn">×</button>
+                    </div>
+                    <div class="mobile-search-suggestions" id="mobileSearchSuggestions"></div>
+                </div>
+            </div>
+        `;
+        
+        document.body.insertAdjacentHTML('beforeend', overlayHTML);
+        
+        const searchIcon = document.querySelector('.down-icons span:nth-child(2)');
+        if (searchIcon) {
+            searchIcon.addEventListener('click', toggleMobileSearch);
+        }
+        
+        document.getElementById('mobileSearchBack')?.addEventListener('click', closeMobileSearch);
+        
+        const overlay = document.getElementById('mobileSearchOverlay');
+        overlay?.addEventListener('click', (e) => {
+            if (e.target === overlay) closeMobileSearch();
+        });
+        
+        initializeMobileSearchInput();
+    }
+
+    function initializeMobileSearchInput() {
+        const mobileInput = document.getElementById('mobileSearchInput');
+        const mobileClearBtn = document.getElementById('mobileClearBtn');
+
+        if (mobileInput) {
+            mobileInput.addEventListener('input', (e) => {
+                mobileClearBtn.style.display = e.target.value.trim().length > 0 ? 'block' : 'none';
+                
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    showMobileSearchSuggestions(e.target.value);
+                }, 300);
+            });
+
+            mobileInput.addEventListener('focus', (e) => {
+                if (e.target.value.trim().length >= 2) {
+                    showMobileSearchSuggestions(e.target.value);
+                }
+            });
+
+            mobileInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    performMobileSearch(mobileInput.value);
+                }
+            });
+        }
+
+        mobileClearBtn?.addEventListener('click', () => {
+            if (mobileInput) {
+                mobileInput.value = '';
+                mobileClearBtn.style.display = 'none';
+                mobileInput.focus();
+                hideMobileSuggestions();
+            }
+        });
+    }
+
+    async function showMobileSearchSuggestions(searchTerm) {
+        const suggestionsContainer = document.getElementById('mobileSearchSuggestions');
+        if (!suggestionsContainer) return;
+        
+        if (!searchTerm || searchTerm.trim().length < 2) {
+            suggestionsContainer.classList.remove('show');
+            return;
+        }
+        
+        try {
+            const searchTermLower = searchTerm.toLowerCase().trim();
+            
+            if (allProductsCache.length === 0) {
+                await loadProductsCache();
+            }
+            
+            const suggestions = allProductsCache
+                .filter(product => {
+                    const text = `
+                        ${(product.name || '').toLowerCase()}
+                        ${(product.description || '').toLowerCase()}
+                        ${(product.category || '').toLowerCase()}
+                    `;
+                    
+                    const display = getCategoryDisplayName(product.category || '').toLowerCase();
+                    
+                    return (
+                        text.includes(searchTermLower) ||
+                        display.includes(searchTermLower) ||
+                        display.replace(/ & /g, ' ').includes(searchTermLower) ||
+                        display.replace(/ & /g, '').includes(searchTermLower) ||
+                        display.replace(/\s+/g, '').includes(searchTermLower)
+                    );
+                })
+                .slice(0, 8);
+            
+            if (suggestions.length === 0) {
+                suggestionsContainer.innerHTML = `
+                    <div class="mobile-no-results">
+                        <i class='bx bx-search-alt'></i>
+                        <p>No products found for "${searchTerm}"</p>
+                    </div>
+                `;
+                suggestionsContainer.classList.add('show');
+                return;
+            }
+            
+            let html = '';
+            suggestions.forEach(product => {
+                const regex = new RegExp(`(${searchTerm})`, 'gi');
+                const highlightedName = product.name.replace(regex, '<span class="mobile-suggestion-highlight">$1</span>');
+                const category = getCategoryDisplayName(product.category);
+                const price = product.price ? `$${product.price.toFixed(2)}` : 'Price on request';
+                
+                html += `
+                    <div class="mobile-suggestion-item" onclick="goToMobileProductPage('${product.id}')">
+                        <div class="mobile-suggestion-image">
+                            <img src="${product.imageUrl || 'placeholder.jpg'}" alt="${product.name}" onerror="this.src='placeholder.jpg'">
+                        </div>
+                        <div class="mobile-suggestion-content">
+                            <span class="mobile-suggestion-name">${highlightedName}</span>
+                            <span class="mobile-suggestion-category">${category}</span>
+                            <span class="mobile-suggestion-price">${price}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            suggestionsContainer.innerHTML = html;
+            suggestionsContainer.classList.add('show');
+            
+        } catch (error) {
+            console.error("Error showing mobile suggestions:", error);
+        }
+    }
+
+    // ==================== SHARED FUNCTIONS ====================
+    function performSearch(searchTerm) {
+        if (!searchTerm || searchTerm.trim() === '') return;
+        hideSuggestions();
+        localStorage.setItem('searchTerm', searchTerm);
+        window.location.href = `shop.html?search=${encodeURIComponent(searchTerm)}`;
+    }
+
+    function performMobileSearch(searchTerm) {
+        if (!searchTerm || searchTerm.trim() === '') return;
+        hideMobileSuggestions();
+        closeMobileSearch();
+        localStorage.setItem('searchTerm', searchTerm);
+        window.location.href = `shop.html?search=${encodeURIComponent(searchTerm)}`;
+    }
+
+    window.goToProductPage = function(productId) {
+        const product = allProductsCache.find(p => p.id === productId);
+        if (product) {
+            localStorage.setItem('selectedProduct', JSON.stringify(product));
+            window.location.href = '../SHOP_FOLDER/product-detail.html';
+        }
+    };
+
+    window.goToMobileProductPage = function(productId) {
+        const product = allProductsCache.find(p => p.id === productId);
+        if (product) {
+            localStorage.setItem('selectedProduct', JSON.stringify(product));
+            closeMobileSearch();
+            window.location.href = '../SHOP_FOLDER/product-detail.html';
+        }
+    };
+
+    function hideSuggestions() {
+        document.getElementById('searchSuggestions')?.classList.remove('show');
+    }
+
+    function hideMobileSuggestions() {
+        document.getElementById('mobileSearchSuggestions')?.classList.remove('show');
+    }
+
+    function toggleMobileSearch() {
+        const overlay = document.getElementById('mobileSearchOverlay');
+        if (overlay) {
+            overlay.classList.add('active');
+            setTimeout(() => {
+                document.getElementById('mobileSearchInput')?.focus();
+            }, 300);
+        }
+    }
+
+    function closeMobileSearch() {
+        const overlay = document.getElementById('mobileSearchOverlay');
+        if (overlay) {
+            overlay.classList.remove('active');
+            const input = document.getElementById('mobileSearchInput');
+            const clearBtn = document.getElementById('mobileClearBtn');
+            if (input) input.value = '';
+            if (clearBtn) clearBtn.style.display = 'none';
+            hideMobileSuggestions();
+        }
+    }
+
+    window.closeMobileSearch = closeMobileSearch;
+
+    function initializeDownIcons() {
+        const downIcons = document.querySelectorAll('.down-icons span');
+        
+        downIcons.forEach((icon, index) => {
+            icon.addEventListener('click', () => {
+                downIcons.forEach(i => i.classList.remove('active'));
+                icon.classList.add('active');
+                
+                switch(index) {
+                    case 0: window.location.href = 'shop.html'; break;
+                    case 1: toggleMobileSearch(); break;
+                    case 2: window.location.href = 'wishlist.html'; break;
+                    case 3: window.location.href = 'account.html'; break;
+                }
+            });
+        });
+    }
+
+    // ==================== STYLES ====================
+    function addSearchStyles() {
+        const style = document.createElement('style');
+        style.textContent = `
+            /* Desktop Search Styles */
+            .search-suggestions {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                border: 1px solid #e0e0e0;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                max-height: 300px;
+                overflow-y: auto;
+                z-index: 1000;
+                display: none;
+                margin-top: 4px;
+            }
+            
+            .search-suggestions.show { display: block; }
+            
+            .suggestion-item {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 10px 15px;
+                cursor: pointer;
+                border-bottom: 1px solid #f0f0f0;
+                transition: background-color 0.2s;
+            }
+            
+            .suggestion-item:hover { background-color: #f9f9f9; }
+            .suggestion-item:last-child { border-bottom: none; }
+            
+            .suggestion-content { flex: 1; }
+            
+            .suggestion-name {
+                font-weight: 500;
+                color: #333;
+                display: block;
+                margin-bottom: 3px;
+            }
+            
+            .suggestion-category {
+                font-size: 12px;
+                color: #8424e3;
+                display: block;
+            }
+            
+            .suggestion-price {
+                font-weight: 600;
+                color: #8424e3;
+                margin-left: 15px;
+            }
+            
+            .suggestion-highlight {
+                background-color: #ffe6f4;
+                color: #8424e3;
+                font-weight: 600;
+            }
+            
+            .clear-btn.visible { display: block; }
+            
+            .clear-btn {
+                display: none;
+                position: absolute;
+                right: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+                background: none;
+                border: none;
+                font-size: 20px;
+                color: #999;
+                cursor: pointer;
+                padding: 0 5px;
+            }
+            
+            .clear-btn:hover { color: #333; }
+            
+            .search-wrapper {
+                position: relative;
+                display: flex;
+                align-items: center;
+            }
+            
+            .brand-search { position: relative; }
+
+            /* Mobile Search Overlay */
+            .mobile-search-overlay {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: white;
+                z-index: 10000;
+                transform: translateY(100%);
+                transition: transform 0.4s ease-in-out;
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .mobile-search-overlay.active { transform: translateY(0); }
+            
+            .mobile-search-header {
+                display: flex;
+                align-items: center;
+                padding: 15px 20px;
+                background: var(--primary-color, #8424e3);
+                color: white;
+                position: sticky;
+                top: 0;
+                z-index: 10;
+            }
+            
+            .mobile-search-back {
+                background: none;
+                border: none;
+                color: white;
+                font-size: 24px;
+                cursor: pointer;
+                padding: 0;
+                margin-right: 15px;
+                display: flex;
+                align-items: center;
+            }
+            
+            .mobile-search-header h3 {
+                font-size: 18px;
+                font-weight: 500;
+                margin: 0;
+            }
+            
+            .mobile-search-content {
+                flex: 1;
+                padding: 20px;
+                overflow-y: auto;
+                background: #f8f8f8;
+            }
+            
+            .mobile-search-input-wrapper {
+                position: relative;
+                display: flex;
+                align-items: center;
+                background: white;
+                border-radius: 30px;
+                padding: 0 15px;
+                border: 2px solid var(--primary-color, #8424e3);
+                margin-bottom: 20px;
+            }
+            
+            .mobile-search-input-wrapper i {
+                color: #999;
+                font-size: 20px;
+                margin-right: 10px;
+            }
+            
+            .mobile-search-input-wrapper input {
+                flex: 1;
+                padding: 15px 0;
+                border: none;
+                background: transparent;
+                font-size: 16px;
+                outline: none;
+            }
+            
+            .mobile-clear-btn {
+                display: none;
+                background: none;
+                border: none;
+                font-size: 24px;
+                color: #999;
+                cursor: pointer;
+                padding: 0 5px;
+            }
+            
+            .mobile-clear-btn:hover { color: #333; }
+            
+            .mobile-search-suggestions {
+                display: none;
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .mobile-search-suggestions.show { display: flex; }
+            
+            .mobile-suggestion-item {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                padding: 12px;
+                background: white;
+                border-radius: 12px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+                cursor: pointer;
+                transition: transform 0.2s, box-shadow 0.2s;
+            }
+            
+            .mobile-suggestion-item:hover,
+            .mobile-suggestion-item:active {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(132, 36, 227, 0.15);
+            }
+            
+            .mobile-suggestion-image {
+                width: 60px;
+                height: 60px;
+                border-radius: 10px;
+                overflow: hidden;
+                flex-shrink: 0;
+                background: #f5f5f5;
+            }
+            
+            .mobile-suggestion-image img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            
+            .mobile-suggestion-content { flex: 1; }
+            
+            .mobile-suggestion-name {
+                font-weight: 600;
+                color: #333;
+                display: block;
+                margin-bottom: 4px;
+                font-size: 15px;
+            }
+            
+            .mobile-suggestion-category {
+                font-size: 12px;
+                color: var(--icons-color, #8424e3);
+                display: block;
+                margin-bottom: 2px;
+            }
+            
+            .mobile-suggestion-price {
+                font-size: 14px;
+                font-weight: 600;
+                color: #333;
+                display: block;
+            }
+            
+            .mobile-suggestion-highlight {
+                background-color: #ffe6f4;
+                color: var(--icons-color, #8424e3);
+                font-weight: 600;
+                padding: 0 2px;
+            }
+            
+            .mobile-no-results {
+                text-align: center;
+                padding: 40px 20px;
+                background: white;
+                border-radius: 12px;
+            }
+            
+            .mobile-no-results i {
+                font-size: 50px;
+                color: #ccc;
+                margin-bottom: 15px;
+            }
+            
+            .mobile-no-results p {
+                color: #666;
+                font-size: 16px;
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    // ==================== INITIALIZATION ====================
+    document.addEventListener('DOMContentLoaded', () => {
+        addSearchStyles();
+        initializeDesktopSearch();
+        createMobileSearchOverlay();
+        initializeDownIcons();
+        
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartCount = document.getElementById('cartCount');
+        if (cartCount) {
+            const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+            cartCount.innerText = totalItems;
+        }
+    });
+
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        setTimeout(() => {
+            addSearchStyles();
+            initializeDesktopSearch();
+            createMobileSearchOverlay();
+            initializeDownIcons();
+        }, 100);
+    }
+</script>
+
+    <script src="../JS/script.js"></script>
+    <!-- <script type="module" src="../SHOP_FOLDER/shop.js"></script> -->
+    <!-- <script type="module" src="../SHOP_FOLDER/cart.js"></script> -->
+</body>
+</html>

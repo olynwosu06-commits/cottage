@@ -1,0 +1,1456 @@
+/**
+ * Cottage Cosmetics - Main Stylesheet
+ * Author: Cottage Cosmetics Team
+ * Version: 1.0.0
+ * Description: Core styles for the Cottage Cosmetics e-commerce website including header, navigation, dropdowns, product sections, and footer
+ */
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body{
+    background-color: #f7f7f7;
+}
+
+:root{
+    --primary-color: #5d1bb3;
+    --icons-color: #8424e3;
+    --secondary-color: #ffe6f4;
+    --basic-color: #ffffff;
+    --text-color: #333;
+    --border-radius: 5px;
+    --transition-duration: 0.3s;
+}
+
+/* ========================================
+   FAQ Top Navigation Bar
+   ======================================== */
+.faq{
+    background-color: var(--primary-color);
+    height: 6.5vh;
+    padding: 0px 40px;
+    color: var(--basic-color);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100000;
+    
+}
+
+.list{
+    display: flex;
+    text-align: center;
+    justify-items: center;
+    justify-content: space-between;
+    gap: 200px;
+    list-style: none ;
+}  
+
+.faq a{
+    color: var(--basic-color);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* ========================================
+   Main Navigation (Nav2)
+   ======================================== */
+.nav2{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--secondary-color);
+    height: 15vh;
+    padding: 20px 70px;
+    margin-top: 2em;
+}
+
+.brand-img img, .cottage-cosmetics img{
+    width: 150px;
+    padding-top: 10px;
+    cursor: pointer;
+} 
+
+.brand-search{
+    display: flex;
+    align-items: center;
+}
+
+.brand-search input{
+    width: 600px;
+    height: 7vh;
+    border-radius: 6px 0 0 6px;
+    border: 0.5px solid #d6b8f3;
+    outline: none;
+    padding: 10px;
+}
+
+.brand-search input:focus{
+    border: 2px solid var(--primary-color);
+    border-right: none;
+}
+
+.brand-search button{
+    background-color: var(--icons-color);
+    color: var(--basic-color);
+    border: none;
+    padding: 10px;
+    border-radius: 0 6px 6px 0;
+    height: 7vh;
+    width: 50px;
+    font-size: 20px;
+}
+
+.brans-search input{
+    padding: 10px;
+    border: 1px solid var(--primary-color);
+    border-radius: var(--border-radius);
+    width: 300px;
+}
+
+/* For the account icon span when user is logged in */
+.user-cart .accountIcon {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.user-cart .accountIcon:hover {
+    color: var(--icons-color);
+}
+
+.user-cart .accountIcon Welcome {
+    font-size: 12px;
+    color: #666;
+    line-height: 1.2;
+}
+
+.user-cart .accountIcon span {
+    font-size: 15px;
+    font-weight: bold;
+    color: #333;
+    line-height: 1.2;
+}
+
+/* If you want to style the "Welcome" text differently */
+.user-cart .accountIcon Welcome {
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+/* For the user's name */
+.user-cart .accountIcon span:last-child {
+    color: var(--icons-color);
+    font-weight: 600;
+}
+
+/* Keep the icon styling consistent */
+.user-cart .accountIcon i {
+    font-size: 28px;
+    margin-bottom: 2px;
+}
+
+/* If you want to add a subtle background when logged in */
+.user-cart .accountIcon Welcome + span {
+    background: rgba(196, 122, 122, 0.1);
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-top: 2px;
+}
+
+.user-cart{
+    display: flex;
+    gap: 30px;
+}
+
+.user-cart span i{
+    font-size: 28px;
+}
+
+.user-cart span i:hover{
+    color: var(--icons-color);
+    transition: all 0.5s ease;
+    cursor: pointer;
+}
+
+.user-cart span:nth-child(2){
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+    color: #000000;
+    font-weight: normal;
+}
+.user-cart span:nth-child(2):hover{
+    cursor: pointer;
+}
+
+.user-cart span:nth-child(2) span{
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.cart-icon {
+    position: relative;
+    display: inline-block;
+}
+
+.cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: var(--icons-color);
+    color: white !important;
+    font-size: 10px !important;
+    display: flex;
+    justify-content: center;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+}
+
+/* ========================================
+   Bottom Navigation (Nav3)
+   ======================================== */
+.nav3{
+    background-color: var(--primary-color);
+    height: 6.5vh;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-list{
+    display: flex;
+    gap: 50px;
+    color: var(--basic-color);
+    font-weight: bold;
+    font-size: 15px;
+    list-style: none;
+    padding-left: 80px;
+}
+
+.navbar-list li{
+    cursor: pointer;
+}
+
+/* ========================================
+   Brands Dropdown Menu
+   ======================================== */
+.brands{
+    background-color: #ffffff;
+    display: flex;
+    gap: 15%;
+    color: #000000;
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    top: 11.2em;
+    height: 24em;
+    box-shadow: 2px 2px 9px 0 rgb(218, 216, 216);
+    opacity: 0;
+    visibility: hidden;
+    filter: blur(6px);
+    transform: translateY(40px);
+    padding: 30px 0 0 60px;
+    transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s ease, filter 0.4s ease;
+}
+
+.brand:hover .brands, .brands:hover{
+    opacity: 1;
+    filter: blur(0);
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.brands div:last-child{
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.brandss{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.brandss ul{
+    display: grid;
+    grid-template-columns: repeat(2, 15em );
+    gap: 10px;
+    list-style: none;
+    font-weight: normal;
+    font-size: 14px;
+}
+
+.brandss h2, .brandss ul, .brandss a, .brands  div:nth-child(2){
+    opacity: 0;
+    transform: translateX(-12px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.brand:hover .brands h2, .brands:hover .brands h2{
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.brand:hover .brands ul, .brands:hover .brands ul{
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.brand:hover .brands a, .brands:hover .brands a{
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.brand:hover .brands div:nth-child(2), .brands:hover .brands div:nth-child(2){
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.brandss h2{transition-delay: 0.12s;}
+.brandss ul{transition-delay: 0.22s;}
+.brandss a{transition-delay: 0.32s;}
+.brands div:nth-child(2){transition-delay: 0.42s;}
+
+/* ========================================
+   Bath Dropdown Menu
+   ======================================== */
+.baths{
+    background-color: #ffffff;
+    display: flex;
+    gap: 12em;
+    color: #000000;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 11.2em;
+    padding-left: 40px;
+    z-index: 100;
+    padding-top: 3em;
+    height: 24em;
+    box-shadow: 2px 2px 9px 0 rgb(218, 216, 216);
+    opacity: 0;
+    visibility: hidden;
+    filter: blur(6px);
+    transform: translateX(-40px);
+    transition: opacity 0.4s ease, visibility 0.4s ease, filter 0.4s ease, transform 0.4s ease;
+}
+
+.bath:hover .baths, .baths:hover{
+    opacity: 1;
+    visibility: visible;
+    filter: blur(0);
+    transform: translateX(0);
+}
+
+.baths1{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.4s ease, transform 0.3s ease;
+}
+
+.bath:hover .baths1, .baths:hover .baths1{
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.baths1:nth-child(1){transition-delay: 0.12s;}
+.baths1:nth-child(2){transition-delay: 0.22s;}
+.baths1:nth-child(3){transition-delay: 0.32s;}
+
+
+.baths1 h2{
+    font-size: 18px;
+    font-weight: bold;
+    color: #1B1B1B;
+    letter-spacing: 0.5px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #000;
+}
+
+
+.baths ul{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.baths ul li{
+    list-style: none;
+    font-size: 13px;
+    font-weight: 500;
+    color: #000;
+    cursor: pointer;
+}
+
+/* ========================================
+   Deals Dropdown Menu
+   ======================================== */
+.deals{
+    background-color: var(--basic-color);
+    color: #000000;
+    position: absolute;
+    left: 21.5em;
+    right: 53.7em;
+    top: 11.2em;
+    height: 40vh;
+    z-index: 100;
+    box-shadow: 2px 2px 9px 0 rgb(218, 216, 216);
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+    align-items: center;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(40px);
+    filter: blur(6px);
+    transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s ease, filter 0.4s ease;
+}
+
+.deal:hover .deals, .deals:hover{
+    opacity: 1;
+    visibility: visible;
+    filter: blur(0);
+    transform: translateY(0);
+}
+
+.deals p{
+    font-weight: normal;
+    font-size: 13px;
+}
+
+.deals p{
+    opacity: 0; 
+    transform: translateY(-12px);
+}
+
+
+.deal:hover .deals p, .deals:hover .deals p{
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.deals p:nth-child(1){transition-delay: 0.12s;}
+.deals p:nth-child(2){transition-delay: 0.22s;}
+.deals p:nth-child(3){transition-delay: 0.32s;}
+.deals p:nth-child(4){transition-delay: 0.42s;}
+.deals p:nth-child(4){transition-delay: 0.52s;}
+
+/* ========================================
+   Mobile Bottom Navigation Icons
+   ======================================== */
+.down-icons {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 8vh;
+    background-color: var(--basic-color);
+    display: none;
+    justify-content: space-around; 
+    align-items: center;           
+    box-shadow: 0 -4px 15px rgba(0,0,0,0.15); 
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    z-index: 1000;
+}
+
+.down-icons span {
+    flex: 1;                       
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.down-icons span i {
+    font-size: 28px;
+    color: #555;                     
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+/* Hover effect */
+.down-icons span:hover i {
+    color: var(--icons-color);       
+    transform: translateY(-5px) scale(1.2); 
+}
+
+.down-icons span.active i {
+    color: var(--icons-color);
+    transform: scale(1.3);
+}
+
+/* ========================================
+   Hero Slider Section
+   ======================================== */
+.sliders {
+  width: 100%;
+  height: 50vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 80%;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 3rem;
+  font-weight: bold;
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out;
+}
+
+.slide.active {
+  opacity: 1;
+}
+
+/* Background Images */
+.slide1 {
+  background-image: url(../IMAGES/skincare1.jpg);
+}
+
+.slide2 {
+  background-image: url(../IMAGES/skincare2.jpg);
+}
+
+.slide3 {
+  background-image: url(../IMAGES/skincare3.jpg);
+}
+
+.slide4{
+    background-image: url(../IMAGES/lovely-dark-skinned-model-with-crisp-hair-applies-pink-hydrogel-patches-eyes-removing-bags-puffiness-after-sleepless-night-has-cheerful-expression-dressed-casually.jpg);
+}
+
+.slide5{
+    background-image: url(../IMAGES/close-up-man-using-eye-patches.jpg);
+}
+
+.slide-text {
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(8px);
+  padding: 40px;
+  border-radius: 15px;
+  width: 35vw;
+  height: 52vh;
+  color: #000;
+  position: relative;
+  left: 380px;
+  box-shadow: 2px 2px 4px rgb(177, 176, 176);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.slide-text h1{
+    font-size: 60px;
+    letter-spacing: 1px;
+    font-weight: normal;
+}
+
+.slide2 h1{
+    font-size: 50px;
+}
+.slide3 h1{
+    font-size: 43px;
+}
+
+.slide-text p{
+    font-size: 17px;
+    font-weight: normal;
+}
+
+.slide-text button{
+    background-color: var(--icons-color);
+    padding: 15px;
+    width: 150px;
+    border-radius: 10px;
+    border: none;
+    font-size: 17px;
+    color: #ffffff;
+}
+
+.slide-text button:hover{
+    background-color: var(--primary-color);
+    transition: all 0.3 ease-in-out;
+}
+
+/* ========================================
+   Brand Logos Carousel
+   ======================================== */
+.images {
+  width: 100%;
+  overflow: hidden;
+  border: 3px solid black;
+  position: relative;
+  top: 35em;
+}
+
+.track {
+  display: flex;
+  flex-direction: row;
+  gap: 25px;
+  width: 100%;
+}
+
+.track img {
+  width: 150px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+/* ========================================
+   Mobile Navigation Menu
+   ======================================== */
+.navbar{
+  display: none;
+}
+
+/* ========================================
+   Three Images Promo Section
+   ======================================== */
+.threeimages {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    padding: 40px 20px;
+    margin-top: 38em;
+}
+.threeimages-text h1 {
+    margin-bottom: 40px;
+    font-size: 2.5rem;
+    font-weight: normal;
+    font-family: sans-serif;
+}
+
+.threeimages-img {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.threeimages-img > div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.threeimages-img div:nth-child(2) img{
+    position: relative;
+    top: 45px;
+}
+
+.threeimages-img img {
+    width: 80%;              
+    height: auto;
+    border-radius: 10px;
+}
+
+.threeimages-img div p{
+    font-size: 21px;
+    text-align: center;
+    padding-bottom: 10px;
+    padding-top: 7px;
+}
+
+.threeimages-img div a{
+    font-size: 15px;
+    color: #000;
+    transform: translateY(-5px) scale(1.2); 
+}
+.threeimages-img div a:hover{
+    color: var(--icons-color);
+    transform: scale(1.3);
+}
+
+/* ========================================
+   New Arrivals Section
+   ======================================== */
+.new-arrivals{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 83%;
+    height: auto;
+    min-height: 65vh;
+    border-radius: 10px;
+    background-color: #ffffff;
+    margin: 40px 100px 10px 70px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.view-all{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+}
+
+.view-all h1 {
+    font-size: 28px;
+    color: #333;
+    margin: 0;
+}
+
+.view-all a {
+    text-decoration: none;
+    color: #666;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    padding: 8px 16px;
+    border-radius: 20px;
+    background-color: #f5f5f5;
+}
+
+.view-all a:hover {
+    color: #000;
+    background-color: #e8e8e8;
+}
+
+.new-arrivals2{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    border: 1px solid rgb(218, 212, 212);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 0 20px 20px 20px;
+}
+
+.new-arrivals2 > div{
+    display: flex;
+    flex-direction: column;
+    padding: 20px 15px;
+    border-right: 1px solid rgb(218, 212, 212);
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fff;
+}
+
+.new-arrivals2 > div:last-child {
+    border-right: none;
+}
+
+.new-arrivals2 > div:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    z-index: 1;
+}
+
+/* Heart icon styling */
+.new-arrivals2 .bx-heart {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 24px;
+    color: #999;
+    transition: color 0.3s ease;
+    z-index: 2;
+}
+
+.new-arrivals2 .bx-heart:hover {
+    color: var(--icons-color);
+}
+
+.new-arrivals2 img{
+    width: 80%;
+    height: auto;
+    margin: 20px auto;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.new-arrivals2 > div:hover img {
+    transform: scale(1.05);
+}
+
+/* Product info styling */
+.new-arrivals2 > div > div {
+    text-align: left;
+    width: 100%;
+    margin-top: auto;
+}
+
+.new-arrivals2 p {
+    color: #888;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 0 8px 0;
+}
+
+.new-arrivals2 h3{
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 12px 0;
+    line-height: 1.4;
+    min-height: 60px;
+}
+
+.new-arrivals2 h1{
+    font-size: 18px;
+    font-weight: 700;
+    color: #2a2a2a;
+    margin: 0;
+}
+
+/* Add to Cart button styling */
+.add-to-cart {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: var(--icons-color);
+    color: white;
+    text-align: center;
+    padding: 12px 0;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0;
+    transition: bottom 0.3s ease, opacity 0.3s ease;
+    cursor: pointer;
+    border: none;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    z-index: 3;
+}
+
+.new-arrivals2 > div {
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 0;
+}
+
+.new-arrivals2 > div:hover .add-to-cart {
+    bottom: 0;
+    opacity: 1;
+}
+
+.add-to-cart:hover {
+    background: var(--primary-color);
+}
+
+.add-to-cart:active {
+    transform: scale(0.98);
+}
+
+/* Alternative styling for Add to Cart button */
+.add-to-cart-alt {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 25px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 15px;
+    width: 100%;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+.new-arrivals2 > div:hover .add-to-cart-alt {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.add-to-cart-alt:hover {
+    background: #45a049;
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+}
+
+/* Fix for duplicate image (Baby Dove appears twice) */
+.new-arrivals2 > div:nth-child(4) p {
+    color: #e67e22;
+}
+
+.new-arrivals2 > div:nth-child(5) p {
+    color: #3498db;
+}
+
+/* ========================================
+   Shop By Category Section
+   ======================================== */
+.shop-by-category{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 5em;
+    background-color: var(--secondary-color);
+    margin-top: 40px;
+    padding-top: 30px;
+}
+
+.shop1{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+}
+
+.shop1 h1{
+    font-size: 45px;
+    font-weight: normal;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+.shop1 h3{
+    font-size: 30px;
+    font-weight: normal;
+    font-family: 'Playfair Display', serif;
+}
+
+.shop1 p{
+    line-height: 2;
+}
+
+.shop2{
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.shop2 div img{
+    width: 60%;
+    height: auto;
+    border-radius: 50%;
+}
+
+.shop2 div:nth-child(3) img{
+    width: 55%;
+}
+
+/* ========================================
+   Four Images Promo Section
+   ======================================== */
+.fourimages{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    margin-top: 60px;
+}
+
+.fourimages-div{
+    height: 73vh;
+    width: 20%;
+    border-radius: 20px;
+    align-items: center;
+    justify-content: end;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    color: var(--basic-color);
+    padding-bottom: 20px;
+    transition: all 0.6s ease-out;
+}
+
+/* Animated state */
+.fourimages-div.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.fourimages-div h1{
+    font-size: 40px;
+    font-weight: normal;
+    font-family: 'Playfair Display', serif;
+    line-height: 1.1;
+}
+.fourimages-div p{
+    font-weight: normal;
+    font-size: 17px;
+    font-family: 'Playfair Display', serif;
+    line-height: 1.1;
+}
+.fourimages-div button{
+    padding: 13px 30px;
+    border-radius: 20px;
+    border: none;
+    background-color: var(--basic-color);
+    color: #000;
+    font-size: 15px;
+}
+
+.fourimages-div button:hover{
+    background-color: var(--icons-color);
+    transition: all 0.3 ease-in-out;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.fourimages-div:nth-child(1){
+    background: 
+    linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
+    url("../IMAGES/3rdimg4.jpg");
+    background-size: cover;
+}
+.fourimages-div:nth-child(2){
+    background: 
+    linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
+    url("../IMAGES/3rdimg.jpg");
+    background-size: cover;
+}
+.fourimages-div:nth-child(3){
+    background: 
+    linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
+    url("../IMAGES/3rdimg2.jpg");
+    background-size: cover;
+}
+.fourimages-div:nth-child(4){
+    background: 
+    linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
+    url("../IMAGES/3rdim3.jpg");
+    background-size: cover;
+}
+
+/* ========================================
+   Footer Section
+   ======================================== */
+footer{
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+    background-image: url(../IMAGES/pink-flowers-blue-leaves.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+}
+
+.footer1{
+    display: flex;
+    width: 100%;
+    gap: 15em;
+    align-items: center;
+    padding: 20px;
+    margin-bottom: 40px;
+}
+
+.cottage-cosmetics{
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    gap: 10px;
+}
+
+.cottage-cosmetics p{
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.numbers-links{
+    display: flex;
+    width: 65%;
+    gap: 6rem;
+    padding-top: 30px;
+}
+
+.numbers-links div {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.numbers-links div ul{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    list-style: none;
+}
+
+.numbers-links div ul li a{
+    font-size: 14px;
+    text-decoration: none;
+    color: #000;
+}
+.numbers-links div ul li a:hover{
+    text-decoration: underline;
+}
+
+.footer2{
+    display: flex;
+    justify-content: space-between;
+    height: 7vh;
+    padding: 30px;
+    padding-top: 10px;
+}
+
+.footer2 p{
+    font-size: 13px;
+}
+
+.footer2 ul{
+    display: flex;
+    list-style: none;
+    gap: 10px;
+}
+
+.footer2 ul li a{
+    font-size: 13px;
+    text-decoration: none;
+    color: #000;
+}
+.footer2 ul li a:hover{
+    text-decoration: underline;
+    color: gray;
+}
+.footer2 ul li a{
+    font-size: 13px;
+    text-decoration: none;
+    color: #000;
+}
+
+.footer2 ul li span{
+    color: #8424e3;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.footer2 ul li:last-child a{
+    text-decoration: underline;
+}
+
+/* ========================================
+   Responsive Design - Mobile (max-width: 768px)
+   ======================================== */
+@media(max-width: 768px){
+body{
+    overflow-x: hidden;
+}
+
+.faq{
+    display: none;
+}
+
+.nav2{
+    height: 10vh;
+    border-bottom: 2px solid var(--primary-color);
+    margin-top: 0;
+}
+
+.brand-img img{
+    width: 130px;
+    position: relative;
+    left: 50px;
+}
+
+.brand-search{
+    display: none;
+}
+
+.user-cart span:first-child,
+.user-cart span:nth-child(2),
+.user-cart span:nth-child(3){
+    display: none;
+}
+
+.user-cart span:last-child {
+    position: relative;
+    left: 30px;
+    display: inline-block;
+}
+
+.bx-cart-alt{
+    margin-top:26px;
+    position: relative;
+}
+
+.cart-count {
+    position: absolute;
+    top: -30px;
+    right: -8px;
+    background: var(--icons-color);
+    color: white;
+    font-size: 12px !important;
+    font-weight: bold;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    text-align: center !important ;
+    z-index: 10;
+    display: flex !important;
+    align-items: center;
+}
+
+/* NAVBAR */
+.navbar{
+    display: flex;
+}
+#menu-icon {
+    display: block;
+    position: absolute;
+    left: 1em;
+    top: 15px;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.nav-links {
+    position: fixed;
+    top: 0;
+    background: white;
+    width: 330px;
+    height: 100%;
+    flex-direction: column;
+    transform: translateX(-100%);
+    transition: transform 0.7s ease-in-out;
+    padding-top: 0;
+    z-index: 100;
+    display: flex;
+    gap: 40px; 
+    border-top: 1px solid rgb(243, 239, 239);
+}
+
+.close-icon {
+    position: absolute;
+    top: 25px;
+    right: 20px;
+    font-size: 35px;
+    cursor: pointer;
+    font-weight: lighter;
+    transition: color 0.3 ease;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+.close-icon:hover{
+    color: var(--icons-color);
+    animation: spin 1s linear infinite;
+}
+
+.nav-links-img img{
+    width: 130px;
+    cursor: pointer;
+  }
+.nav-links-img{
+    border-bottom: 1px solid rgb(243, 239, 239);
+    height: 12vh;
+  }
+
+.nav-links.active {
+    transform: translateX(0);
+  }
+
+.nav-links-text{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    font-weight: normal;
+}
+  
+.nav-links-text ul{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    list-style: none;
+  }
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    backdrop-filter: blur(5px);
+    background: rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s ease;
+    z-index: 90;
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.nav3{
+    display: none;
+}
+
+.down-icons{
+    display: flex;
+}
+
+/* SLIDES */
+  .slider {
+    height: 80vh;
+}
+
+  .slide {
+    background-size: cover; 
+    background-position: center center;
+}
+
+.slide-text {
+    max-width: 90%;
+    padding: 20px;
+    border-radius: 15px;
+    left: 0;
+    top: 2.8em;
+    width: 100vw;
+    height: 35vh;
+    align-items: center;
+    text-align: center;
+    gap: 23px;
+}
+
+.slide-text h1 {
+    font-size: 2rem;
+  }
+
+.slide-text p {
+    font-size: 1.1rem;
+  }
+
+.slide-text button {
+    font-size: 0.9rem;
+    padding: 15px;
+    font-size: 19px;
+}
+
+/* THREEIMAGES */
+.threeimages{
+    margin-top: 5em;
+}
+
+.threeimages-img{
+    flex-direction: column;
+    gap: 30px;
+}
+
+.threeimages-text h1{
+    font-size: 30px;
+}
+
+.threeimages-img img{
+    width: 100%;
+}
+
+.threeimages-img div:nth-child(2){
+    margin-bottom: 50px;
+    border-top: 1px solid rgb(196, 195, 195);
+    padding: 0;
+}
+
+.threeimages-img div:nth-child(2) p{
+    position: relative;
+    top: 35px;
+}
+.threeimages-img div:nth-child(2) a{
+    position: relative;
+    top: 35px;
+}
+
+/* FOURIMAGES */
+.fourimages{
+    flex-direction: column;
+}
+
+.fourimages-div{
+    width: 90%;
+    height: 50vh;
+}
+
+/* SHOP BY CATEGORY */
+.shop-by-category{
+    padding: 30px;
+}
+
+.shop1 h1{
+    font-size: 35px;
+}
+
+.shop2{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 50px;
+}
+
+.shop2 div img{
+    width: 75%;
+}
+
+.shop2 div:nth-child(3) img{
+    width: 70%;
+}
+
+/* FOOTER */
+footer{
+    background-position: bottom;
+    margin-bottom: 100px;
+}
+.footer1{
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+}
+
+.cottage-cosmetics{
+    width: 100%;
+}
+
+.numbers-links{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4rem;
+    column-gap: 2rem;
+}
+
+.footer2{
+    flex-direction: column-reverse;
+    height: 15vh;
+    padding-top: 40px;
+    align-items: center;
+}
+
+.footer2 p{
+    margin-top: 20px;
+}
+
+/* BRANDIMAGES */
+.images{
+    top: 2em;
+}
+}

@@ -1,0 +1,113 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Cottage</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Page</h1>
+        
+        <!-- Add Product Form -->
+        <div class="form-container">
+            <h2>Add New Product</h2>
+            <form id="productForm">
+                <div class="form-group">
+                    <label for="imageUrl">Product Image URL</label>
+                    <input id="imageUrl" type="url" placeholder="https://example.com/image.jpg" required>
+                    <small>Direct link to product image</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="productName">Product Name</label>
+                    <input id="productName" type="text" placeholder="Enter product name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="price">Price (₦)</label>
+                    <input id="price" type="number" step="0.01" placeholder="0.00" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" placeholder="Enter product description" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" required>
+                        <option value="bath">Bath & Body</option>
+                        <option value="body1">Body Lotion</option>
+                        <option value="face">Face</option>
+                        <option value="faceMask">Face Mask</option>
+                        <option value="faceWash">Face Wash</option>
+                        <option value="baby">Baby Skin</option>
+                        <option value="babyLotion">Baby Lotion</option>
+                        <option value="babyWash">Baby Wash</option>
+                        <option value="babyOil">Baby Oil</option>
+                        <option value="babyPowder">Baby Powder</option>
+                        <option value="cream">Cream</option>
+                        <option value="serum">Serum</option>
+                        <option value="skincare">Skin Care</option>
+                        <option value="sunScreen">Sun Screen</option>
+                        <option value="scrubs">Scrubs</option>
+                    </select>
+                </div>
+                
+                <button type="submit" id="addProduct">Add Product</button>
+            </form>
+        </div>
+
+        <!-- Products List -->
+        <h2>Products</h2>
+        <div id="productsList" class="products-grid"></div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2>Edit Product</h2>
+            <form id="editForm">
+                <div class="form-group">
+                    <label for="editImage">Product Image URL</label>
+                    <input id="editImage" type="url" placeholder="https://example.com/image.jpg">
+                    <small>Leave empty to keep current image</small>
+                </div>
+    
+                <div class="form-group">
+                    <label for="editProductName">Product Name</label>
+                    <input id="editProductName" type="text" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editPrice">Price (₦)</label>
+                    <input id="editPrice" type="number" step="0.01" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editDescription">Description</label>
+                    <textarea id="editDescription" required></textarea>
+                </div>
+
+                <!-- FIXED: Category dropdown will be populated by JavaScript -->
+                <div class="form-group">
+                    <label for="editCategory">Category</label>
+                    <select id="editCategory" required>
+                        <!-- Options will be added by JavaScript -->
+                    </select>
+                </div>
+    
+                <button type="submit" class="update-btn">Update Product</button>
+                <button type="button" class="cancel-btn" onclick="closeModal()">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal (Will be created by JavaScript) -->
+    <!-- The delete modal is now created dynamically in admin.js -->
+
+    <script type="module" src="admin.js"></script>
+</body>
+</html>

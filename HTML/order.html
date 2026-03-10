@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders - Cottage Cosmetics</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="../CSS/style.css">
+    <style>
+        :root{
+            --primary-color: #5d1bb3;
+            --icons-color: #8424e3;
+            --secondary-color: #ffe6f4;
+            --basic-color: #ffffff;
+            --text-color: #333;
+            --border-radius: 5px;
+            --transition-duration: 0.3s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            /* background: linear-gradient(135deg, var(--secondary-color) 0%, #ffd6e9 100%); */
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Header Styles */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .page-header h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--icons-color));
+            border-radius: 2px;
+        }
+
+        .order-stats {
+            display: flex;
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: var(--basic-color);
+            padding: 15px 25px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 15px rgba(93, 27, 179, 0.1);
+            text-align: center;
+            transition: transform var(--transition-duration) ease;
+            border: 1px solid rgba(93, 27, 179, 0.1);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(93, 27, 179, 0.2);
+        }
+
+        .stat-card .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .stat-card .stat-label {
+            color: var(--icons-color);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Table Container */
+        .recent-orders {
+            background: var(--basic-color);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(93, 27, 179, 0.1);
+            overflow-x: auto;
+            border: 1px solid rgba(93, 27, 179, 0.1);
+        }
+
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        .orders-table thead tr {
+            background: linear-gradient(135deg, var(--secondary-color), #ffd6e9);
+            border-radius: var(--border-radius);
+        }
+
+        .orders-table th {
+            padding: 18px 15px;
+            text-align: left;
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .orders-table th:first-child {
+            border-radius: var(--border-radius) 0 0 var(--border-radius);
+        }
+
+        .orders-table th:last-child {
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        .orders-table td {
+            padding: 20px 15px;
+            border-bottom: 1px solid rgba(93, 27, 179, 0.1);
+            color: var(--text-color);
+            transition: background var(--transition-duration) ease;
+        }
+
+        .orders-table tbody tr {
+            transition: all var(--transition-duration) ease;
+        }
+
+        .orders-table tbody tr:hover {
+            background: var(--secondary-color);
+            transform: scale(1.01);
+            box-shadow: 0 4px 15px rgba(93, 27, 179, 0.1);
+        }
+
+        /* Order ID Style */
+        .order-id {
+            font-weight: 600;
+            color: var(--basic-color);
+            background: var(--primary-color);
+            padding: 6px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 0.9rem;
+            border: 1px solid var(--icons-color);
+        }
+
+        /* Status Badge Styles */
+        .status-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+            text-align: center;
+            min-width: 100px;
+            letter-spacing: 0.3px;
+            box-shadow: 0 2px 5px rgba(93, 27, 179, 0.1);
+        }
+
+        .status-badge.delivered {
+            background: linear-gradient(135deg, #e8d5ff, #d4b3ff);
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+
+        .status-badge.processing {
+            background: linear-gradient(135deg, var(--secondary-color), #ffd6e9);
+            color: var(--primary-color);
+            border: 1px solid var(--icons-color);
+        }
+
+        .status-badge.pending {
+            background: linear-gradient(135deg, #e0d0ff, #c4a8ff);
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+
+        .status-badge.cancelled {
+            background: linear-gradient(135deg, #ffd6d6, #ffb3b3);
+            color: #b31b1b;
+            border: 1px solid #b31b1b;
+        }
+
+        /* Price Style */
+        .order-price {
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+
+        /* Action Button */
+        .view-btn {
+            color: var(--basic-color);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: var(--border-radius);
+            background: linear-gradient(135deg, var(--primary-color), var(--icons-color));
+            border: none;
+            transition: all var(--transition-duration) ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 10px rgba(93, 27, 179, 0.2);
+        }
+
+        .view-btn:hover {
+            background: linear-gradient(135deg, var(--icons-color), var(--primary-color));
+            transform: translateX(5px);
+            box-shadow: 0 6px 15px rgba(93, 27, 179, 0.3);
+        }
+
+        .view-btn i {
+            font-size: 1.1rem;
+            transition: transform var(--transition-duration) ease;
+            color: var(--basic-color);
+        }
+
+        .view-btn:hover i {
+            transform: translateX(3px);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px !important;
+        }
+
+        .empty-state-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .empty-state i {
+            font-size: 5rem;
+            color: var(--icons-color);
+        }
+
+        .empty-state p {
+            font-size: 1.2rem;
+            color: var(--text-color);
+        }
+
+        .shop-now-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--icons-color));
+            color: var(--basic-color);
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all var(--transition-duration) ease;
+            display: inline-block;
+            border: none;
+            box-shadow: 0 4px 15px rgba(93, 27, 179, 0.3);
+        }
+
+        .shop-now-btn:hover {
+            background: linear-gradient(135deg, var(--icons-color), var(--primary-color));
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(93, 27, 179, 0.4);
+        }
+
+        /* Loading Skeleton */
+        .loading-skeleton {
+            text-align: center;
+            padding: 40px !important;
+        }
+
+        .skeleton-loader {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--secondary-color);
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Calendar Icon Color */
+        .bx-calendar {
+            color: var(--icons-color) !important;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .page-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .page-header h1::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .order-stats {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .stat-card {
+                flex: 1;
+            }
+
+            .orders-table td {
+                padding: 15px 10px;
+            }
+
+            .status-badge {
+                min-width: 80px;
+                padding: 6px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="faq">
+            <ul class="list">
+                <li><a href="#">FAQ</a></li>
+                <li><a href="shop.html?category=bath">Bath & Body</a></li>
+                <li><a href="#">Become a Distributor</a></li>
+                <li><a href="#">Contact Helpdesk</a></li>
+                <li><a href="#">Support Center</a></li>
+            </ul>
+        </nav>
+
+        <nav class="navbar">
+            <div class="nav-links">
+
+                <div class="close-icon">&times;</div>
+
+                <div class="nav-links-img">
+                    <img class="brandName" src="../IMAGES/brand name.svg" alt="">
+                </div>
+
+                <div class="nav-links-text">
+                    <h4>MAIN MENU</h4>
+                    <ul>
+                        <li onclick="window.location.href = './brand-images.html'">Brands</li>
+                        <li onclick="window.location.href='../SHOP_FOLDER/shop.html?category=bath'">Bath & Body</li>
+                        <li onclick="window.location.href='../SHOP_FOLDER/shop.html?category=serum'">Serum</li>
+                        <li onclick="window.location.href = '../SHOP_FOLDER/shop.html?category=baby'">Baby Skin</li>
+                        <li><a href="../SHOP_FOLDER/shop.html">Shop all</a></li>
+                    </ul>
+                </div>
+
+                <p>@ 2026 Cottage Cosmetics / All Rights Reserved</p>
+            </div>
+
+            <div class="overlay"></div> 
+
+            <i class='bx bx-menu' id="menu-icon"></i>
+        </nav>
+
+        <nav class="nav2">
+            <div class="brand-img">
+                <img class="brandName" src="../IMAGES/brand name.svg" alt="">
+            </div>
+
+            <div class="brand-search">
+                <div class="search-wrapper">
+                    <input type="text" id="name" placeholder="Search products..." autocomplete="off">
+                    <button type="button" class="clear-btn" title="Clear">×</button>
+                </div>
+                <button type="submit" class="search-btn">
+                    <i class="bx bx-search"></i>
+                </button>
+                <!-- suggestions will be added here by JS -->
+            </div>
+
+            <div class="user-cart">
+                <span class="accountIcon"><i class='bx bx-user-circle'></i></span>
+                <span class="accountIcon">Sign in <span>Account</span></span>
+                 <span><i class='bx bx-heart' ></i></span>
+                <span id="addToCart" class="cart-icon"><i class='bx bx-cart-alt' ></i>
+                    <span id="cartCount" class="cart-count">0</span>
+                </span>          
+            </div>
+        </nav>
+
+        <nav class ="nav3">
+            <ul class="navbar-list">
+                <li class="brand" onclick="window.location.href = './brand-images.html'">Brands
+                    <div class="brands">
+                        <div class="brandss">
+                            <h2></h2>
+                            <ul>
+                                <li>CeraVe</li>
+                                <li>Zaron</li>
+                                <li>Dior</li>
+                                <li>RevLon</li>
+                                <li>Maybelline</li>
+                                <li>Sukin</li>
+                                <li>Dr. Teal's</li>
+                                <li>Nutrogena</li>
+                                <li>Cetaphil</li>
+                                <li>Simple</li>
+                                <li>MAC</li>
+                                <li>SheaMoisture</li>
+                                <li>NARS</li>
+                                <li>e.i.f</li>
+                                <li>Huda Beauty</li>
+                            </ul>
+                            <a href="#">View all</a>
+                        </div>
+                        <div>
+                            <img src="../IMAGES/image.png" alt="Nivea Body Milk">
+                            <img src="../IMAGES/image.png" alt="Nivea Body Milk">
+                        </div>
+                    </div>
+                </li>
+
+                <li class="bath" onclick="window.location.href = '../SHOP_FOLDER/shop.html?category=bath'">Bath & Body
+                    <div class="baths">
+                        <div class="baths1">
+                            <h2>Bath & Body</h2>
+                            <ul>
+                                <li>Acne treatment</li>
+                                <li>Bath Socks and Bubble bath</li>
+                                <li>Beauty Supplements</li>
+                                <li>Body oils</li>
+                                <li>Body wash</li>
+                                <li>Moisturizers and lotion</li>
+                                <li>Essential oils</li>
+                                <li>Feet care</li>
+                                <li>Scrubs and Exfoliatants</li>
+                                <li></li>
+                            </ul>
+                        </div>
+
+                        
+                        <div class="baths1">
+                            <h2>Specific Concerns</h2>
+                            <ul>
+                                <li>Acne, Pimples and Blackheads</li>
+                                <li>Sensitive Skin</li>
+                                <li>Anti-aging</li>
+                                <li>Normal and Combination skin</li>
+                                <li>Dark Spots & hyperpigmentation</li>
+                                <li>dry Skin / Hydration</li>
+                                <li>Dull Skin</li>
+                                <li>Oily Skin</li>
+                            </ul>
+                        </div>
+
+                        <div class="baths1">
+                            <ul>
+                                <h2>Hand Care</h2>
+                                <li>Hand creams and masks</li>
+                            </ul>
+
+                            <ul>
+                                <h2>Feet Care</h2>
+                                <li>Foot creams and Exfoliatants</li>
+                            </ul>
+
+                            <ul>
+                                <h2>Oral Care</h2>
+                                <li>Tooth brushes and tooth pastes</li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+
+                <li>Serum</li>
+
+                <li class="deal">Deals
+                    <div class="deals">
+                        <p>Under 5k</p>
+                        <p>Best Sellers</p>
+                        <p>On Sale</p>
+                        <p>Back in Stock</p>
+                        <p>Gift Cards</p>
+                    </div>
+                </li>
+
+                <li>Bundle</li>
+
+                <li onclick="window.location.href = '../SHOP_FOLDER/shop.html'">Shop all</li>
+            </ul>
+        </nav>
+    </header>
+
+
+    <div class="container">
+        <div class="page-header">
+            <h1>My Orders</h1>
+            <div class="order-stats" id="orderStats">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalOrders">0</div>
+                    <div class="stat-label">Total Orders</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="deliveredOrders">0</div>
+                    <div class="stat-label">Delivered</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="recent-orders">
+            <table class="orders-table" id="allOrdersTable">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Date</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="ordersTableBody">
+                    <tr>
+                        <td colspan="5" class="loading-skeleton">
+                            <div class="skeleton-loader"></div>
+                            <div style="color: var(--primary-color);">Loading your orders...</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyB4Hy_sEEH1twq0GDzKi5E1CZD5dVHn4Kk",
+            authDomain: "cottage-9fa0c.firebaseapp.com",
+            projectId: "cottage-9fa0c",
+            storageBucket: "cottage-9fa0c.firebasestorage.app",
+            messagingSenderId: "346971937714",
+            appId: "1:346971937714:web:0f453c14862de16bede2ab"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                await loadAllOrders(user.uid);
+            } else {
+                window.location.href = '../HTML/account.html';
+            }
+        });
+        
+        async function loadAllOrders(userId) {
+            try {
+                const ordersRef = collection(db, "orders");
+                const querySnapshot = await getDocs(ordersRef);
+                
+                const tableBody = document.getElementById('ordersTableBody');
+                
+                // Filter orders for this user
+                const userOrders = [];
+                querySnapshot.forEach(doc => {
+                    const order = doc.data();
+                    const orderUserId = order.userId || order.userTd || order.id || order.user_id || order.uid;
+                    
+                    if (orderUserId === userId) {
+                        userOrders.push({
+                            id: doc.id,
+                            ...order
+                        });
+                    }
+                });
+                
+                // Update stats
+                document.getElementById('totalOrders').textContent = userOrders.length;
+                document.getElementById('deliveredOrders').textContent = 
+                    userOrders.filter(o => o.status === 'paid' || o.paymentStatus === 'success').length;
+                
+                if (userOrders.length === 0) {
+                    tableBody.innerHTML = `
+                        <tr>
+                            <td colspan="5" class="empty-state">
+                                <div class="empty-state-content">
+                                    <i class='bx bx-package'></i>
+                                    <p>No orders found</p>
+                                    <a href="shop.html" class="shop-now-btn">Start Shopping</a>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+                
+                // Sort by date
+                userOrders.sort((a, b) => {
+                    const dateA = a.createdAt || a.orderDate || 0;
+                    const dateB = b.createdAt || b.orderDate || 0;
+                    return new Date(dateB) - new Date(dateA);
+                });
+                
+                let html = '';
+                userOrders.forEach(order => {
+                    // Format date
+                    let date = 'N/A';
+                    const dateField = order.createdAt || order.orderDate || order.createdat;
+                    if (dateField) {
+                        try {
+                            const dateObj = dateField.toDate ? dateField.toDate() : new Date(dateField);
+                            date = dateObj.toLocaleDateString('en-US', {
+                                year: 'numeric',
+                                month: 'short',
+                                day: 'numeric'
+                            });
+                        } catch (e) {}
+                    }
+                    
+                    // Determine status
+                    let statusClass = 'processing';
+                    let statusText = 'Processing';
+                    const orderStatus = order.status || order.paymentStatus;
+                    
+                    if (orderStatus === 'paid' || orderStatus === 'success' || orderStatus === 'delivered') {
+                        statusClass = 'delivered';
+                        statusText = 'Delivered';
+                    } else if (orderStatus === 'pending') {
+                        statusClass = 'pending';
+                        statusText = 'Pending';
+                    } else if (orderStatus === 'failed' || orderStatus === 'cancelled') {
+                        statusClass = 'cancelled';
+                        statusText = 'Failed';
+                    }
+                    
+                    // Calculate total
+                    let total = order.total || 0;
+                    if (!total && order.items) {
+                        total = order.items.reduce((sum, item) => {
+                            return sum + ((item.price || 0) * (item.quantity || 1));
+                        }, 0);
+                    }
+                    
+                    html += `
+                        <tr>
+                            <td><span class="order-id">#${(order.orderNumber || order.id).toString().substring(0, 8)}</span></td>
+                            <td><i class='bx bx-calendar'></i> ${date}</td>
+                            <td><span class="order-price">₦${Number(total).toLocaleString()}</span></td>
+                            <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                            <td>
+                                <a href="order-details.html?id=${order.id}" class="view-btn">
+                                    View <i class='bx bx-right-arrow-alt'></i>
+                                </a>
+                            </td>
+                        </tr>
+                    `;
+                });
+                
+                tableBody.innerHTML = html;
+                
+            } catch (error) {
+                console.error("Error:", error);
+                document.getElementById('ordersTableBody').innerHTML = `
+                    <tr>
+                        <td colspan="5" class="empty-state">
+                            <div class="empty-state-content">
+                                <i class='bx bx-error-circle'></i>
+                                <p>Error loading orders. Please refresh.</p>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+    </script>
+    <script src="../JS/script.js"></script>
+</body>
+</html>/
