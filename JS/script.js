@@ -87,7 +87,7 @@ const accountIcons = document.querySelectorAll('.accountIcon');
 
 accountIcons.forEach(icon => {
     icon.addEventListener('click', () => {
-        window.location.href = "account.html";
+        window.location.href = "../HTML/account.html";
     });
 });
 
@@ -106,17 +106,17 @@ const beautyBrands = document.querySelectorAll('.beautyBrands');
 
 beautyBrands.forEach(icons => {
     icons.addEventListener('click', ()=>{
-        window.location.href = 'brand-images.html';
+        window.location.href = '../HTML/brand-images.html';
     });
 });
 
 // 8. Cart icon click - redirect to cart page
-const addToCart = document.getElementById('addToCart');
-if (addToCart) {
-    addToCart.addEventListener('click', ()=>{
-        window.location.href = '../SHOP_FOLDER/cart.html';
-    });
-}
+// const addToCart = document.getElementById('addToCart');
+// if (addToCart) {
+//     addToCart.addEventListener('click', ()=>{
+//         window.location.href = '../SHOP_FOLDER/cart.html';
+//     });
+// }
 
 // 9. FIXED: Update cart count function
 function updateCartCount() {
@@ -384,7 +384,7 @@ class ShoppingCart {
         }, 5000);
     }
 
-    renderCartPage() {
+ renderCartPage() {
     const cartContainer = document.querySelector('.cart-items');
     if (!cartContainer) return;
 
@@ -399,8 +399,8 @@ class ShoppingCart {
     this.cart.forEach((item, index) => {
         console.log(`Item ${index}:`, item); // DEBUG each item
         
-        // Use a reliable placeholder
-        const imageSrc = item.image || 'https://via.placeholder.com/100x100?text=Product';
+        // FIXED: Try both image and imageUrl properties
+        const imageSrc = item.imageUrl || item.image || 'https://via.placeholder.com/100x100?text=Product';
         
         html += `
             <div class="cart-item" data-id="${item.id}" style="display: flex; align-items: center; gap: 20px; padding: 20px; border-bottom: 1px solid #eee;">
@@ -413,7 +413,7 @@ class ShoppingCart {
                 <div style="flex: 1;">
                     <h3 style="margin: 0 0 5px 0;">${item.name || 'Product'}</h3>
                     <p style="margin: 0 0 5px 0; color: #666;">${item.category || ''}</p>
-                    <p style="margin: 0; font-weight: bold;">${item.priceDisplay || '₦0'}</p>
+                    <p style="margin: 0; font-weight: bold;">₦${(item.price || 0).toLocaleString()}</p>
                 </div>
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <button onclick="cart.updateQuantity('${item.id}', ${item.quantity - 1})" style="width: 30px; height: 30px; border: 1px solid #ddd; background: white; cursor: pointer;">-</button>
@@ -421,7 +421,7 @@ class ShoppingCart {
                     <button onclick="cart.updateQuantity('${item.id}', ${item.quantity + 1})" style="width: 30px; height: 30px; border: 1px solid #ddd; background: white; cursor: pointer;">+</button>
                 </div>
                 <div style="min-width: 100px; text-align: right; font-weight: bold;">
-                    ₦${(item.price * item.quantity).toLocaleString()}
+                    ₦${((item.price || 0) * (item.quantity || 1)).toLocaleString()}
                 </div>
                 <button onclick="cart.removeItem('${item.id}')" style="background: none; border: none; cursor: pointer; color: #ff4444;">
                     <i class='bx bx-trash' style="font-size: 20px;"></i>
@@ -434,12 +434,17 @@ class ShoppingCart {
     
     // Update cart summary
     this.updateCartSummary();
+    
+    // Add image load listeners
+    this.addImageLoadListeners();
 }
 
 addImageLoadListeners() {
     document.querySelectorAll('.cart-item img').forEach(img => {
         // Add loading animation
-        const container = img.closest('.item-image-container');
+        const container = img.closest('div[style*="width: 100px"]'); // Find the image container div
+        if (!container) return;
+        
         const loader = document.createElement('div');
         loader.className = 'image-spinner';
         loader.style.cssText = `
@@ -455,13 +460,19 @@ addImageLoadListeners() {
             animation: spin 1s linear infinite;
         `;
         
+        // Make container relative for absolute positioning
+        container.style.position = 'relative';
         container.appendChild(loader);
         
         // Hide loader when image loads
-        img.onload = () => loader.remove();
+        img.onload = () => {
+            if (loader.parentNode) loader.remove();
+        };
+        
         img.onerror = () => {
-            loader.remove();
+            if (loader.parentNode) loader.remove();
             img.src = 'https://via.placeholder.com/80x80?text=No+Image';
+            img.style.objectFit = 'contain';
         };
     });
 }
@@ -620,3 +631,4 @@ function checkout() {
     }
     window.location.href = 'checkout.html';
 }
+

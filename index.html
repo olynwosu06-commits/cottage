@@ -4,12 +4,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../CSS/style.css">
+    <link rel="stylesheet" href="../CSS/product.css">
+    <link rel="stylesheet" href="../SHOP_FOLDER/cart.css">
     <link rel="icon" href="../IMAGES/brand name.svg">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>Cottage Cosmetics</title>
 </head>
-<body>  
+<body>
+    
+        <!-- WhatsApp Floating Button + Popup -->
+    <div class="whatsapp-container">
+    <!-- Floating Button -->
+    <button id="whatsappBtn" class="whatsapp-btn" onclick="toggleWhatsApp()">
+        <i class='bx bxl-whatsapp whatsapp-icon'></i>
+        <span class="close-x">×</span>
+    </button>
+
+    <!-- Popup -->
+    <div id="whatsappPopup" class="whatsapp-popup">
+        <div class="popup-header">
+        <h3>Start a Conversation</h3>
+        <button class="close-btn" onclick="toggleWhatsApp()">×</button>
+        </div>
+        
+        <div class="popup-body">
+        <p>We respond during working hours</p>
+        
+        <div class="customer-care" onclick="openWhatsAppChat()">
+            <div class="icon-green">
+            <i class='bx bxl-whatsapp'></i>
+            </div>
+            <div class="info">
+            <strong>Customer Care</strong>
+            <span>Customer Care</span>
+            </div>
+            <i class='bx bxl-whatsapp arrow'></i>
+        </div>
+        
+        <div class="robot">
+            <i class='bx bx-bot'></i>
+        </div>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        function toggleWhatsApp() {
+            const btn = document.getElementById('whatsappBtn');
+            const popup = document.getElementById('whatsappPopup');
+            
+            btn.classList.toggle('active');
+            popup.classList.toggle('show');
+        }
+
+        function openWhatsAppChat() {
+            // ←←← CHANGE THIS TO YOUR REAL NUMBER (include country code, no + or 00)
+            const phone = "2348035140624";  // ← Replace with your WhatsApp number
+            const message = "Hello! I need help with my order on Cottage Cosmetics";
+            
+            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, "_blank");
+            toggleWhatsApp(); // close popup after click
+        }
+    </script>
+
+    
     <header>
         <nav class="faq">
             <ul class="list">
@@ -19,6 +78,26 @@
                 <li><a href="#">Contact Helpdesk</a></li>
                 <li><a href="#">Support Center</a></li>
             </ul>
+        </nav>
+
+        <nav class="faqs">
+            <div class="ticker-wrap">
+                <div class="ticker">
+                    <ul class="ticker__list">
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="shop.html?category=bath">Bath & Body</a></li>
+                        <li><a href="#">Become a Distributor</a></li>
+                        <li><a href="#">Contact Helpdesk</a></li>
+                        <li><a href="#">Support Center</a></li>
+                        
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="shop.html?category=bath">Bath & Body</a></li>
+                        <li><a href="#">Become a Distributor</a></li>
+                        <li><a href="#">Contact Helpdesk</a></li>
+                        <li><a href="#">Support Center</a></li>
+                    </ul>
+                </div>
+            </div>
         </nav>
 
         <nav class="navbar">
@@ -33,7 +112,7 @@
                 <div class="nav-links-text">
                     <h4>MAIN MENU</h4>
                     <ul>
-                        <li onclick="window.location.href = './brand-images.html'">Brands</li>
+                        <li onclick="window.location.href = '../brand-images.html'">Brands</li>
                         <li onclick="window.location.href='../SHOP_FOLDER/shop.html?category=bath'">Bath & Body</li>
                         <li onclick="window.location.href='../SHOP_FOLDER/shop.html?category=serum'">Serum</li>
                         <li onclick="window.location.href = '../SHOP_FOLDER/shop.html?category=baby'">Baby Skin</li>
@@ -178,6 +257,54 @@
         </nav>
     </header>
 
+    <!-- Dim Overlay -->
+<div class="dim-overlay" id="dimOverlay" onclick="toggleCart()"></div>
+
+<!-- Cart Drawer -->
+<div class="cart-drawer" id="cartDrawer">
+    <div class="cart-head">
+        <div>
+            <h3>Your Cart</h3>
+            <div class="cart-count-label" id="cartCountLabel">0 items</div>
+        </div>
+        <button class="close-btn" onclick="toggleCart()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+        </button>
+    </div>
+  
+    <div class="cart-body" id="cartBody">
+        <!-- Cart items will be dynamically inserted here -->
+    </div>
+  
+    <div class="cart-foot" id="cartFoot" style="display:none">
+        <div class="cart-summary-rows">
+            <div class="cart-row">
+                <span>Subtotal</span>
+                <span id="cartSubtotal">$0.00</span>
+            </div>
+            <div class="cart-row">
+                <span>Shipping</span>
+                <span style="color:var(--gold)">Free</span>
+            </div>
+            <div class="cart-row total">
+                <span>Total</span>
+                <span id="cartTotal">$0.00</span>
+            </div>
+            </div>
+                <button class="btn-to-checkout" onclick="goToCheckout()">
+                Proceed to Checkout
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="5" y1="12" x2="19" y2="12"/>
+                    <polyline points="12 5 19 12 12 19"/>
+                </svg>
+                </button>
+        </div>
+    </div>
+</div>
+
     <main>
 
         <section class="down-icons">
@@ -268,7 +395,7 @@
                 <div>
                     <p>“Stand Out. Shield Up.”</p>
                     <a href="../SHOP_FOLDER/shop.html">Shop now</a>
-                    <img src="../IMAGES/WhatsApp Image 2026-02-13 at 13.14.306.jpeg" alt="">
+                    <img src="../IMAGES/portrait-beautiful-black-woman-with-mysterious-shadows.jpg" alt="">
                 </div>
 
                 <div>
@@ -409,9 +536,44 @@
             </div>
         </section>
 
+        <section class="real-skin">
+            <div class="real-skin1">
+                <h1>Real Skin, Real Beauty</h1>
+            </div>
+            <div class="real-skin2">
+                <div>
+                    <i>Clean and Effective.</i>
+                    <p>Nourish your skin with products designed to keep your natural glow on.</p>
+                </div>
+                <button type="button">Shop now</button>
+            </div>
+        </section>
+
     </main>
 
+    <div class="container">
+        <!-- NEW: Category filter tabs -->
+        <div class="best-sellers">
+            <h1>Best Sellers</h1>
+            <p>Explore our best-selling beauty products in Nigeria, handpicked for all skin types. From hydrating serums to anti-acne solutions, shop only trusted brands.</p>
+            </div>
 
+        <!-- Products grid -->
+        <div id="productsGrid" class="products-grid"></div>
+
+        <div class="view"><button type="button">View all</button></div>
+    </div>
+
+    <section class="choose-us">
+        <h1>Why Choose Us?</h1>
+        <div>
+            <p><i class='bx bx-checkbox-checked' ></i>Original beauty & skincare products</p>
+            <p><i class='bx bxs-truck'></i>Fast delivery across Nigeria</p>
+            <p><i class='bx bx-checkbox-checked' ></i>Trusted beauty store in Lagos, Nigeria</p>
+            <p><i class='bx bxs-credit-card-front'></i>Affordable prices & promotions</p>
+        </div>
+        <button>Shop now</button>
+    </section>
 
     <footer>
         <section class="footer1">
@@ -940,10 +1102,10 @@
                 icon.classList.add('active');
                 
                 switch(index) {
-                    case 0: window.location.href = 'shop.html'; break;
+                    case 0: window.location.href = '../SHOP_FOLDER/shop.html'; break;
                     case 1: toggleMobileSearch(); break;
                     case 2: window.location.href = 'wishlist.html'; break;
-                    case 3: window.location.href = 'account.html'; break;
+                    case 3: window.location.href = '../HTML/account.html'; break;
                 }
             });
         });
@@ -1062,7 +1224,7 @@
                 background: var(--primary-color, #8424e3);
                 color: white;
                 position: sticky;
-                top: 0;
+                top: 46px;
                 z-index: 10;
             }
             
@@ -1100,6 +1262,7 @@
                 padding: 0 15px;
                 border: 2px solid var(--primary-color, #8424e3);
                 margin-bottom: 20px;
+                margin-top: 60px;
             }
             
             .mobile-search-input-wrapper i {
@@ -1248,7 +1411,8 @@
 </script>
 
     <script src="../JS/script.js"></script>
-    <!-- <script type="module" src="../SHOP_FOLDER/shop.js"></script> -->
-    <!-- <script type="module" src="../SHOP_FOLDER/cart.js"></script> -->
+    <script type="module" src="../SHOP_FOLDER/cart.js"></script>
+    <script type="module" src="../JS/index.js"></script>
+
 </body>
 </html>

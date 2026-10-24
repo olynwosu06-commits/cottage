@@ -1,44 +1,221 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-const firebaseConfig = {
+  const firebaseConfig = {
     apiKey: "AIzaSyB4Hy_sEEH1twq0GDzKi5E1CZD5dVHn4Kk",
     authDomain: "cottage-9fa0c.firebaseapp.com",
     projectId: "cottage-9fa0c",
     storageBucket: "cottage-9fa0c.firebasestorage.app",
     messagingSenderId: "346971937714",
     appId: "1:346971937714:web:0f453c14862de16bede2ab"
-};
+  };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
+  const app  = initializeApp(firebaseConfig);
+  const db   = getFirestore(app);
+  const auth = getAuth(app);
 
-// Track authentication state
-let currentUser = null;
+  let currentUser = null;
+  onAuthStateChanged(auth, user => currentUser = user);
 
-// Monitor auth state
-onAuthStateChanged(auth, (user) => {
-    currentUser = user;
-    console.log("Auth state changed. User logged in:", !!user);
-});
+  const PER_PAGE = 12;
+  let allProducts   = [];
+  let currentPage   = 1;
+  let currentSort   = "default";
 
-// ────────────────────────────────────────
-//  HELPERS
-// ────────────────────────────────────────
+  function getCategory() {
+    const params = new URLSearchParams(location.search);
+    return params.get("category") || "all";
+  }
 
-function isUserLoggedIn() {
-    return currentUser !== null;
-}
+  function showToast(message, isError = false) {
+    const el = document.createElement("div");
+    el.style.cssText = `
+      background: ${isError ? '#ef4444' : 'var(--accent)'};
+      color:white; padding:14px 20px; border-radius:8px;
+      margin-bottom:10px; box-shadow:0 4px 12px rgba(0,0,0,0.25);
+      min-width:260px; font-weight:500;
+    `;
+    el.textContent = message;
+    document.getElementById("toastContainer").appendChild(el);
+    setTimeout(() => el.remove(), 2600);
+  }
 
-function getCategoryFromUrl() {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get('category') || 'all';
-}
+  function createCard(product) {
+    const discount = product.oldPrice
+      ? Math.round((product.oldPrice - product.price) / product.oldPrice * 100)
+      : 0;
 
-function getCategoryDisplayName(category) {
-    const categories = {
+    const card = document.createElement("div");
+    card.className = "product-card";
+
+    card.innerHTML = `
+      ${discount > 0 ? `<span class="badge">-${discount}%</span>` : ""}
+      <div class="wishlist-btn"><i class="far fa-heart"></i></div>
+      <div class="image-wrapper">
+        <img src="${product.imageUrl || 'https://via.placeholder.com/240x260?text=No+Image'}" alt="${product.name || ''}" loading="lazy">
+      </div>
+      <div class="product-info">
+        <div class="product-name">${product.name || "—"}</div>
+        <div class="stars">${"★".repeat(Math.round(product.rating || 4.5))}${"☆".repeat(5 - Math.round(product.rating || 4.5))}</div>
+        <div class="price-row">
+          ₦${(product.price || 0).toLocaleString()}
+          ${product.oldPrice ? `<span class="old-price">₦${product.oldPrice.toLocaleString()}</span>` : ""}
+        </div>
+        <button class="add-btn"
+          data-id="${product.id}"
+          data-name="${(product.name||'').replace(/"/g,'&quot;')}"
+          data-price="${product.price||0}"
+          data-image="${product.imageUrl||''}">
+          Add to Cart
+        </button>
+      </div>
+    `;
+
+    card.querySelector(".add-btn").onclick = e => {
+      e.stopPropagation();
+      const btn = e.currentTarget;
+      const id    = btn.dataset.id;
+      const name  = btn.dataset.name;
+      const price = Number(btn.dataset.price);
+      const img   = btn.dataset.image;
+
+      if (!currentUser) {
+        showToast("Please sign in to add items", true);
+        setTimeout(() => location.href = "../HTML/account.html", 1800);
+        return;
+      }
+
+      let cart = JSON.parse(localStorage.getItem("cart") || "[]");
+      const item = cart.find(x => x.id === id);
+      if (item) item.quantity = (item.quantity||1) + 1;
+      else cart.push({id, name, price, imageUrl:img, quantity:1});
+
+      localStorage.setItem("cart", JSON.stringify(cart));
+      showToast(`${name} added to cart`);
+
+      btn.textContent = "Added ✓";
+      btn.style.background = "var(--accent-dark)";
+      setTimeout(() => {
+        btn.textContent = "Add to Cart";
+        btn.style.background = "";
+      }, 1400);
+    };
+
+    card.addEventListener("click", e => {
+      if (e.target.closest(".add-btn") || e.target.closest(".wishlist-btn")) return;
+      localStorage.setItem("selectedProduct", JSON.stringify(product));
+      location.href = "product-detail.html";
+    });
+
+    return card;
+  }
+
+  function render(page = 1) {
+    const grid = document.getElementById("productsGrid");
+    const loader = document.getElementById("loader");
+
+    // Hide loader when rendering products
+    if (loader) loader.style.display = "none";
+
+    grid.innerHTML = "";
+
+    let items = [...allProducts];
+
+    if (currentSort === "price-low")  items.sort((a,b) => (a.price||0) - (b.price||0));
+    if (currentSort === "price-high") items.sort((a,b) => (b.price||0) - (a.price||0));
+    if (currentSort === "name")       items.sort((a,b) => (a.name||"").localeCompare(b.name||""));
+
+    const total = items.length;
+    const start = (page-1) * PER_PAGE;
+    const end   = Math.min(start + PER_PAGE, total);
+    const slice = items.slice(start, end);
+
+    slice.forEach(p => grid.appendChild(createCard(p)));
+
+    document.getElementById("showingText").textContent =
+      total === 0 ? "No products found in this category" : `Showing ${start+1}–${end} of ${total} products`;
+
+    const pag = document.getElementById("pagination");
+    pag.innerHTML = "";
+
+    if (total <= PER_PAGE) return;
+
+    const pages = Math.ceil(total / PER_PAGE);
+
+    if (page > 1) {
+      const a = document.createElement("a"); a.href="#"; a.innerHTML = "« Prev";
+      a.onclick = e => { e.preventDefault(); render(page-1); };
+      pag.appendChild(a);
+    }
+
+    for (let i = 1; i <= pages; i++) {
+      if (i === 1 || i === pages || Math.abs(i - page) <= 2) {
+        const a = document.createElement("a"); a.href="#"; a.textContent = i;
+        if (i === page) a.className = "active";
+        a.onclick = e => { e.preventDefault(); render(i); };
+        pag.appendChild(a);
+      } else if (Math.abs(i - page) === 3) {
+        pag.insertAdjacentHTML("beforeend", "<span>…</span>");
+      }
+    }
+
+    if (page < pages) {
+      const a = document.createElement("a"); a.href="#"; a.innerHTML = "Next »";
+      a.onclick = e => { e.preventDefault(); render(page+1); };
+      pag.appendChild(a);
+    }
+  }
+
+  async function load() {
+    const cat = getCategory();
+    const grid = document.getElementById("productsGrid");
+    const loader = document.getElementById("loader");
+
+    // Make sure loader is visible at start
+    if (loader) loader.style.display = "flex";
+
+    try {
+      let q = cat === "all"
+        ? collection(db, "products")
+        : query(collection(db, "products"), where("category", "==", cat));
+
+      const snap = await getDocs(q);
+      allProducts = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+      render(1);
+    } catch (err) {
+      console.error(err);
+      if (loader) loader.style.display = "none";
+      grid.innerHTML = '<div class="no-products">Error loading products. Please try again later.</div>';
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    load();
+    document.getElementById("sortSelect")?.addEventListener("change", e => {
+      currentSort = e.target.value;
+      render(1);
+    });
+  });
+
+
+
+
+// ==================================
+// MOBILE/DESKTOP SEARCH
+// ==================================
+
+    
+    // Make db available globally
+    window.db = window.db || db;
+
+    // ==================== SHARED VARIABLES ====================
+    let allProductsCache = [];
+    let searchTimeout;
+    
+    // Category display names
+    const categoryDisplayNames = {
         'all': 'All Products',
         'bath': 'Bath & Body',
         'body1': 'Body Lotion',
@@ -56,643 +233,738 @@ function getCategoryDisplayName(category) {
         'sunScreen': 'Sun Screen',
         'scrubs': 'Scrubs'
     };
-    return categories[category] || category;
-}
 
-// ────────────────────────────────────────
-//  PAGINATION & LOADING
-// ────────────────────────────────────────
-
-let currentPage = 1;
-const productsPerPage = 16;
-let currentCategory = 'all';
-let allProducts = [];
-let allProductsCache = [];
-let isSearchMode = false;
-let currentSearchTerm = '';
-
-function createPagination(currentPage, totalPages, container) {
-    let existing = container.querySelector('.pagination');
-    if (existing) existing.remove();
-
-    if (totalPages <= 1) return;
-
-    const pagination = document.createElement('div');
-    pagination.className = 'pagination';
-
-    if (currentPage > 1) {
-        const prev = document.createElement('a');
-        prev.href = '#';
-        prev.innerHTML = '&laquo;';
-        prev.onclick = (e) => { e.preventDefault(); changePage(currentPage - 1); };
-        pagination.appendChild(prev);
+    // Shared helper function
+    function getCategoryDisplayName(category) {
+        return categoryDisplayNames[category] || category || 'Product';
     }
 
-    for (let i = 1; i <= totalPages; i++) {
-        if (i === 1 || i === totalPages || (i >= currentPage - 2 && i <= currentPage + 2)) {
-            const link = document.createElement('a');
-            link.href = '#';
-            link.innerHTML = i;
-            if (i === currentPage) link.className = 'active';
-            link.onclick = (e) => { e.preventDefault(); changePage(i); };
-            pagination.appendChild(link);
-        } else if (i === currentPage - 3 || i === currentPage + 3) {
-            const dots = document.createElement('span');
-            dots.innerHTML = '...';
-            pagination.appendChild(dots);
+    // ==================== LOAD PRODUCTS (SINGLE FUNCTION) ====================
+    async function loadProductsCache() {
+        try {
+            if (allProductsCache.length === 0) {
+                const querySnapshot = await getDocs(collection(db, "products"));
+                querySnapshot.forEach((doc) => {
+                    allProductsCache.push({
+                        id: doc.id,
+                        ...doc.data()
+                    });
+                });
+                console.log(`Loaded ${allProductsCache.length} products`);
+            }
+            return allProductsCache;
+        } catch (error) {
+            console.error("Error loading products cache:", error);
+            return [];
         }
     }
 
-    if (currentPage < totalPages) {
-        const next = document.createElement('a');
-        next.href = '#';
-        next.innerHTML = '&raquo;';
-        next.onclick = (e) => { e.preventDefault(); changePage(currentPage + 1); };
-        pagination.appendChild(next);
-    }
-
-    container.appendChild(pagination);
-}
-
-function changePage(page) {
-    currentPage = page;
-    if (isSearchMode) {
-        displaySearchResults(allProductsCache, currentSearchTerm, page);
-    } else {
-        loadProductsByCategory(page);
-    }
-    document.getElementById('productsGrid')?.scrollIntoView({ behavior: 'smooth' });
-}
-
-async function loadProductsByCategory(page = 1) {
-    const category = getCategoryFromUrl();
-    const grid = document.getElementById('productsGrid');
-    if (!grid) return;
-
-    const searchContainer = document.getElementById('searchResultsContainer');
-    if (searchContainer) searchContainer.style.display = 'none';
-    grid.style.display = 'grid';
-
-    isSearchMode = false;
-    currentSearchTerm = '';
-
-    if (category !== currentCategory) {
-        currentCategory = category;
-        currentPage = 1;
-        allProducts = [];
-        allProductsCache = [];
-    }
-
-    const titleElement = document.querySelector('h1');
-    if (titleElement) {
-        titleElement.textContent = getCategoryDisplayName(category);
-    }
-
-    grid.innerHTML = '<div class="loader-container"><div class="spinner"></div><p>Loading products...</p></div>';
-
-    try {
-        let q = category === 'all' 
-            ? collection(db, "products")
-            : query(collection(db, "products"), where("category", "==", category));
-
-        const snapshot = await getDocs(q);
+    // ==================== DESKTOP SEARCH ====================
+    async function initializeDesktopSearch() {
+        const searchInput = document.getElementById('name');
+        const searchBtn = document.querySelector('.brand-search .search-btn');
+        const clearBtn = document.querySelector('.clear-btn');
         
-        if (snapshot.empty) {
-            grid.innerHTML = '<div class="no-products">No products found in this category.</div>';
-            return;
+        // Create suggestions container if it doesn't exist
+        const searchWrapper = document.querySelector('.search-wrapper');
+        if (searchWrapper && !document.getElementById('searchSuggestions')) {
+            const suggestionsContainer = document.createElement('div');
+            suggestionsContainer.id = 'searchSuggestions';
+            suggestionsContainer.className = 'search-suggestions';
+            searchWrapper.appendChild(suggestionsContainer);
         }
 
-        allProducts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        // Load products cache
+        await loadProductsCache();
 
-        const total = allProducts.length;
-        const start = (page - 1) * productsPerPage;
-        const end = Math.min(start + productsPerPage, total);
-        const pageItems = allProducts.slice(start, end);
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                if (clearBtn) {
+                    clearBtn.classList.toggle('visible', e.target.value.trim().length > 0);
+                }
+                
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    showSearchSuggestions(e.target.value);
+                }, 300);
+            });
 
-        displayProducts(pageItems, grid, start + 1, end, total);
-
-    } catch (err) {
-        console.error("Load products error:", err);
-        grid.innerHTML = 'Error loading products. Please try again.';
-    }
-}
-
-function displayProducts(products, grid, start, end, total) {
-    grid.innerHTML = '';
-
-    // Remove old counter if exists
-    const oldCounter = document.querySelector('.results-counter');
-    if (oldCounter) oldCounter.remove();
-
-    const counter = document.createElement('div');
-    counter.className = 'results-counter';
-    counter.innerHTML = `Showing ${start}-${end} of ${total} results`;
-    grid.parentNode.insertBefore(counter, grid);
-
-    products.forEach(product => {
-        grid.appendChild(createProductCard(product));
-    });
-
-    const totalPages = Math.ceil(total / productsPerPage);
-    createPagination(currentPage, totalPages, document.querySelector('.container'));
-}
-
-// ────────────────────────────────────────
-//  PRODUCT CARD
-// ────────────────────────────────────────
-
-function createProductCard(product, highlightTerm = null) {
-    const card = document.createElement('div');
-    card.className = 'product-card';
-    
-    // Make the whole card clickable for product details
-    card.addEventListener('click', (e) => {
-        // Don't trigger if clicking on the add to cart button
-        if (!e.target.classList.contains('add-to-cart') && !e.target.closest('.add-to-cart')) {
-            localStorage.setItem('selectedProduct', JSON.stringify(product));
-            window.location.href = 'product-detail.html';
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    performSearch(searchInput.value);
+                }
+            });
         }
-    });
 
-    const categoryDisplay = getCategoryDisplayName(product.category || 'uncategorized');
+        if (searchBtn) {
+            searchBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                performSearch(searchInput?.value || '');
+            });
+        }
 
-    let name = product.name || 'Unnamed Product';
-    let desc = product.description 
-        ? product.description.substring(0, 50) + (product.description.length > 50 ? '...' : '')
-        : 'No description available.';
+        if (clearBtn) {
+            clearBtn.addEventListener('click', () => {
+                if (searchInput) {
+                    searchInput.value = '';
+                    clearBtn.classList.remove('visible');
+                    searchInput.focus();
+                }
+                hideSuggestions();
+            });
+        }
 
-    if (highlightTerm) {
-        name = highlightText(name, highlightTerm);
-        desc = highlightText(desc, highlightTerm);
-    }
-
-    card.innerHTML = `
-        <img src="${product.imageUrl || 'placeholder.jpg'}" alt="${product.name}" 
-             onerror="this.src='placeholder.jpg'">
-        <div class="product-info">
-            <div class="product-name">${name}</div>
-            <div class="product-category">${categoryDisplay}</div>
-            <div class="product-price">₦${(product.price || 0).toLocaleString()}</div>
-            <button class="add-to-cart" 
-                    data-product-id="${product.id}"
-                     data-product-name="${product.name.replace(/'/g, "\\'")}"
-                     data-product-price="${product.price || 0}"
-                    data-product-image="${product.imageUrl || ''}">
-                Add to Cart
-            </button>
-        </div>
-    `;
-
-    // Add click event listener to the button
-    const addToCartBtn = card.querySelector('.add-to-cart');
-    addToCartBtn.addEventListener('click', (e) => {
-        e.stopPropagation(); // Prevent card click
-        e.preventDefault();
-        
-        const productId = addToCartBtn.dataset.productId;
-        const name = addToCartBtn.dataset.productName;
-        const price = parseFloat(addToCartBtn.dataset.productPrice);
-        const imageUrl = addToCartBtn.dataset.productImage;
-        
-        handleAddToCart(productId, name, price, imageUrl);
-    });
-
-    return card;
-}
-
-// ────────────────────────────────────────
-//  ADD TO CART WITH LOGIN CHECK (NO ALERT)
-// ────────────────────────────────────────
-
-function handleAddToCart(productId, name, price, imageUrl, quantity = 1) {
-    console.log("Add to cart clicked. Logged in:", isUserLoggedIn());
-    
-    if (!isUserLoggedIn()) {
-        // Show login required toast
-        showToast({
-            type: 'warning',
-            title: 'Login Required',
-            message: 'Please sign in to add items to your cart. Redirecting to login...',
-            duration: 2500
-        });
-        
-        // Store the product they wanted to add
-        sessionStorage.setItem('pendingCartItem', JSON.stringify({
-            productId, name, price, imageUrl, quantity
-        }));
-        
-        // Automatically redirect after toast
-        setTimeout(() => {
-            window.location.href = '../HTML/account.html';
-        }, 2500);
-        
-        return;
-    }
-
-    // User is logged in, proceed with adding to cart
-    addToCart(productId, name, price, imageUrl, quantity);
-}
-
-function addToCart(productId, name, price, imageUrl, quantity = 1) {
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-    const item = cart.find(i => i.id === productId);
-    if (item) {
-        item.quantity += quantity;
-    } else {
-        cart.push({
-            id: productId,
-            name: name,
-            price: Number(price) || 0,
-            imageUrl: imageUrl || '',
-            quantity: quantity
+        document.addEventListener('click', (e) => {
+            const suggestions = document.getElementById('searchSuggestions');
+            if (suggestions && !e.target.closest('.brand-search')) {
+                suggestions.classList.remove('show');
+            }
         });
     }
 
-    localStorage.setItem('cart', JSON.stringify(cart));
-
-    const countEl = document.getElementById('cartCount');
-    if (countEl) {
-        countEl.textContent = cart.reduce((sum, i) => sum + i.quantity, 0);
-    }
-
-    showToast({
-        type: 'success',
-        title: 'Added to Cart',
-        message: `${name} added successfully 🛍️`,
-        duration: 2600
-    });
-
-    // Button visual feedback
-    const btn = event?.target;
-    if (btn && btn.classList.contains('add-to-cart')) {
-        const orig = btn.innerHTML;
-        btn.innerHTML = '<i class="bx bx-check"></i> Added!';
-        btn.style.background = '#f5babe';
-        setTimeout(() => {
-            btn.innerHTML = orig;
-            btn.style.background = '';
-        }, 1600);
-    }
-}
-
-// ────────────────────────────────────────
-//  SEARCH & SUGGESTIONS
-// ────────────────────────────────────────
-
-let searchTimeout;
-
-async function showSearchSuggestions(term) {
-    const container = document.getElementById('searchSuggestions');
-    if (!container) return;
-
-    term = (term || '').trim().toLowerCase();
-    if (term.length < 2) {
-        container.classList.remove('show');
-        return;
-    }
-
-    try {
-        if (allProductsCache.length === 0) {
-            const snap = await getDocs(collection(db, "products"));
-            allProductsCache = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-        }
-
-        const matches = allProductsCache
-            .filter(p => {
-                const text = `${p.name || ''} ${p.description || ''} ${p.category || ''}`.toLowerCase();
-                const cat = getCategoryDisplayName(p.category || '').toLowerCase();
-                return text.includes(term) || cat.includes(term);
-            })
-            .slice(0, 6);
-
-        if (matches.length === 0) {
-            container.classList.remove('show');
+    // Show desktop suggestions
+    async function showSearchSuggestions(searchTerm) {
+        const suggestionsContainer = document.getElementById('searchSuggestions');
+        if (!suggestionsContainer) return;
+        
+        if (!searchTerm || searchTerm.trim().length < 2) {
+            suggestionsContainer.classList.remove('show');
             return;
         }
+        
+        try {
+            const searchTermLower = searchTerm.toLowerCase().trim();
+            
+            if (allProductsCache.length === 0) {
+                await loadProductsCache();
+            }
+            
+            const suggestions = allProductsCache
+                .filter(product => {
+                    const text = `
+                        ${(product.name || '').toLowerCase()}
+                        ${(product.description || '').toLowerCase()}
+                        ${(product.category || '').toLowerCase()}
+                    `;
+                    
+                    const display = getCategoryDisplayName(product.category || '').toLowerCase();
+                    
+                    return (
+                        text.includes(searchTermLower) ||
+                        display.includes(searchTermLower) ||
+                        display.replace(/ & /g, ' ').includes(searchTermLower) ||
+                        display.replace(/ & /g, '').includes(searchTermLower) ||
+                        display.replace(/\s+/g, '').includes(searchTermLower)
+                    );
+                })
+                .slice(0, 6);
+            
+            if (suggestions.length === 0) {
+                suggestionsContainer.classList.remove('show');
+                return;
+            }
+            
+            let html = '';
+            suggestions.forEach(product => {
+                const regex = new RegExp(`(${searchTerm})`, 'gi');
+                const highlightedName = product.name.replace(regex, '<span class="suggestion-highlight">$1</span>');
+                const category = getCategoryDisplayName(product.category);
+                
+                html += `
+                    <div class="suggestion-item" onclick="goToProductPage('${product.id}')">
+                        <div class="suggestion-content">
+                            <span class="suggestion-name">${highlightedName}</span>
+                            <span class="suggestion-category">${category}</span>
+                        </div>
+                        <span class="suggestion-price">$${product.price ? product.price.toFixed(2) : '0.00'}</span>
+                    </div>
+                `;
+            });
+            
+            suggestionsContainer.innerHTML = html;
+            suggestionsContainer.classList.add('show');
+            
+        } catch (error) {
+            console.error("Error showing suggestions:", error);
+            suggestionsContainer.classList.remove('show');
+        }
+    }
 
-        let html = '';
-        matches.forEach(p => {
-            const highlighted = p.name.replace(new RegExp(`(${term})`, 'gi'), '<span class="suggestion-highlight">$1</span>');
-            html += `
-                <div class="suggestion-item" onclick="goToProduct('${p.id}')">
-                    <span class="suggestion-name">${highlighted}</span>
-                    <span class="suggestion-price">₦${(p.price || 0).toLocaleString()}</span>
+    // ==================== MOBILE SEARCH ====================
+    function createMobileSearchOverlay() {
+        if (document.getElementById('mobileSearchOverlay')) return;
+
+        const overlayHTML = `
+            <div class="mobile-search-overlay" id="mobileSearchOverlay">
+                <div class="mobile-search-header">
+                    <button class="mobile-search-back" id="mobileSearchBack">
+                        <i class='bx bx-arrow-back'></i>
+                    </button>
+                    <h3>Search Products</h3>
                 </div>
-            `;
-        });
-
-        container.innerHTML = html;
-        container.classList.add('show');
-    } catch (error) {
-        console.error("Error getting suggestions:", error);
-    }
-}
-
-window.goToProduct = (id) => {
-    const product = allProductsCache.find(p => p.id === id);
-    if (product) {
-        localStorage.setItem('selectedProduct', JSON.stringify(product));
-        window.location.href = 'product-detail.html';
-    }
-};
-
-async function searchProducts(term) {
-    term = (term || '').trim();
-    if (!term) {
-        clearSearch();
-        return;
-    }
-
-    isSearchMode = true;
-    currentSearchTerm = term;
-    currentPage = 1;
-
-    const grid = document.getElementById('productsGrid');
-    let searchCont = document.getElementById('searchResultsContainer');
-
-    if (!searchCont) {
-        searchCont = document.createElement('div');
-        searchCont.id = 'searchResultsContainer';
-        searchCont.className = 'search-results-container';
-        const container = document.querySelector('.container');
-        if (container) {
-            container.appendChild(searchCont);
-        }
-    }
-
-    if (grid) grid.style.display = 'none';
-    searchCont.style.display = 'block';
-    searchCont.innerHTML = '<div class="loading">Searching products...</div>';
-
-    try {
-        if (allProductsCache.length === 0) {
-            const snap = await getDocs(collection(db, "products"));
-            allProductsCache = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-        }
-
-        const matches = allProductsCache.filter(p => {
-            const text = `${p.name || ''} ${p.description || ''} ${p.category || ''}`.toLowerCase();
-            return text.includes(term.toLowerCase());
-        });
-
-        displaySearchResults(matches, term, 1);
-    } catch (error) {
-        console.error("Error searching products:", error);
-        searchCont.innerHTML = '<div class="no-products">Error searching products. Please try again.</div>';
-    }
-}
-
-function displaySearchResults(products, term, page = 1) {
-    const grid = document.getElementById('productsGrid');
-    let container = document.getElementById('searchResultsContainer');
-    if (!container || !grid) return;
-
-    const total = products.length;
-    const start = (page - 1) * productsPerPage;
-    const end = Math.min(start + productsPerPage, total);
-
-    container.innerHTML = '';
-
-    if (total === 0) {
-        container.innerHTML = `
-            <div class="no-results-wrapper">
-                <div class="no-products-found">
-                    <h3>No products found for "${term}"</h3>
-                    <p>Try different keywords or browse our categories</p>
-                    <button onclick="clearSearch()" class="primary-btn">Browse All Products</button>
+                <div class="mobile-search-content">
+                    <div class="mobile-search-input-wrapper">
+                        <i class='bx bx-search'></i>
+                        <input type="text" id="mobileSearchInput" placeholder="Search for products..." autocomplete="off">
+                        <button class="mobile-clear-btn" id="mobileClearBtn">×</button>
+                    </div>
+                    <div class="mobile-search-suggestions" id="mobileSearchSuggestions"></div>
                 </div>
             </div>
         `;
-        return;
-    }
-
-    const header = document.createElement('div');
-    header.className = 'search-header';
-    header.innerHTML = `
-        <div>
-            <h2>Search Results</h2>
-            <span class="search-count">Found ${total} products for "${term}"</span>
-        </div>
-        <button class="clear-search-btn" onclick="clearSearch()">✕ Clear</button>
-    `;
-    container.appendChild(header);
-
-    const counter = document.createElement('div');
-    counter.className = 'results-counter';
-    counter.textContent = `Showing ${start + 1}-${end} of ${total} products`;
-    container.appendChild(counter);
-
-    const resultsGrid = document.createElement('div');
-    resultsGrid.className = 'products-grid';
-    products.slice(start, end).forEach(p => {
-        resultsGrid.appendChild(createProductCard(p, term));
-    });
-    container.appendChild(resultsGrid);
-
-    const totalPages = Math.ceil(total / productsPerPage);
-    if (totalPages > 1) {
-        const pag = document.createElement('div');
-        pag.className = 'search-pagination';
-        for (let i = 1; i <= totalPages; i++) {
-            const btn = document.createElement('button');
-            btn.textContent = i;
-            btn.className = i === page ? 'active' : '';
-            btn.onclick = () => displaySearchResults(products, term, i);
-            pag.appendChild(btn);
+        
+        document.body.insertAdjacentHTML('beforeend', overlayHTML);
+        
+        const searchIcon = document.querySelector('.down-icons span:nth-child(2)');
+        if (searchIcon) {
+            searchIcon.addEventListener('click', toggleMobileSearch);
         }
-        container.appendChild(pag);
-    }
-}
-
-function highlightText(text, term) {
-    if (!term || !text) return text;
-    const regex = new RegExp(`(${term})`, 'gi');
-    return text.replace(regex, '<span class="highlight">$1</span>');
-}
-
-window.clearSearch = () => {
-    isSearchMode = false;
-    currentSearchTerm = '';
-    const input = document.getElementById('name');
-    if (input) input.value = '';
-    
-    const suggestions = document.getElementById('searchSuggestions');
-    if (suggestions) suggestions.classList.remove('show');
-    
-    const searchContainer = document.getElementById('searchResultsContainer');
-    if (searchContainer) {
-        searchContainer.style.display = 'none';
-        searchContainer.innerHTML = '';
-    }
-    
-    const grid = document.getElementById('productsGrid');
-    if (grid) grid.style.display = 'grid';
-    
-    loadProductsByCategory(1);
-};
-
-// ────────────────────────────────────────
-//  TOAST NOTIFICATION
-// ────────────────────────────────────────
-
-function showToast({ type = 'success', title = 'Success', message, duration = 2800, showClose = true }) {
-    let container = document.getElementById('toastContainer');
-    
-    if (!container) {
-        container = document.createElement('div');
-        container.id = 'toastContainer';
-        container.className = 'toast-container';
-        document.body.appendChild(container);
+        
+        document.getElementById('mobileSearchBack')?.addEventListener('click', closeMobileSearch);
+        
+        const overlay = document.getElementById('mobileSearchOverlay');
+        overlay?.addEventListener('click', (e) => {
+            if (e.target === overlay) closeMobileSearch();
+        });
+        
+        initializeMobileSearchInput();
     }
 
-    const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
+    function initializeMobileSearchInput() {
+        const mobileInput = document.getElementById('mobileSearchInput');
+        const mobileClearBtn = document.getElementById('mobileClearBtn');
 
-    const icons = { success: '✅', error: '❌', info: 'ℹ️', warning: '⚠️' };
+        if (mobileInput) {
+            mobileInput.addEventListener('input', (e) => {
+                mobileClearBtn.style.display = e.target.value.trim().length > 0 ? 'block' : 'none';
+                
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    showMobileSearchSuggestions(e.target.value);
+                }, 300);
+            });
 
-    toast.innerHTML = `
-        <div class="toast-icon">${icons[type] || '✨'}</div>
-        <div class="toast-content">
-            <h4 class="toast-title">${title}</h4>
-            <p class="toast-message">${message}</p>
-        </div>
-        ${showClose ? '<button class="toast-close">×</button>' : ''}
-    `;
+            mobileInput.addEventListener('focus', (e) => {
+                if (e.target.value.trim().length >= 2) {
+                    showMobileSearchSuggestions(e.target.value);
+                }
+            });
 
-    container.appendChild(toast);
-    
-    // Trigger animation
-    setTimeout(() => toast.classList.add('show'), 10);
+            mobileInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    performMobileSearch(mobileInput.value);
+                }
+            });
+        }
 
-    const remove = () => {
-        toast.classList.remove('show');
-        setTimeout(() => {
-            if (toast.parentNode) toast.remove();
-        }, 300);
+        mobileClearBtn?.addEventListener('click', () => {
+            if (mobileInput) {
+                mobileInput.value = '';
+                mobileClearBtn.style.display = 'none';
+                mobileInput.focus();
+                hideMobileSuggestions();
+            }
+        });
+    }
+
+    async function showMobileSearchSuggestions(searchTerm) {
+        const suggestionsContainer = document.getElementById('mobileSearchSuggestions');
+        if (!suggestionsContainer) return;
+        
+        if (!searchTerm || searchTerm.trim().length < 2) {
+            suggestionsContainer.classList.remove('show');
+            return;
+        }
+        
+        try {
+            const searchTermLower = searchTerm.toLowerCase().trim();
+            
+            if (allProductsCache.length === 0) {
+                await loadProductsCache();
+            }
+            
+            const suggestions = allProductsCache
+                .filter(product => {
+                    const text = `
+                        ${(product.name || '').toLowerCase()}
+                        ${(product.description || '').toLowerCase()}
+                        ${(product.category || '').toLowerCase()}
+                    `;
+                    
+                    const display = getCategoryDisplayName(product.category || '').toLowerCase();
+                    
+                    return (
+                        text.includes(searchTermLower) ||
+                        display.includes(searchTermLower) ||
+                        display.replace(/ & /g, ' ').includes(searchTermLower) ||
+                        display.replace(/ & /g, '').includes(searchTermLower) ||
+                        display.replace(/\s+/g, '').includes(searchTermLower)
+                    );
+                })
+                .slice(0, 8);
+            
+            if (suggestions.length === 0) {
+                suggestionsContainer.innerHTML = `
+                    <div class="mobile-no-results">
+                        <i class='bx bx-search-alt'></i>
+                        <p>No products found for "${searchTerm}"</p>
+                    </div>
+                `;
+                suggestionsContainer.classList.add('show');
+                return;
+            }
+            
+            let html = '';
+            suggestions.forEach(product => {
+                const regex = new RegExp(`(${searchTerm})`, 'gi');
+                const highlightedName = product.name.replace(regex, '<span class="mobile-suggestion-highlight">$1</span>');
+                const category = getCategoryDisplayName(product.category);
+                const price = product.price ? `$${product.price.toFixed(2)}` : 'Price on request';
+                
+                html += `
+                    <div class="mobile-suggestion-item" onclick="goToMobileProductPage('${product.id}')">
+                        <div class="mobile-suggestion-image">
+                            <img src="${product.imageUrl || 'placeholder.jpg'}" alt="${product.name}" onerror="this.src='placeholder.jpg'">
+                        </div>
+                        <div class="mobile-suggestion-content">
+                            <span class="mobile-suggestion-name">${highlightedName}</span>
+                            <span class="mobile-suggestion-category">${category}</span>
+                            <span class="mobile-suggestion-price">${price}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            suggestionsContainer.innerHTML = html;
+            suggestionsContainer.classList.add('show');
+            
+        } catch (error) {
+            console.error("Error showing mobile suggestions:", error);
+        }
+    }
+
+    // ==================== SHARED FUNCTIONS ====================
+    function performSearch(searchTerm) {
+        if (!searchTerm || searchTerm.trim() === '') return;
+        hideSuggestions();
+        localStorage.setItem('searchTerm', searchTerm);
+        window.location.href = `shop.html?search=${encodeURIComponent(searchTerm)}`;
+    }
+
+    function performMobileSearch(searchTerm) {
+        if (!searchTerm || searchTerm.trim() === '') return;
+        hideMobileSuggestions
+        
+        
+        ();
+        closeMobileSearch();
+        localStorage.setItem('searchTerm', searchTerm);
+        window.location.href = `shop.html?search=${encodeURIComponent(searchTerm)}`;
+    }
+
+    window.goToProductPage = function(productId) {
+        const product = allProductsCache.find(p => p.id === productId);
+        if (product) {
+            localStorage.setItem('selectedProduct', JSON.stringify(product));
+            window.location.href = '../SHOP_FOLDER/product-detail.html';
+        }
     };
 
-    let timeout = setTimeout(remove, duration);
+    window.goToMobileProductPage = function(productId) {
+        const product = allProductsCache.find(p => p.id === productId);
+        if (product) {
+            localStorage.setItem('selectedProduct', JSON.stringify(product));
+            closeMobileSearch();
+            window.location.href = '../SHOP_FOLDER/product-detail.html';
+        }
+    };
 
-    const closeBtn = toast.querySelector('.toast-close');
-    if (closeBtn) {
-        closeBtn.addEventListener('click', () => {
-            clearTimeout(timeout);
-            remove();
+    function hideSuggestions() {
+        document.getElementById('searchSuggestions')?.classList.remove('show');
+    }
+
+    function hideMobileSuggestions() {
+        document.getElementById('mobileSearchSuggestions')?.classList.remove('show');
+    }
+
+    function toggleMobileSearch() {
+        const overlay = document.getElementById('mobileSearchOverlay');
+        if (overlay) {
+            overlay.classList.add('active');
+            setTimeout(() => {
+                document.getElementById('mobileSearchInput')?.focus();
+            }, 300);
+        }
+    }
+
+    function closeMobileSearch() {
+        const overlay = document.getElementById('mobileSearchOverlay');
+        if (overlay) {
+            overlay.classList.remove('active');
+            const input = document.getElementById('mobileSearchInput');
+            const clearBtn = document.getElementById('mobileClearBtn');
+            if (input) input.value = '';
+            if (clearBtn) clearBtn.style.display = 'none';
+            hideMobileSuggestions();
+        }
+    }
+
+    window.closeMobileSearch = closeMobileSearch;
+
+    function initializeDownIcons() {
+        const downIcons = document.querySelectorAll('.down-icons span');
+        
+        downIcons.forEach((icon, index) => {
+            icon.addEventListener('click', () => {
+                downIcons.forEach(i => i.classList.remove('active'));
+                icon.classList.add('active');
+                
+                switch(index) {
+                    case 0: window.location.href = 'shop.html'; break;
+                    case 1: toggleMobileSearch(); break;
+                    case 2: window.location.href = 'wishlist.html'; break;
+                    // case 3: window.location.href = 'account.html'; break;
+                }
+            });
         });
     }
 
-    toast.addEventListener('mouseenter', () => clearTimeout(timeout));
-    toast.addEventListener('mouseleave', () => {
-        timeout = setTimeout(remove, duration);
-    });
-}
-
-// ────────────────────────────────────────
-//  INITIALIZATION
-// ────────────────────────────────────────
-
-document.addEventListener('DOMContentLoaded', () => {
-    console.log("DOM loaded, initializing...");
-    
-    // Create toast container
-    if (!document.getElementById('toastContainer')) {
-        const toastContainer = document.createElement('div');
-        toastContainer.id = 'toastContainer';
-        toastContainer.className = 'toast-container';
-        document.body.appendChild(toastContainer);
-    }
-    
-    // Create suggestions container
-    const searchWrapper = document.querySelector('.brand-search, .search-wrapper');
-    if (searchWrapper && !document.getElementById('searchSuggestions')) {
-        const sug = document.createElement('div');
-        sug.id = 'searchSuggestions';
-        sug.className = 'search-suggestions';
-        searchWrapper.appendChild(sug);
-    }
-
-    // Load products
-    loadProductsByCategory();
-
-    const input = document.getElementById('name');
-    if (input) {
-        input.addEventListener('input', e => {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => showSearchSuggestions(e.target.value), 300);
-        });
-
-        input.addEventListener('keypress', e => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                searchProducts(input.value);
+    // ==================== STYLES ====================
+    function addSearchStyles() {
+        const style = document.createElement('style');
+        style.textContent = `
+            /* Desktop Search Styles */
+            .search-suggestions {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                border: 1px solid #e0e0e0;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                max-height: 300px;
+                overflow-y: auto;
+                z-index: 1000;
+                display: none;
+                margin-top: 4px;
             }
-        });
-    }
-
-    // Search button
-    const searchBtn = document.querySelector('.brand-search button, .search-btn');
-    if (searchBtn) {
-        searchBtn.addEventListener('click', e => {
-            e.preventDefault();
-            searchProducts(input?.value || '');
-        });
-    }
-
-    // Clear button
-    const clearBtn = document.querySelector('.clear-btn');
-    if (clearBtn) {
-        clearBtn.addEventListener('click', () => {
-            if (input) {
-                input.value = '';
-                clearSearch();
+            
+            .search-suggestions.show { display: block; }
+            
+            .suggestion-item {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 10px 15px;
+                cursor: pointer;
+                border-bottom: 1px solid #f0f0f0;
+                transition: background-color 0.2s;
             }
-        });
+            
+            .suggestion-item:hover { background-color: #f9f9f9; }
+            .suggestion-item:last-child { border-bottom: none; }
+            
+            .suggestion-content { flex: 1; }
+            
+            .suggestion-name {
+                font-weight: 500;
+                color: #333;
+                display: block;
+                margin-bottom: 3px;
+            }
+            
+            .suggestion-category {
+                font-size: 12px;
+                color: #8424e3;
+                display: block;
+            }
+            
+            .suggestion-price {
+                font-weight: 600;
+                color: #8424e3;
+                margin-left: 15px;
+            }
+            
+            .suggestion-highlight {
+                background-color: #ffe6f4;
+                color: #8424e3;
+                font-weight: 600;
+            }
+            
+            .clear-btn.visible { display: block; }
+            
+            .clear-btn {
+                display: none;
+                position: absolute;
+                right: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+                background: none;
+                border: none;
+                font-size: 20px;
+                color: #999;
+                cursor: pointer;
+                padding: 0 5px;
+            }
+            
+            .clear-btn:hover { color: #333; }
+            
+            .search-wrapper {
+                position: relative;
+                display: flex;
+                align-items: center;
+            }
+            
+            .brand-search { position: relative; }
+
+            /* Mobile Search Overlay */
+            .mobile-search-overlay {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: white;
+                z-index: 10000;
+                transform: translateY(100%);
+                transition: transform 0.4s ease-in-out;
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .mobile-search-overlay.active { transform: translateY(0); }
+            
+            .mobile-search-header {
+                display: flex;
+                align-items: center;
+                padding: 15px 20px;
+                background: var(--primary-color, #8424e3);
+                color: white;
+                position: sticky;
+                top: 46px;
+                z-index: 10;
+            }
+            
+            .mobile-search-back {
+                background: none;
+                border: none;
+                color: white;
+                font-size: 24px;
+                cursor: pointer;
+                padding: 0;
+                margin-right: 15px;
+                display: flex;
+                align-items: center;
+            }
+            
+            .mobile-search-header h3 {
+                font-size: 18px;
+                font-weight: 500;
+                margin: 0;
+            }
+            
+            .mobile-search-content {
+                flex: 1;
+                padding: 20px;
+                overflow-y: auto;
+                background: #f8f8f8;
+            }
+            
+            .mobile-search-input-wrapper {
+                position: relative;
+                display: flex;
+                align-items: center;
+                background: white;
+                border-radius: 30px;
+                padding: 0 15px;
+                border: 2px solid var(--primary-color, #8424e3);
+                margin-bottom: 20px;
+                margin-top: 60px;
+
+            }
+            
+            .mobile-search-input-wrapper i {
+                color: #999;
+                font-size: 20px;
+                margin-right: 10px;
+            }
+            
+            .mobile-search-input-wrapper input {
+                flex: 1;
+                padding: 15px 0;
+                border: none;
+                background: transparent;
+                font-size: 16px;
+                outline: none;
+            }
+            
+            .mobile-clear-btn {
+                display: none;
+                background: none;
+                border: none;
+                font-size: 24px;
+                color: #999;
+                cursor: pointer;
+                padding: 0 5px;
+            }
+            
+            .mobile-clear-btn:hover { color: #333; }
+            
+            .mobile-search-suggestions {
+                display: none;
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .mobile-search-suggestions.show { display: flex; }
+            
+            .mobile-suggestion-item {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                padding: 12px;
+                background: white;
+                border-radius: 12px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+                cursor: pointer;
+                transition: transform 0.2s, box-shadow 0.2s;
+            }
+            
+            .mobile-suggestion-item:hover,
+            .mobile-suggestion-item:active {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(132, 36, 227, 0.15);
+            }
+            
+            .mobile-suggestion-image {
+                width: 60px;
+                height: 60px;
+                border-radius: 10px;
+                overflow: hidden;
+                flex-shrink: 0;
+                background: #f5f5f5;
+            }
+            
+            .mobile-suggestion-image img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            
+            .mobile-suggestion-content { flex: 1; }
+            
+            .mobile-suggestion-name {
+                font-weight: 600;
+                color: #333;
+                display: block;
+                margin-bottom: 4px;
+                font-size: 15px;
+            }
+            
+            .mobile-suggestion-category {
+                font-size: 12px;
+                color: var(--icons-color, #8424e3);
+                display: block;
+                margin-bottom: 2px;
+            }
+            
+            .mobile-suggestion-price {
+                font-size: 14px;
+                font-weight: 600;
+                color: #333;
+                display: block;
+            }
+            
+            .mobile-suggestion-highlight {
+                background-color: #ffe6f4;
+                color: var(--icons-color, #8424e3);
+                font-weight: 600;
+                padding: 0 2px;
+            }
+            
+            .mobile-no-results {
+                text-align: center;
+                padding: 40px 20px;
+                background: white;
+                border-radius: 12px;
+            }
+            
+            .mobile-no-results i {
+                font-size: 50px;
+                color: #ccc;
+                margin-bottom: 15px;
+            }
+            
+            .mobile-no-results p {
+                color: #666;
+                font-size: 16px;
+            }
+        `;
+        document.head.appendChild(style);
     }
 
-    // Close suggestions when clicking outside
-    document.addEventListener('click', e => {
-        if (!e.target.closest('.brand-search') && !e.target.closest('.search-wrapper')) {
-            const suggestions = document.getElementById('searchSuggestions');
-            if (suggestions) suggestions.classList.remove('show');
+    // ==================== INITIALIZATION ====================
+    document.addEventListener('DOMContentLoaded', () => {
+        addSearchStyles();
+        initializeDesktopSearch();
+        createMobileSearchOverlay();
+        initializeDownIcons();
+        
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartCount = document.getElementById('cartCount');
+        if (cartCount) {
+            const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+            cartCount.innerText = totalItems;
         }
     });
 
-    // Account icon redirectzz
-    const accountIcons = document.querySelectorAll('.accountIcon, .user-cart span:first-child');
-    accountIcons.forEach(el => {
-        el.addEventListener('click', () => {
-            window.location.href = "../HTML/account.html";
-        });
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        setTimeout(() => {
+            addSearchStyles();
+            initializeDesktopSearch();
+            createMobileSearchOverlay();
+            initializeDownIcons();
+        }, 100);
+    }
+
+
+// =========================================
+// UPDATE ACCOUNT DISPLAY 
+// =========================================
+    function updateUserDisplay() {
+        const userName = localStorage.getItem('userName');
+        
+        // Find the "Sign in Account" element - it's in a span within .user-cart
+        const userCartSpan = document.querySelector('.user-cart span:nth-child(2)');
+        
+        if (userName && userCartSpan) {
+            // Change "Sign in Account" to show the user's name
+            userCartSpan.innerHTML = `Hi, <span style="color: #8424e3; font-weight: 600;">${userName}</span>`;
+        }
+    }
+    
+    // Run when page loads
+    document.addEventListener('DOMContentLoaded', updateUserDisplay);
+    
+    // Run when page becomes visible (user comes back to tab)
+    document.addEventListener('visibilitychange', function() {
+        if (!document.hidden) updateUserDisplay();
     });
     
-    // Check for pending cart item from previous session
-    const pendingItem = sessionStorage.getItem('pendingCartItem');
-    if (pendingItem && isUserLoggedIn()) {
-        const item = JSON.parse(pendingItem);
-        addToCart(item.productId, item.name, item.price, item.imageUrl, item.quantity);
-        sessionStorage.removeItem('pendingCartItem');
-        showToast({
-            type: 'success',
-            title: 'Welcome Back!',
-            message: 'Item has been added to your cart',
-            duration: 3000
-        });
-    }
+    // Run when localStorage changes (logged in from another tab)
+    window.addEventListener('storage', function(e) {
+        if (e.key === 'userName') updateUserDisplay();
+    });
+
+
+
+    const accountIcons = document.querySelectorAll('.accountIcon');
+
+accountIcons.forEach(icon => {
+    icon.addEventListener('click', () => {
+        window.location.href = "../HTML/account.html";
+    });
 });
-
-window.addEventListener('popstate', () => {
-    currentPage = 1;
-    currentCategory = getCategoryFromUrl();
-    isSearchMode = false;
-    currentSearchTerm = '';
-    loadProductsByCategory();
-});
-
-// Make functions available globally
-window.handleAddToCart = handleAddToCart;
-window.addToCart = addToCart;
-window.clearSearch = clearSearch;
-window.searchProducts = searchProducts;
-
-

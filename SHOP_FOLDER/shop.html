@@ -1,924 +1,515 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Shop - Cottage Cosmetics</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../CSS/style.css">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="shop.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shop – Cottage Cosmetics</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="../CSS/style.css">
+  <link rel="stylesheet" href="../SHOP_FOLDER/shop.css">
+  <link rel="stylesheet" href="../SHOP_FOLDER/cart.css">
 </head>
-<!-- Toast Notification Container -->
-<div id="toastContainer" class="toast-container"></div>
 <body>
-<!-- <div class="header">
-        
-        <h1>Our Products</h1>
-</div> -->
+  <header>
+    <nav class="faq">
+      <ul class="list">
+        <li><a href="#">FAQ</a></li>
+        <li><a href="shop.html?category=bath">Bath & Body</a></li>
+        <li><a href="#">Become a Distributor</a></li>
+        <li><a href="#">Contact Helpdesk</a></li>
+        <li><a href="#">Support Center</a></li>
+      </ul>
+    </nav>
 
-    
-    <header>
-        <nav class="faq">
-            <ul class="list">
-                <li><a href="#">FAQ</a></li>
-                <li><a href="shop.html?category=bath">Bath & Body</a></li>
-                <li><a href="#">Become a Distributor</a></li>
-                <li><a href="#">Contact Helpdesk</a></li>
-                <li><a href="#">Support Center</a></li>
-            </ul>
-        </nav>
-
-        <nav class="navbar">
-            <div class="nav-links">
-
-                <div class="close-icon">&times;</div>
-
-                <div class="nav-links-img">
-                    <img class="brandName" src="../IMAGES/brand name.svg" alt="">
-                </div>
-
-                <div class="nav-links-text">
-                    <h4>MAIN MENU</h4>
-                    <ul>
-                        <li onclick="window.location.href = '../HTML/brand-images.html'">Brands</li>
-                        <li onclick="window.location.href = './shop.html?category=bath'">Bath & Body</li>
-                        <li onclick="window.location.href='./shop.html?category=serum'">Serum</li>
-                        <li onclick="window.location.href='./shop.html?category=bundles'">Baby Skin</li>
-                        <li onclick="window.location.href = './shop.html'">Shop all</li>
+    <nav class="faqs">
+            <div class="ticker-wrap">
+                <div class="ticker">
+                    <ul class="ticker__list">
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="shop.html?category=bath">Bath & Body</a></li>
+                        <li><a href="#">Become a Distributor</a></li>
+                        <li><a href="#">Contact Helpdesk</a></li>
+                        <li><a href="#">Support Center</a></li>
+                        
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="shop.html?category=bath">Bath & Body</a></li>
+                        <li><a href="#">Become a Distributor</a></li>
+                        <li><a href="#">Contact Helpdesk</a></li>
+                        <li><a href="#">Support Center</a></li>
                     </ul>
                 </div>
-
-                <p>@ 2026 Cottage Cosmetics / All Rights Reserved</p>
-            </div>
-
-            <div class="overlay"></div> 
-
-            <i class='bx bx-menu' id="menu-icon"></i>
-        </nav>
-
-        <nav class="nav2">
-            <div class="brand-img" onclick="window.location.href = '../HTML/index.html'">
-                <img class="brandName" src="../IMAGES/brand name.svg" alt="">
-            </div>
-
-            <div class="brand-search">
-                <div class="search-wrapper">
-                    <input type="text" id="name" placeholder="Search products..." autocomplete="off">
-                    <button type="button" class="clear-btn" title="Clear">×</button>
-                </div>
-                <button type="submit" class="search-btn">
-                    <i class="bx bx-search"></i>
-                </button>
-                <!-- suggestions will be added here by JS -->
-            </div>
-
-            <div class="user-cart">
-                <span class="accountIcon"><i class='bx bx-user-circle'></i></span>
-                <span class="accountIcon">Sign in <span>Account</span></span>
-                 <span><i class='bx bx-heart' ></i></span>
-                    <span id="addToCart" class="cart-icon"><i class='bx bx-cart-alt' ></i>
-                    <span id="cartCount" class="cart-count">0</span>
-                </span> 
             </div>
         </nav>
 
-        <nav class ="nav3">
-            <ul class="navbar-list">
-                <li class="brand">Brands
-                    <div class="brands">
-                        <div class="brandss">
-                            <h2 onclick="window.location.href = '../HTML/brand-images.html'">Brands</h2>
-                            <ul>
-                                <li>CeraVe</li>
-                                <li>Zaron</li>
-                                <li>Dior</li>
-                                <li>RevLon</li>
-                                <li>Maybelline</li>
-                                <li>Sukin</li>
-                                <li>Dr. Teal's</li>
-                                <li>Nutrogena</li>
-                                <li>Cetaphil</li>
-                                <li>Simple</li>
-                                <li>MAC</li>
-                                <li>SheaMoisture</li>
-                                <li>NARS</li>
-                                <li>e.i.f</li>
-                                <li>Huda Beauty</li>
-                            </ul>
-                            <a href="#">View all</a>
-                        </div>
-                        <div>
-                            <img src="../IMAGES/image.png" alt="Nivea Body Milk">
-                            <img src="../IMAGES/image.png" alt="Nivea Body Milk">
-                        </div>
-                    </div>
-                </li>
+    <nav class="navbar">
+      <div class="nav-links">
+        <div class="close-icon">&times;</div>
+        <div class="nav-links-img">
+          <img class="brandName" src="../IMAGES/brand name.svg" alt="">
+        </div>
+        <div class="nav-links-text">
+          <h4>MAIN MENU</h4>
+          <ul>
+            <li onclick="window.location.href = './brand-images.html'">Brands</li>
+            <li onclick="window.location.href='../SHOP_FOLDER/shop.html?category=bath'">Bath & Body</li>
+            <li onclick="window.location.href='../SHOP_FOLDER/shop.html?category=serum'">Serum</li>
+            <li onclick="window.location.href = '../SHOP_FOLDER/shop.html?category=baby'">Baby Skin</li>
+            <li><a href="../SHOP_FOLDER/shop.html">Shop all</a></li>
+          </ul>
+        </div>
+        <p>@ 2026 Cottage Cosmetics / All Rights Reserved</p>
+      </div>
+      <div class="overlay"></div> 
+      <i class='bx bx-menu' id="menu-icon"></i>
+    </nav>
 
-                <li class="bath">Bath & Body
-                    <div class="baths">
-                        <div class="baths1">
-                            <h2>Bath & Body</h2>
-                            <ul>
-                                <li>Acne treatment</li>
-                                <li>Bath Socks and Bubble bath</li>
-                                <li>Beauty Supplements</li>
-                                <li>Body oils</li>
-                                <li>Body wash</li>
-                                <li>Moisturizers and lotion</li>
-                                <li>Essential oils</li>
-                                <li>Feet care</li>
-                                <li>Scrubs and Exfoliatants</li>
-                                <li></li>
-                            </ul>
-                        </div>
+    <nav class="nav2">
+      <div class="brand-img" onclick="window.location.href = '../index.html'">
+        <img class="brandName" src="../IMAGES/brand name.svg" alt="">
+      </div>
+      <div class="brand-search">
+        <div class="search-wrapper">
+          <input type="text" id="name" placeholder="Search products..." autocomplete="off">
+          <button type="button" class="clear-btn" title="Clear">×</button>
+        </div>
+        <button type="submit" class="search-btn">
+          <i class="bx bx-search"></i>
+        </button>
+      </div>
+      <div class="user-cart">
+        <span class="accountIcon"><i class='bx bx-user-circle'></i></span>
+        <span class="accountIcon">Sign in <span>Account</span></span>
+        <span><i class='bx bx-heart'></i></span>
+        <span id="addToCart" class="cart-icon"><i class='bx bx-cart-alt'></i>
+          <span id="cartCount" class="cart-count">0</span>
+        </span>          
+      </div>
+    </nav>
 
-                        
-                        <div class="baths1">
-                            <h2>Specific Concerns</h2>
-                            <ul>
-                                <li>Acne, Pimples and Blackheads</li>
-                                <li>Sensitive Skin</li>
-                                <li>Anti-aging</li>
-                                <li>Normal and Combination skin</li>
-                                <li>Dark Spots & hyperpigmentation</li>
-                                <li>dry Skin / Hydration</li>
-                                <li>Dull Skin</li>
-                                <li>Oily Skin</li>
-                            </ul>
-                        </div>
+    <nav class="nav3">
+      <ul class="navbar-list">
+        <li class="brand" onclick="window.location.href = './brand-images.html'">Brands
+          <div class="brands">
+            <div class="brandss">
+              <h2></h2>
+              <ul>
+                <li>CeraVe</li>
+                <li>Zaron</li>
+                <li>Dior</li>
+                <li>RevLon</li>
+                <li>Maybelline</li>
+                <li>Sukin</li>
+                <li>Dr. Teal's</li>
+                <li>Nutrogena</li>
+                <li>Cetaphil</li>
+                <li>Simple</li>
+                <li>MAC</li>
+                <li>SheaMoisture</li>
+                <li>NARS</li>
+                <li>e.i.f</li>
+                <li>Huda Beauty</li>
+              </ul>
+              <a href="#">View all</a>
+            </div>
+            <div>
+              <img src="../IMAGES/image.png" alt="Nivea Body Milk">
+              <img src="../IMAGES/image.png" alt="Nivea Body Milk">
+            </div>
+          </div>
+        </li>
+        <li class="bath" onclick="window.location.href = '../SHOP_FOLDER/shop.html?category=bath'">Bath & Body
+          <div class="baths">
+            <div class="baths1">
+              <h2>Bath & Body</h2>
+              <ul>
+                <li>Acne treatment</li>
+                <li>Bath Socks and Bubble bath</li>
+                <li>Beauty Supplements</li>
+                <li>Body oils</li>
+                <li>Body wash</li>
+                <li>Moisturizers and lotion</li>
+                <li>Essential oils</li>
+                <li>Feet care</li>
+                <li>Scrubs and Exfoliatants</li>
+              </ul>
+            </div>
+            <div class="baths1">
+              <h2>Specific Concerns</h2>
+              <ul>
+                <li>Acne, Pimples and Blackheads</li>
+                <li>Sensitive Skin</li>
+                <li>Anti-aging</li>
+                <li>Normal and Combination skin</li>
+                <li>Dark Spots & hyperpigmentation</li>
+                <li>dry Skin / Hydration</li>
+                <li>Dull Skin</li>
+                <li>Oily Skin</li>
+              </ul>
+            </div>
+            <div class="baths1">
+              <ul>
+                <h2>Hand Care</h2>
+                <li>Hand creams and masks</li>
+              </ul>
+              <ul>
+                <h2>Feet Care</h2>
+                <li>Foot creams and Exfoliatants</li>
+              </ul>
+              <ul>
+                <h2>Oral Care</h2>
+                <li>Tooth brushes and tooth pastes</li>
+              </ul>
+            </div>
+          </div>
+        </li>
+        <li>Serum</li>
+        <li class="deal">Deals
+          <div class="deals">
+            <p>Under 5k</p>
+            <p>Best Sellers</p>
+            <p>On Sale</p>
+            <p>Back in Stock</p>
+            <p>Gift Cards</p>
+          </div>
+        </li>
+        <li>Bundle</li>
+        <li onclick="window.location.href = '../SHOP_FOLDER/shop.html'">Shop all</li>
+      </ul>
+    </nav>
+  </header>
 
-                        <div class="baths1">
-                            <ul>
-                                <h2>Hand Care</h2>
-                                <li>Hand creams and masks</li>
-                            </ul>
+  <!-- Dim Overlay -->
+  <div class="dim-overlay" id="dimOverlay" onclick="toggleCart()"></div>
 
-                            <ul>
-                                <h2>Feet Care</h2>
-                                <li>Foot creams and Exfoliatants</li>
-                            </ul>
+  <!-- Cart Drawer -->
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="cart-head">
+      <div>
+        <h3>Your Cart</h3>
+        <div class="cart-count-label" id="cartCountLabel">0 items</div>
+      </div>
+      <button class="close-btn" onclick="toggleCart()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  
+    <div class="cart-body" id="cartBody">
+      <!-- Cart items will be dynamically inserted here -->
+    </div>
+  
+    <div class="cart-foot" id="cartFoot" style="display:none">
+      <div class="cart-summary-rows">
+        <div class="cart-row">
+          <span>Subtotal</span>
+          <span id="cartSubtotal">$0.00</span>
+        </div>
+        <div class="cart-row">
+          <span>Shipping</span>
+          <span style="color:var(--gold)">Free</span>
+        </div>
+        <div class="cart-row total">
+          <span>Total</span>
+          <span id="cartTotal">$0.00</span>
+        </div>
+      </div>
+      <button class="btn-to-checkout" onclick="goToCheckout()">
+        Proceed to Checkout
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="5" y1="12" x2="19" y2="12"/>
+          <polyline points="12 5 19 12 12 19"/>
+        </svg>
+      </button>
+    </div>
+  </div>
 
-                            <ul>
-                                <h2>Oral Care</h2>
-                                <li>Tooth brushes and tooth pastes</li>
-                            </ul>
-                        </div>
-                    </div>
-                </li>
+  <!-- DOWN ICONS -->
+  <section class="down-icons">
+    <span><i class='bx bx-store-alt bx-tada'></i></span>
+    <span><i class='bx bx-search bx-flashing'></i></span>
+    <span><i class='bx bx-heart bx-burst'></i></span>
+    <span class="accountIcon"><i class='bx bx-user-circle bx-tada'></i></span>
+  </section>
 
-                <li>Serum</li>
+  <!-- Filter Overlay -->
+  <div class="filter-overlay" id="filterOverlay"></div>
 
-                <li class="deal">Deals
-                    <div class="deals">
-                        <p>Under 5k</p>
-                        <p>Best Sellers</p>
-                        <p>On Sale</p>
-                        <p>Back in Stock</p>
-                        <p>Gift Cards</p>
-                    </div>
-                </li>
+  <div class="container">
+    <!-- Desktop Sidebar (hidden on mobile) -->
+    <aside class="sidebar desktop-sidebar">
+      <div class="filter-group">
+        <h3>Categories</h3>
+        <ul>
+          <li><a href="?category=all" class="filter-link">All Products</a></li>
+          <li><a href="?category=bath" class="filter-link">Bath & Body</a></li>
+          <li><a href="?category=body1" class="filter-link">Body Lotion</a></li>
+          <li><a href="?category=face" class="filter-link">Face</a></li>
+          <li><a href="?category=faceMask" class="filter-link">Face Mask</a></li>
+          <li><a href="?category=faceWash" class="filter-link">Face Wash</a></li>
+          <li><a href="?category=baby" class="filter-link">Baby Skin</a></li>
+          <li><a href="?category=serum" class="filter-link">Serum</a></li>
+          <li><a href="?category=cream" class="filter-link">Cream</a></li>
+          <li><a href="?category=sunScreen" class="filter-link">Sun Screen</a></li>
+          <li><a href="?category=scrubs" class="filter-link">Scrubs</a></li>
+        </ul>
+      </div>
 
-                <li>Bundle</li>
+      <div class="filter-group">
+        <h3>Skin Type</h3>
+        <ul>
+          <li><label><input type="checkbox" class="skin-filter" value="normal"> Normal</label></li>
+          <li><label><input type="checkbox" class="skin-filter" value="oily"> Oily</label></li>
+          <li><label><input type="checkbox" class="skin-filter" value="dry"> Dry</label></li>
+          <li><label><input type="checkbox" class="skin-filter" value="combination"> Combination</label></li>
+          <li><label><input type="checkbox" class="skin-filter" value="sensitive"> Sensitive</label></li>
+        </ul>
+      </div>
 
-                <li>Yet</li>
+      <div class="filter-group">
+        <h3>Price</h3>
+        <div class="price-slider">
+          <input type="range" min="0" max="50000" value="50000" step="1000" id="priceRange">
+          <div style="margin-top:8px; color:var(--text-muted);" id="priceDisplay">₦0 – ₦50,000</div>
+        </div>
+      </div>
+    </aside>
+
+    <main>
+      <!-- Mobile Filter Hamburger -->
+      <div class="mobile-filter-header">
+        <button class="mobile-filter-btn" id="mobileFilterBtn">
+          <i class='bx bx-filter-alt'></i>
+          <span>Filters</span>
+        </button>
+        <span class="mobile-showing">Showing 1-12 of 32 products</span>
+      </div>
+
+      <!-- Filter Drawer (Mobile) -->
+      <div class="filter-drawer" id="filterDrawer">
+        <div class="filter-drawer-header">
+          <h3>Filters</h3>
+          <button class="close-drawer" id="closeDrawer">&times;</button>
+        </div>
+        
+        <div class="filter-drawer-content">
+          <!-- Categories -->
+          <div class="filter-section">
+            <h4>Categories</h4>
+            <ul>
+              <li><a href="?category=all" class="filter-link mobile-filter-link">All Products</a></li>
+              <li><a href="?category=bath" class="filter-link mobile-filter-link">Bath & Body</a></li>
+              <li><a href="?category=body1" class="filter-link mobile-filter-link">Body Lotion</a></li>
+              <li><a href="?category=face" class="filter-link mobile-filter-link">Face</a></li>
+              <li><a href="?category=faceMask" class="filter-link mobile-filter-link">Face Mask</a></li>
+              <li><a href="?category=faceWash" class="filter-link mobile-filter-link">Face Wash</a></li>
+              <li><a href="?category=baby" class="filter-link mobile-filter-link">Baby Skin</a></li>
+              <li><a href="?category=serum" class="filter-link mobile-filter-link">Serum</a></li>
+              <li><a href="?category=cream" class="filter-link mobile-filter-link">Cream</a></li>
+              <li><a href="?category=sunScreen" class="filter-link mobile-filter-link">Sun Screen</a></li>
+              <li><a href="?category=scrubs" class="filter-link mobile-filter-link">Scrubs</a></li>
             </ul>
-        </nav>
-    </header>
+          </div>
+
+          <!-- Skin Type -->
+          <div class="filter-section">
+            <h4>Skin Type</h4>
+            <ul>
+              <li><label><input type="checkbox" class="skin-filter-mobile" value="normal"> Normal</label></li>
+              <li><label><input type="checkbox" class="skin-filter-mobile" value="oily"> Oily</label></li>
+              <li><label><input type="checkbox" class="skin-filter-mobile" value="dry"> Dry</label></li>
+              <li><label><input type="checkbox" class="skin-filter-mobile" value="combination"> Combination</label></li>
+              <li><label><input type="checkbox" class="skin-filter-mobile" value="sensitive"> Sensitive</label></li>
+            </ul>
+          </div>
+
+          <!-- Price -->
+          <div class="filter-section">
+            <h4>Price Range</h4>
+            <div class="price-slider-mobile">
+              <input type="range" min="0" max="50000" value="50000" step="1000" id="priceRangeMobile">
+              <div style="margin-top:8px; color:var(--text-muted);" id="priceDisplayMobile">₦0 – ₦50,000</div>
+            </div>
+          </div>
+
+          <!-- Apply Button -->
+          <button class="apply-filters-btn" id="applyFilters">Apply Filters</button>
+        </div>
+      </div>
+
+      <div class="controls desktop-controls">
+        <div id="showingText">Showing 1-12 of 32 products</div>
+        <select id="sortSelect">
+          <option value="default">Default sorting</option>
+          <option value="price-low">Price: low to high</option>
+          <option value="price-high">Price: high to low</option>
+          <option value="name">Name: A–Z</option>
+        </select>
+      </div>
+
+      <div class="products-grid" id="productsGrid">
+        <!-- Loader starts here -->
+        <div class="loader-container" id="loader">
+          <div class="spinner"></div>
+          <p>Loading products...</p>
+        </div>
+      </div>
+
+      <div class="pagination" id="pagination"></div>
+    </main>
+  </div>
+
+  <!-- Toast container -->
+  <div id="toastContainer" style="position:fixed; top:20px; right:20px; z-index:9999;"></div>
+
+  <footer>
+    <section class="footer1">
+      <div class="cottage-cosmetics">
+        <img class="brandName" src="../IMAGES/brand name.svg" alt="">
+        <p>Cottage Cosmetics | Premium Skincare & Beauty Essentials in Nigeria
+          We curate authentic skincare and beauty products, sourced directly from trusted manufacturers and certified distributors to ensure exceptional quality, safety, and results you can rely on</p>
+      </div>
+
+      <div class="numbers-links">
+        <div>
+          <h4>Quick Actions</h4>
+          <ul>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Book a Consultation</a></li>
+            <li><a href="#">Shipping</a></li>
+            <li><a href="#">FAQs</a></li>
+            <li><a href="#">Store Locator</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Categories</h4>
+          <ul>
+            <li><a href="#">Brands</a></li>
+            <li><a href="#">Baths & Body</a></li>
+            <li><a href="#">Skincare</a></li>
+            <li><a href="#">Baby Skin</a></li>
+            <li><a href="#">Body oil</a></li>
+            <li><a href="#">Face</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="#">hello@cottagecosmetics.com</a></li>
+            <li><a href="#">Wholesale (+234)8154969674</a></li>
+            <li><a href="#">(+234)0704095243</a></li>
+            <li><a href="#">(+234)9049953986</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
     <hr>
 
+    <div class="footer2">
+      <p>2026, All Rights Reserved</p>
+      <ul>
+        <li><a href="#">Terms</a></li>
+        <li><a href="#">Refunds</a></li>
+        <li><a href="#">Privacys</a></li>
+        <li><span>Designed by</span> <a href="#">Ema</a></li>
+      </ul>
+    </div>
+  </footer>
 
-    <section class="down-icons">
-        <span><i class='bx bx-store-alt bx-tada' ></i></span>
-        <span><i class='bx bx-search bx-flashing' ></i></i></span>
-        <span><i class='bx bx-heart bx-burst' ></i></span>
-        <span class="accountIcon"><i class='bx bx-user-circle bx-tada' ></i></span>
-    </section>
+  <script type="module" src="../SHOP_FOLDER/shop.js"></script>
+  <script type="module" src="../SHOP_FOLDER/cart.js"></script>
+  <script type="module" src="../JS/script.js"></script>
+  
+  <!-- Filter Drawer Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const mobileFilterBtn = document.getElementById('mobileFilterBtn');
+      const filterDrawer = document.getElementById('filterDrawer');
+      const closeDrawer = document.getElementById('closeDrawer');
+      const filterOverlay = document.getElementById('filterOverlay');
+      const body = document.body;
 
-    <section class="dark-skinned">
-            <img src="../IMAGES/lovely-dark-skinned-model-with-crisp-hair-applies-pink-hydrogel-patches-eyes-removing-bags-puffiness-after-sleepless-night-has-cheerful-expression-dressed-casually.jpg" alt="">
-    </section>
+      // Open drawer
+      mobileFilterBtn.addEventListener('click', function() {
+        filterDrawer.classList.add('active');
+        filterOverlay.classList.add('active');
+        body.classList.add('filter-open');
+      });
 
-    <section class="general">
-        
-        <div class="productss">
-            <h1>Products Categories</h1>
-            <ul>
-                <li onclick="window.location.href = 'shop.html?category=bath'">Bath & Body</li>
-                <li onclick="window.location.href = 'shop.html?category=body1'">Body Lotion</li>
-                <li onclick="window.location.href = 'shop.html?category=face'">Face</li>
-                <li onclick="window.location.href = 'shop.html?category=faceMask'">Face Mask</li>
-                <li onclick="window.location.href = 'shop.html?category=faceWash'">Face Wash</li>
-                <li onclick="window.location.href = 'shop.html?category=baby'">Baby Skin</li>
-                <li onclick="window.location.href = 'shop.html?category=babyLotion'">Baby Lotion</li>
-                <li onclick="window.location.href = 'shop.html?category=babyWash'">Baby Wash</li>
-                <li onclick="window.location.href = 'shop.html?category=babyOil'">Baby Oil</li>
-                <li onclick="window.location.href = 'shop.html?category=babyPowder'">Baby Powder</li>
-                <li onclick="window.location.href = 'shop.html?category=cream'">Cream</li>
-                <li onclick="window.location.href = 'shop.html?category=serum'">Serum</li>
-                <li onclick="window.location.href = 'shop.html?category=skincare'">Skin Care</li>
-                <li onclick="window.location.href = 'shop.html?category=sunScreen'">Sun Screen</li>
-                <li onclick="window.location.href = 'shop.html?category=scrubs'">Scrubs</li>
-            </ul>
-        </div>
+      // Close drawer function
+      function closeFilterDrawer() {
+        filterDrawer.classList.remove('active');
+        filterOverlay.classList.remove('active');
+        body.classList.remove('filter-open');
+      }
 
-        <!-- <div class="productss2">
-            <h1 id="productss2-h1">Products Categories</h1>
-            <ul id="productss2-ul">
-                <li onclick="window.location.href = 'shop.html?category=bath'">Bath</li>
-                <li onclick="window.location.href = 'shop.html?category=baby-skin'">Baby Skin</li>
-                <li>Body wash</li>
-                <li>Cream</li>
-                <li>Skincare</li>
-                <li onclick="window.location.href = 'shop.html?category=face'">Face</li>
-                <li>Baby</li>
-                <li>Body wash</li>
-                <li onclick="window.location.href = 'shop.html?category=cream'">Cream</li>
-                <li>Skincare</li>
-                <li>Bath</li>
-                <li>Baby</li>
-                <li>Body wash</li>
-                <li>Cream</li>
-                <li>Skincare</li>
-            </ul>
-        </div> -->
+      // Close with X button
+      closeDrawer.addEventListener('click', closeFilterDrawer);
 
-        <div class="container">
-                <!-- NEW: Category filter tabs -->
-                <div class="category-tabs">
-                    <button class="category-tab active" >All Products</button>
-                    <!-- <button class="category-tab" onclick="filterProducts('bath')">Bath & Body</button>
-                    <button class="category-tab" onclick="filterProducts('serum')">Serum</button>
-                    <button class="category-tab" onclick="filterProducts('face')">Face</button> -->
-                </div>
+      // Close with overlay click
+      filterOverlay.addEventListener('click', closeFilterDrawer);
 
-                <!-- Products grid -->
-                <div id="productsGrid" class="products-grid"></div>
-        </div>
-    </section>
-
-            <footer>
-        <section class="footer1">
-            <div class="cottage-cosmetics">
-                <img class="brandName" src="../IMAGES/brand name.svg" alt="">
-                <p>Cottage Cosmetics | Premium Skincare & Beauty Essentials in Nigeria
-                    We curate authentic skincare and beauty products, sourced directly from trusted manufacturers and certified distributors to ensure exceptional quality, safety, and results you can rely on</p>
-            </div>
-
-            <div class="numbers-links">
-                <div>
-                    <h4>Quick Actions</h4>
-                    <ul>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">Book a Consultation</a></li>
-                        <li><a href="#">Shipping</a></li>
-                        <li><a href="#">FAQs</a></li>
-                        <li><a href="#">Store Locator</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4>Categories</h4>
-                    <ul>
-                        <li><a href="#">Brands</a></li>
-                        <li><a href="#">Baths & Body</a></li>
-                        <li><a href="#">Skincare</a></li>
-                        <li><a href="#">Baby Skin</a></li>
-                        <li><a href="#">Body oil</a></li>
-                        <li><a href="#">Face</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4>Contact</h4>
-                    <ul>
-                        <li><a href="#">hello@cottagecosmetics.com</a></li>
-                        <li><a href="#">Wholesale (+234)8154969674</a></li>
-                        <li><a href="#">(+234)0704095243</a></li>
-                        <li><a href="#">(+234)9049953986</a></li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <hr>
-
-        <div class="footer2">
-            <p>2026, All Rights Reserved</p>
-            <ul>
-                <li><a href="#">Terms</a></li>
-                <li><a href="#">Refunds</a></li>
-                <li><a href="#">Privacys</a></li>
-                <li><span>Designed by</span> <a href="#">Ema</a></li>
-            </ul>
-        </div>
-    </footer>
-
-        <script>
-    // Update user display on homepage
-    function updateUserDisplay() {
-        const userName = localStorage.getItem('userName');
-        
-        // Find the "Sign in Account" element - it's in a span within .user-cart
-        const userCartSpan = document.querySelector('.user-cart span:nth-child(2)');
-        
-        if (userName && userCartSpan) {
-            // Change "Sign in Account" to show the user's name
-            userCartSpan.innerHTML = `Hi, <span style="color: #8424e3; font-weight: 600;">${userName}</span>`;
+      // Close on escape key
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && filterDrawer.classList.contains('active')) {
+          closeFilterDrawer();
         }
-    }
-    
-    // Run when page loads
-    document.addEventListener('DOMContentLoaded', updateUserDisplay);
-    
-    // Run when page becomes visible (user comes back to tab)
-    document.addEventListener('visibilitychange', function() {
-        if (!document.hidden) updateUserDisplay();
-    });
-    
-    // Run when localStorage changes (logged in from another tab)
-    window.addEventListener('storage', function(e) {
-        if (e.key === 'userName') updateUserDisplay();
-    });
-</script>
+      });
 
-<!-- Your other content ... -->
-
-<!-- Cart logic – load at the bottom -->
-<script type="module">
-    // Import the functions you actually need
-    import { initCartCounts } from "./cart-helper.js";   // adjust path if needed
-
-    // Run initialization when the page is ready
-    document.addEventListener("DOMContentLoaded", () => {
-        initCartCounts();
-    });
-</script>
-
-
-
-<!-- Mobile Search Functionality for Down Icons -->
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
-
-    // Your Firebase config
-    const firebaseConfig = {
-        apiKey: "AIzaSyB4Hy_sEEH1twq0GDzKi5E1CZD5dVHn4Kk",
-        authDomain: "cottage-9fa0c.firebaseapp.com",
-        projectId: "cottage-9fa0c",
-        storageBucket: "cottage-9fa0c.firebasestorage.app",
-        messagingSenderId: "346971937714",
-        appId: "1:346971937714:web:0f453c14862de16bede2ab"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    // Mobile search variables
-    let mobileProductsCache = [];
-    let mobileSearchTimeout;
-
-    // Category display names
-    const categoryDisplayNames = {
-        'all': 'All Products',
-        'bath': 'Bath & Body',
-        'body1': 'Body Lotion',
-        'face': 'Face',
-        'faceMask': 'Face Mask',
-        'faceWash': 'FaceWash',
-        'baby': 'Baby Skin',
-        'babyLotion': 'Baby Lotion',
-        'babyWash': 'Baby Wash',
-        'babyOil': 'Baby Oil',
-        'babyPowder': 'Baby Powder',
-        'cream': 'Cream',
-        'serum': 'Serum',
-        'skincare': 'Skin Care',
-        'sunScreen': 'Sun Screen',
-        'scrubs': 'Scrubs'
-    };
-
-    function getCategoryDisplayName(category) {
-        return categoryDisplayNames[category] || category || 'Product';
-    }
-
-    // Create mobile search overlay
-    function createMobileSearchOverlay() {
-        // Check if overlay already exists
-        if (document.getElementById('mobileSearchOverlay')) return;
-
-        const overlayHTML = `
-            <div class="mobile-search-overlay" id="mobileSearchOverlay">
-                <div class="mobile-search-header">
-                    <button class="mobile-search-back" id="mobileSearchBack">
-                        <i class='bx bx-arrow-back'></i>
-                    </button>
-                    <h3>Search Products</h3>
-                </div>
-                <div class="mobile-search-content">
-                    <div class="mobile-search-input-wrapper">
-                        <i class='bx bx-search'></i>
-                        <input type="text" id="mobileSearchInput" placeholder="Search for products..." autocomplete="off">
-                        <button class="mobile-clear-btn" id="mobileClearBtn">×</button>
-                    </div>
-                    <div class="mobile-search-suggestions" id="mobileSearchSuggestions"></div>
-                </div>
-            </div>
-        `;
-        
-        document.body.insertAdjacentHTML('beforeend', overlayHTML);
-        
-        // Add active class to search icon
-        const searchIcon = document.querySelector('.down-icons span:nth-child(2)');
-        if (searchIcon) {
-            searchIcon.addEventListener('click', toggleMobileSearch);
-        }
-        
-        // Back button
-        const backBtn = document.getElementById('mobileSearchBack');
-        if (backBtn) {
-            backBtn.addEventListener('click', closeMobileSearch);
-        }
-        
-        // Close when clicking outside
-        const overlay = document.getElementById('mobileSearchOverlay');
-        if (overlay) {
-            overlay.addEventListener('click', (e) => {
-                if (e.target === overlay) {
-                    closeMobileSearch();
-                }
-            });
-        }
-        
-        // Initialize search input
-        initializeMobileSearchInput();
-        
-        // Load products cache
-        loadMobileProductsCache();
-    }
-
-    // Initialize mobile search input
-    function initializeMobileSearchInput() {
-        const mobileInput = document.getElementById('mobileSearchInput');
-        const mobileClearBtn = document.getElementById('mobileClearBtn');
-        const mobileSuggestions = document.getElementById('mobileSearchSuggestions');
-
-        if (mobileInput) {
-            mobileInput.addEventListener('input', (e) => {
-                if (mobileClearBtn) {
-                    mobileClearBtn.style.display = e.target.value.trim().length > 0 ? 'block' : 'none';
-                }
-                
-                clearTimeout(mobileSearchTimeout);
-                mobileSearchTimeout = setTimeout(() => {
-                    showMobileSearchSuggestions(e.target.value);
-                }, 300);
-            });
-
-            mobileInput.addEventListener('focus', (e) => {
-                if (e.target.value.trim().length >= 2) {
-                    showMobileSearchSuggestions(e.target.value);
-                }
-            });
-
-            mobileInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    performMobileSearch(mobileInput.value);
-                }
-            });
-        }
-
-        if (mobileClearBtn) {
-            mobileClearBtn.addEventListener('click', () => {
-                if (mobileInput) {
-                    mobileInput.value = '';
-                    mobileClearBtn.style.display = 'none';
-                    mobileInput.focus();
-                    hideMobileSuggestions();
-                }
-            });
-        }
-    }
-
-    // Toggle mobile search
-    function toggleMobileSearch() {
-        const overlay = document.getElementById('mobileSearchOverlay');
-        if (overlay) {
-            overlay.classList.add('active');
-            setTimeout(() => {
-                const input = document.getElementById('mobileSearchInput');
-                if (input) input.focus();
-            }, 300);
-        }
-    }
-
-    // Close mobile search
-    function closeMobileSearch() {
-        const overlay = document.getElementById('mobileSearchOverlay');
-        if (overlay) {
-            overlay.classList.remove('active');
-            // Clear input and suggestions
-            const input = document.getElementById('mobileSearchInput');
-            const clearBtn = document.getElementById('mobileClearBtn');
-            if (input) input.value = '';
-            if (clearBtn) clearBtn.style.display = 'none';
-            hideMobileSuggestions();
-        }
-    }
-
-    // Load mobile products cache
-    async function loadMobileProductsCache() {
-        try {
-            if (mobileProductsCache.length === 0) {
-                const querySnapshot = await getDocs(collection(db, "products"));
-                querySnapshot.forEach((doc) => {
-                    mobileProductsCache.push({
-                        id: doc.id,
-                        ...doc.data()
-                    });
-                });
-                console.log(`Loaded ${mobileProductsCache.length} products for mobile search`);
-            }
-        } catch (error) {
-            console.error("Error loading mobile products cache:", error);
-        }
-    }
-
-    // Show mobile search suggestions
-    async function showMobileSearchSuggestions(searchTerm) {
-        const suggestionsContainer = document.getElementById('mobileSearchSuggestions');
-        if (!suggestionsContainer) return;
-        
-        if (!searchTerm || searchTerm.trim().length < 2) {
-            suggestionsContainer.classList.remove('show');
-            return;
-        }
-        
-        try {
-            const searchTermLower = searchTerm.toLowerCase().trim();
-            
-            if (mobileProductsCache.length === 0) {
-                await loadMobileProductsCache();
-            }
-            
-            const suggestions = mobileProductsCache
-                .filter(product => {
-                    const text = `
-                        ${(product.name || '').toLowerCase()}
-                        ${(product.description || '').toLowerCase()}
-                        ${(product.category || '').toLowerCase()}
-                    `;
-                    
-                    const display = getCategoryDisplayName(product.category || '').toLowerCase();
-                    
-                    return (
-                        text.includes(searchTermLower) ||
-                        display.includes(searchTermLower) ||
-                        display.replace(/ & /g, ' ').includes(searchTermLower) ||
-                        display.replace(/ & /g, '').includes(searchTermLower) ||
-                        display.replace(/\s+/g, '').includes(searchTermLower)
-                    );
-                })
-                .slice(0, 8);
-            
-            if (suggestions.length === 0) {
-                suggestionsContainer.innerHTML = `
-                    <div class="mobile-no-results">
-                        <i class='bx bx-search-alt'></i>
-                        <p>No products found for "${searchTerm}"</p>
-                    </div>
-                `;
-                suggestionsContainer.classList.add('show');
-                return;
-            }
-            
-            let html = '';
-            suggestions.forEach(product => {
-                const regex = new RegExp(`(${searchTerm})`, 'gi');
-                const highlightedName = product.name.replace(regex, '<span class="mobile-suggestion-highlight">$1</span>');
-                const category = getCategoryDisplayName(product.category);
-                const price = product.price ? `$${product.price.toFixed(2)}` : 'Price on request';
-                
-                html += `
-                    <div class="mobile-suggestion-item" onclick="goToMobileProductPage('${product.id}')">
-                        <div class="mobile-suggestion-image">
-                            <img src="${product.imageUrl || 'placeholder.jpg'}" alt="${product.name}" onerror="this.src='placeholder.jpg'">
-                        </div>
-                        <div class="mobile-suggestion-content">
-                            <span class="mobile-suggestion-name">${highlightedName}</span>
-                            <span class="mobile-suggestion-category">${category}</span>
-                            <span class="mobile-suggestion-price">${price}</span>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            suggestionsContainer.innerHTML = html;
-            suggestionsContainer.classList.add('show');
-            
-        } catch (error) {
-            console.error("Error showing mobile suggestions:", error);
-        }
-    }
-
-    // Perform mobile search
-    function performMobileSearch(searchTerm) {
-        if (!searchTerm || searchTerm.trim() === '') return;
-        
-        hideMobileSuggestions();
-        closeMobileSearch();
-        
-        localStorage.setItem('searchTerm', searchTerm);
-        window.location.href = `shop.html?search=${encodeURIComponent(searchTerm)}`;
-    }
-
-    // Go to mobile product page
-    window.goToMobileProductPage = function(productId) {
-        const product = mobileProductsCache.find(p => p.id === productId);
-        if (product) {
-            localStorage.setItem('selectedProduct', JSON.stringify(product));
-            closeMobileSearch();
-            window.location.href = 'product-detail.html';
-        }
-    };
-
-    // Hide mobile suggestions
-    function hideMobileSuggestions() {
-        const suggestions = document.getElementById('mobileSearchSuggestions');
-        if (suggestions) {
-            suggestions.classList.remove('show');
-        }
-    }
-
-    // Add mobile search styles
-    function addMobileSearchStyles() {
-        const style = document.createElement('style');
-        style.textContent = `
-            /* Mobile Search Overlay */
-            .mobile-search-overlay {
-                position: fixed;
-                bottom: 2000px;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 250vh;
-                background: white;
-                z-index: 10000;
-                transform: translateY(100%);
-                transition: transform 0.4s ease-in-out;
-                display: none;
-                flex-direction: column;
-            }
-            
-            .mobile-search-overlay.active {
-                transform: translateY(0);
-                display: flex;
-            }
-            
-            .mobile-search-header {
-                display: flex;
-                align-items: center;
-                padding: 40px 80px;
-                background: var(--primary-color);
-                color: white;
-                position: sticky;
-                top: 0;
-                z-index: 10;
-            }
-            
-            .mobile-search-back {
-                background: none;
-                border: none;
-                color: white;
-                font-size: 44px;
-                cursor: pointer;
-                padding: 0;
-                margin-right: 15px;
-                display: flex;
-                align-items: center;
-            }
-            
-            .mobile-search-header h3 {
-                font-size: 45px;
-                font-weight: 600;
-                margin: 0;
-            }
-            
-            .mobile-search-content {
-                flex: 1;
-                padding: 20px;
-                overflow-y: auto;
-                background: #f8f8f8;
-            }
-            
-            .mobile-search-input-wrapper {
-                position: relative;
-                display: flex;
-                align-items: center;
-                background: white;
-                border-radius: 62px;
-                // padding: 0 95px;
-                border: 2px solid var(--primary-color);
-                margin-bottom: 20px;
-                margin: 30px 30px 30px;
-            }
-            
-            .mobile-search-input-wrapper i {
-                color: #999;
-                font-size: 60px;
-                margin-right: 20px;
-                margin-left: 40px;
-            }
-            
-            .mobile-search-input-wrapper input {
-                flex: 1;
-                padding: 39px 0;
-                border: none;
-                background: transparent;
-                font-size: 40px;
-                outline: none;
-                
-            }
-            
-            .mobile-clear-btn {
-                display: none;
-                background: none;
-                border: none;
-                font-size: 54px;
-                color: #999;
-                cursor: pointer;
-                padding: 0 5px;
-            }
-            
-            .mobile-clear-btn:hover {
-                color: #333;
-            }
-            
-            .mobile-search-suggestions {
-                display: none;
-                flex-direction: column;
-                gap: 30px;
-                margin: 20px 
-            }
-            
-            .mobile-search-suggestions.show {
-                display: flex;
-            }
-            
-            .mobile-suggestion-item {
-                display: flex;
-                align-items: center;
-                gap: 25px;
-                height: 240px;
-                padding: 22px;
-                background: white;
-                border-radius: 32px;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-                cursor: pointer;
-                transition: transform 0.2s, box-shadow 0.2s;
-                margin: 0 20px;
-            }
-            
-            .mobile-suggestion-item:hover,
-            .mobile-suggestion-item:active {
-                transform: translateY(-2px);
-                box-shadow: 0 4px 12px rgba(132, 36, 227, 0.15);
-            }
-            
-            .mobile-suggestion-image {
-                width: 150px;
-                height: 150px;
-                border-radius: 10px;
-                overflow: hidden;
-                flex-shrink: 0;
-                background: #f5f5f5;
-            }
-            
-            .mobile-suggestion-image img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-            
-            .mobile-suggestion-content {
-                flex: 1;
-            }
-            
-            .mobile-suggestion-name {
-                font-weight: 600;
-                color: #333;
-                display: block;
-                margin-bottom: 8px;
-                font-size: 38px;
-                line-height: 1.2;
-                letter-spacing: -0.02em;
-            }
-            
-            .mobile-suggestion-category {
-                font-size: 30px;
-                color: var(--icons-color);
-                display: block;
-                margin-bottom: 7px;
-            }
-            
-            .mobile-suggestion-price {
-                font-size: 33px;
-                font-weight: 600;
-                color: #333;
-                display: block;
-            }
-            
-            .mobile-suggestion-highlight {
-                background-color: #ffe6f4;
-                color: var(--icons-color);
-                font-weight: 600;
-                padding: 0 2px;
-            }
-            
-            .mobile-no-results {
-                text-align: center;
-                padding: 40px 20px;
-                background: white;
-                border-radius: 12px;
-            }
-            
-            .mobile-no-results i {
-                font-size: 50px;
-                color: #ccc;
-                margin-bottom: 15px;
-            }
-            
-            .mobile-no-results p {
-                color: #666;
-                font-size: 16px;
-            }
-            
-            /* Active state for search icon */
-            .down-icons span:nth-child(2).active i {
-                color: var(--icons-color);
-                transform: scale(1.2);
-            }
-        `;
-        document.head.appendChild(style);
-    }
-
-    // Make down icons interactive
-    function initializeDownIcons() {
-        const downIcons = document.querySelectorAll('.down-icons span');
-        
-        downIcons.forEach((icon, index) => {
-            icon.addEventListener('click', () => {
-                // Remove active class from all icons
-                downIcons.forEach(i => i.classList.remove('active'));
-                
-                // Add active class to clicked icon
-                icon.classList.add('active');
-                
-                // Handle different icon clicks
-                switch(index) {
-                    case 0: // Store icon
-                        window.location.href = 'shop.html';
-                        break;
-                    case 1: // Search icon
-                        toggleMobileSearch();
-                        break;
-                    case 2: // Heart icon
-                        window.location.href = 'wishlist.html';
-                        break;
-                    case 3: // Account icon
-                        window.location.href = 'account.html';
-                        break;
-                }
-            });
+      // Close when clicking any filter link (categories)
+      document.querySelectorAll('.mobile-filter-link').forEach(link => {
+        link.addEventListener('click', function() {
+          closeFilterDrawer();
+          // The actual filtering happens via the href
         });
-    }
+      });
 
-    // Initialize everything
-    document.addEventListener('DOMContentLoaded', () => {
-        addMobileSearchStyles();
-        createMobileSearchOverlay();
-        initializeDownIcons();
+      // Apply filters button
+      document.getElementById('applyFilters').addEventListener('click', function() {
+        // Get selected skin types
+        const selectedSkinTypes = [];
+        document.querySelectorAll('.skin-filter-mobile:checked').forEach(cb => {
+          selectedSkinTypes.push(cb.value);
+        });
+
+        // Get price value
+        const priceValue = document.getElementById('priceRangeMobile').value;
+
+        // Here you would trigger your filter function
+        console.log('Applying filters:', { selectedSkinTypes, priceValue });
         
-        // Update cart count for mobile
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        const cartCount = document.getElementById('cartCount');
-        if (cartCount) {
-            const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
-            cartCount.innerText = totalItems;
-        }
+        // Close drawer
+        closeFilterDrawer();
+        
+        // You can add your filter logic here
+        // For example: updateProducts(selectedSkinTypes, priceValue);
+      });
+
+      // Update price display
+      const priceRangeMobile = document.getElementById('priceRangeMobile');
+      const priceDisplayMobile = document.getElementById('priceDisplayMobile');
+      
+      priceRangeMobile.addEventListener('input', function() {
+        priceDisplayMobile.textContent = `₦0 – ₦${Number(this.value).toLocaleString()}`;
+      });
+
+      // Sync price with desktop if needed
+      const priceRange = document.getElementById('priceRange');
+      const priceDisplay = document.getElementById('priceDisplay');
+      
+      if (priceRange) {
+        priceRange.addEventListener('input', function() {
+          priceDisplay.textContent = `₦0 – ₦${Number(this.value).toLocaleString()}`;
+        });
+      }
     });
-
-    // Make closeMobileSearch available globally
-    window.closeMobileSearch = closeMobileSearch;
-</script>
-
-
-    <script type="module" src="../JS/script.js"></script>
-    <script type="module" src="../SHOP_FOLDER/cart.js"></script>
-    <script type="module" src="../SHOP_FOLDER/shop.js"></script>
-
+  </script>
 </body>
 </html>

@@ -3,301 +3,377 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Orders - Cottage Cosmetics</title>
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="../CSS/style.css">
+    <title>Dashboard – Cottage Cosmetics</title>
+    
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
     <style>
-        :root{
+        :root {
             --primary-color: #5d1bb3;
             --icons-color: #8424e3;
             --secondary-color: #ffe6f4;
             --basic-color: #ffffff;
             --text-color: #333;
-            --border-radius: 5px;
+            --border-radius: 12px;
             --transition-duration: 0.3s;
+            --shadow: 0 6px 20px rgba(93,27,179,0.12);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', sans-serif;
         }
 
         body {
-            /* background: linear-gradient(135deg, var(--secondary-color) 0%, #ffd6e9 100%); */
+            background: #f5f3f7;
+            color: var(--text-color);
             min-height: 100vh;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
+        .layout {
+            display: flex;
+            min-height: 100vh;
         }
 
-        /* Header Styles */
-        .page-header {
+        /* Simple sidebar */
+        .sidebar {
+            width: 240px;
+            background: white;
+            border-right: 1px solid #eaeaea;
+            padding: 2rem 0;
+            position: fixed;
+            height: 100vh;
+        }
+
+        .sidebar-header {
+            padding: 0 1.5rem 2rem;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        .sidebar-header img {
+            height: 32px;
+            filter: brightness(0) saturate(100%) invert(24%) sepia(92%) saturate(3642%) hue-rotate(261deg) brightness(89%) contrast(97%);
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.875rem 1.5rem;
+            color: #666;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-item i {
+            font-size: 1.3rem;
+            color: #666;
+        }
+
+        .nav-item:hover {
+            background: #f0e8fa;
+            color: var(--primary-color);
+        }
+
+        .nav-item:hover i {
+            color: var(--primary-color);
+        }
+
+        .nav-item.active {
+            background: #f0e8fa;
+            color: var(--primary-color);
+            border-left-color: var(--primary-color);
+        }
+
+        .nav-item.active i {
+            color: var(--primary-color);
+        }
+
+        .nav-footer {
+            position: absolute;
+            bottom: 2rem;
+            width: 100%;
+            padding-top: 2rem;
+            border-top: 1px solid #eaeaea;
+        }
+
+        .main {
+            flex: 1;
+            margin-left: 240px;
+            padding: 2rem;
+        }
+
+        .top-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-            gap: 20px;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            border: 1px solid #eaeaea;
         }
 
-        .page-header h1 {
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            position: relative;
-            padding-bottom: 10px;
+        .page-title h1 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1a1a1a;
         }
 
-        .page-header h1::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 60px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-color), var(--icons-color));
-            border-radius: 2px;
+        .page-title p {
+            font-size: 0.875rem;
+            color: #666;
+            margin-top: 2px;
         }
 
-        .order-stats {
+        .user-menu {
             display: flex;
-            gap: 20px;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 40px;
+            background: #f0e8fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 1.1rem;
+            border: 2px solid white;
+            box-shadow: 0 2px 8px rgba(93,27,179,0.1);
+            overflow: hidden;
+        }
+
+        .avatar-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 40px;
+            object-fit: cover;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.25rem;
+            margin-bottom: 2rem;
         }
 
         .stat-card {
-            background: var(--basic-color);
-            padding: 15px 25px;
-            border-radius: var(--border-radius);
-            box-shadow: 0 4px 15px rgba(93, 27, 179, 0.1);
-            text-align: center;
-            transition: transform var(--transition-duration) ease;
-            border: 1px solid rgba(93, 27, 179, 0.1);
+            background: white;
+            border: 1px solid #eaeaea;
+            border-radius: 12px;
+            padding: 1.25rem;
         }
 
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(93, 27, 179, 0.2);
+        .stat-label {
+            font-size: 0.875rem;
+            color: #666;
+            margin-bottom: 0.5rem;
         }
 
-        .stat-card .stat-value {
-            font-size: 1.8rem;
-            font-weight: bold;
+        .stat-value {
+            font-size: 1.75rem;
+            font-weight: 600;
             color: var(--primary-color);
         }
 
-        .stat-card .stat-label {
-            color: var(--icons-color);
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        .profile-section {
+            background: white;
+            border: 1px solid #eaeaea;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
         }
 
-        /* Table Container */
-        .recent-orders {
-            background: var(--basic-color);
-            border-radius: var(--border-radius);
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(93, 27, 179, 0.1);
-            overflow-x: auto;
-            border: 1px solid rgba(93, 27, 179, 0.1);
+        .profile-avatar-large {
+            width: 64px;
+            height: 64px;
+            border-radius: 64px;
+            background: #f0e8fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 1.5rem;
+            overflow: hidden;
         }
 
-        .orders-table {
+        .profile-avatar-large img {
+            width: 64px;
+            height: 64px;
+            border-radius: 64px;
+            object-fit: cover;
+        }
+
+        .profile-details h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .profile-details p {
+            font-size: 0.875rem;
+            color: #666;
+        }
+
+        .edit-link {
+            margin-left: auto;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .content-card {
+            background: white;
+            border: 1px solid #eaeaea;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid #eaeaea;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 800px;
         }
 
-        .orders-table thead tr {
-            background: linear-gradient(135deg, var(--secondary-color), #ffd6e9);
-            border-radius: var(--border-radius);
-        }
-
-        .orders-table th {
-            padding: 18px 15px;
+        th {
             text-align: left;
-            color: var(--primary-color);
+            padding: 1rem 1.5rem;
+            font-size: 0.75rem;
             font-weight: 600;
-            font-size: 0.95rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            color: #666;
+            background: #fafafa;
+            border-bottom: 1px solid #eaeaea;
         }
 
-        .orders-table th:first-child {
-            border-radius: var(--border-radius) 0 0 var(--border-radius);
+        td {
+            padding: 1rem 1.5rem;
+            font-size: 0.875rem;
+            border-bottom: 1px solid #eaeaea;
         }
 
-        .orders-table th:last-child {
-            border-radius: 0 var(--border-radius) var(--border-radius) 0;
-        }
-
-        .orders-table td {
-            padding: 20px 15px;
-            border-bottom: 1px solid rgba(93, 27, 179, 0.1);
-            color: var(--text-color);
-            transition: background var(--transition-duration) ease;
-        }
-
-        .orders-table tbody tr {
-            transition: all var(--transition-duration) ease;
-        }
-
-        .orders-table tbody tr:hover {
-            background: var(--secondary-color);
-            transform: scale(1.01);
-            box-shadow: 0 4px 15px rgba(93, 27, 179, 0.1);
-        }
-
-        /* Order ID Style */
         .order-id {
             font-weight: 600;
-            color: var(--basic-color);
+            color: white;
             background: var(--primary-color);
-            padding: 6px 12px;
+            padding: 4px 10px;
             border-radius: 20px;
             display: inline-block;
-            font-size: 0.9rem;
-            border: 1px solid var(--icons-color);
+            font-size: 0.8rem;
         }
 
-        /* Status Badge Styles */
         .status-badge {
-            padding: 8px 16px;
+            padding: 4px 12px;
             border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
+            font-size: 0.75rem;
+            font-weight: 500;
             display: inline-block;
-            text-align: center;
-            min-width: 100px;
-            letter-spacing: 0.3px;
-            box-shadow: 0 2px 5px rgba(93, 27, 179, 0.1);
         }
 
         .status-badge.delivered {
-            background: linear-gradient(135deg, #e8d5ff, #d4b3ff);
-            color: var(--primary-color);
-            border: 1px solid var(--primary-color);
+            background: #e3f2e9;
+            color: #1e7b4c;
         }
 
         .status-badge.processing {
-            background: linear-gradient(135deg, var(--secondary-color), #ffd6e9);
-            color: var(--primary-color);
-            border: 1px solid var(--icons-color);
+            background: #fff3e0;
+            color: #b45b0b;
         }
 
         .status-badge.pending {
-            background: linear-gradient(135deg, #e0d0ff, #c4a8ff);
-            color: var(--primary-color);
-            border: 1px solid var(--primary-color);
+            background: #fff3e0;
+            color: #b45b0b;
         }
 
         .status-badge.cancelled {
-            background: linear-gradient(135deg, #ffd6d6, #ffb3b3);
-            color: #b31b1b;
-            border: 1px solid #b31b1b;
+            background: #fee9e7;
+            color: #b3261e;
         }
 
-        /* Price Style */
         .order-price {
-            font-weight: 700;
+            font-weight: 600;
             color: var(--primary-color);
-            font-size: 1.1rem;
         }
 
-        /* Action Button */
         .view-btn {
-            color: var(--basic-color);
+            color: var(--primary-color);
             text-decoration: none;
-            font-weight: 600;
-            padding: 8px 16px;
-            border-radius: var(--border-radius);
-            background: linear-gradient(135deg, var(--primary-color), var(--icons-color));
-            border: none;
-            transition: all var(--transition-duration) ease;
+            font-weight: 500;
+            font-size: 0.8rem;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            font-size: 0.9rem;
-            box-shadow: 0 4px 10px rgba(93, 27, 179, 0.2);
+            gap: 4px;
         }
 
         .view-btn:hover {
-            background: linear-gradient(135deg, var(--icons-color), var(--primary-color));
-            transform: translateX(5px);
-            box-shadow: 0 6px 15px rgba(93, 27, 179, 0.3);
+            text-decoration: underline;
         }
 
-        .view-btn i {
-            font-size: 1.1rem;
-            transition: transform var(--transition-duration) ease;
-            color: var(--basic-color);
-        }
-
-        .view-btn:hover i {
-            transform: translateX(3px);
-        }
-
-        /* Empty State */
         .empty-state {
             text-align: center;
-            padding: 60px 20px !important;
-        }
-
-        .empty-state-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
+            padding: 3rem !important;
+            color: #666;
         }
 
         .empty-state i {
-            font-size: 5rem;
-            color: var(--icons-color);
-        }
-
-        .empty-state p {
-            font-size: 1.2rem;
-            color: var(--text-color);
+            font-size: 3rem;
+            color: #eaeaea;
+            margin-bottom: 1rem;
         }
 
         .shop-now-btn {
-            background: linear-gradient(135deg, var(--primary-color), var(--icons-color));
-            color: var(--basic-color);
-            padding: 12px 30px;
-            border-radius: 25px;
+            background: var(--primary-color);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
             text-decoration: none;
-            font-weight: 600;
-            transition: all var(--transition-duration) ease;
+            font-size: 0.875rem;
             display: inline-block;
-            border: none;
-            box-shadow: 0 4px 15px rgba(93, 27, 179, 0.3);
+            margin-top: 1rem;
         }
 
-        .shop-now-btn:hover {
-            background: linear-gradient(135deg, var(--icons-color), var(--primary-color));
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(93, 27, 179, 0.4);
-        }
-
-        /* Loading Skeleton */
         .loading-skeleton {
             text-align: center;
-            padding: 40px !important;
+            padding: 2rem !important;
         }
 
         .skeleton-loader {
-            display: inline-block;
-            width: 50px;
-            height: 50px;
-            border: 4px solid var(--secondary-color);
-            border-top: 4px solid var(--primary-color);
+            width: 40px;
+            height: 40px;
+            border: 3px solid #f0e8fa;
+            border-top: 3px solid var(--primary-color);
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin-bottom: 15px;
+            margin: 0 auto 1rem;
         }
 
         @keyframes spin {
@@ -305,398 +381,888 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Calendar Icon Color */
-        .bx-calendar {
-            color: var(--icons-color) !important;
+        .settings-form {
+            max-width: 500px;
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .page-header {
-                flex-direction: column;
-                text-align: center;
-            }
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
 
-            .page-header h1::after {
-                left: 50%;
-                transform: translateX(-50%);
-            }
+        .form-group label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #1a1a1a;
+        }
 
-            .order-stats {
-                width: 100%;
-                justify-content: center;
-            }
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #eaeaea;
+            border-radius: 8px;
+            font-size: 0.875rem;
+        }
 
-            .stat-card {
-                flex: 1;
-            }
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
 
-            .orders-table td {
-                padding: 15px 10px;
-            }
+        .form-group input:read-only {
+            background: #f5f5f5;
+            color: #666;
+        }
 
-            .status-badge {
-                min-width: 80px;
-                padding: 6px 12px;
+        .btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background: #4a1a9e;
+        }
+
+        .btn-outline {
+            background: white;
+            color: var(--primary-color);
+            border: 1px solid #eaeaea;
+        }
+
+        .btn-outline:hover {
+            background: #f0e8fa;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+
+        .toast {
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 300px;
+            border-left: 4px solid var(--primary-color);
+            animation: slideIn 0.3s ease;
+        }
+
+        .toast.success { border-left-color: #10b981; }
+        .toast.error { border-left-color: #ef4444; }
+        .toast.warning { border-left-color: #f59e0b; }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
             }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <nav class="faq">
-            <ul class="list">
-                <li><a href="#">FAQ</a></li>
-                <li><a href="shop.html?category=bath">Bath & Body</a></li>
-                <li><a href="#">Become a Distributor</a></li>
-                <li><a href="#">Contact Helpdesk</a></li>
-                <li><a href="#">Support Center</a></li>
-            </ul>
+<div class="layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <img src="../IMAGES/brand name.svg" alt="Cottage Cosmetics">
+        </div>
+        
+        <nav>
+            <a href="#" class="nav-item active" data-section="dashboard">
+                <i class='bx bx-home-alt'></i>
+                Dashboard
+            </a>
+            <a href="#" class="nav-item" data-section="orders">
+                <i class='bx bx-package'></i>
+                My Orders
+            </a>
+            <a href="#" class="nav-item" data-section="wishlist">
+                <i class='bx bx-heart'></i>
+                Wishlist
+            </a>
+            <a href="#" class="nav-item" data-section="settings">
+                <i class='bx bx-user'></i>
+                Profile Settings
+            </a>
+            <a href="#" class="nav-item" data-section="addresses">
+                <i class='bx bx-map'></i>
+                Addresses
+            </a>
         </nav>
 
-        <nav class="navbar">
-            <div class="nav-links">
+        <div class="nav-footer">
+            <a href="#" class="nav-item" id="logoutBtn">
+                <i class='bx bx-log-out'></i>
+                Sign out
+            </a>
+        </div>
+    </aside>
 
-                <div class="close-icon">&times;</div>
+    <!-- Main Content -->
+    <main class="main">
+        <div id="toastContainer" class="toast-container"></div>
 
-                <div class="nav-links-img">
-                    <img class="brandName" src="../IMAGES/brand name.svg" alt="">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div class="page-title">
+                <h1 id="pageTitle">Dashboard</h1>
+                <p id="greeting">Good evening! Time for some self-care.</p>
+            </div>
+            <div class="user-menu">
+                <i class='bx bx-bell' style="color: #666; font-size: 1.25rem; cursor: pointer;"></i>
+                <div class="avatar" id="headerAvatar">
+                    <span id="avatarInitial">U</span>
+                    <img id="headerAvatarImg" style="display: none;" class="avatar-img">
                 </div>
-
-                <div class="nav-links-text">
-                    <h4>MAIN MENU</h4>
-                    <ul>
-                        <li onclick="window.location.href = './brand-images.html'">Brands</li>
-                        <li onclick="window.location.href='../SHOP_FOLDER/shop.html?category=bath'">Bath & Body</li>
-                        <li onclick="window.location.href='../SHOP_FOLDER/shop.html?category=serum'">Serum</li>
-                        <li onclick="window.location.href = '../SHOP_FOLDER/shop.html?category=baby'">Baby Skin</li>
-                        <li><a href="../SHOP_FOLDER/shop.html">Shop all</a></li>
-                    </ul>
-                </div>
-
-                <p>@ 2026 Cottage Cosmetics / All Rights Reserved</p>
             </div>
+        </div>
 
-            <div class="overlay"></div> 
-
-            <i class='bx bx-menu' id="menu-icon"></i>
-        </nav>
-
-        <nav class="nav2">
-            <div class="brand-img">
-                <img class="brandName" src="../IMAGES/brand name.svg" alt="">
-            </div>
-
-            <div class="brand-search">
-                <div class="search-wrapper">
-                    <input type="text" id="name" placeholder="Search products..." autocomplete="off">
-                    <button type="button" class="clear-btn" title="Clear">×</button>
-                </div>
-                <button type="submit" class="search-btn">
-                    <i class="bx bx-search"></i>
-                </button>
-                <!-- suggestions will be added here by JS -->
-            </div>
-
-            <div class="user-cart">
-                <span class="accountIcon"><i class='bx bx-user-circle'></i></span>
-                <span class="accountIcon">Sign in <span>Account</span></span>
-                 <span><i class='bx bx-heart' ></i></span>
-                <span id="addToCart" class="cart-icon"><i class='bx bx-cart-alt' ></i>
-                    <span id="cartCount" class="cart-count">0</span>
-                </span>          
-            </div>
-        </nav>
-
-        <nav class ="nav3">
-            <ul class="navbar-list">
-                <li class="brand" onclick="window.location.href = './brand-images.html'">Brands
-                    <div class="brands">
-                        <div class="brandss">
-                            <h2></h2>
-                            <ul>
-                                <li>CeraVe</li>
-                                <li>Zaron</li>
-                                <li>Dior</li>
-                                <li>RevLon</li>
-                                <li>Maybelline</li>
-                                <li>Sukin</li>
-                                <li>Dr. Teal's</li>
-                                <li>Nutrogena</li>
-                                <li>Cetaphil</li>
-                                <li>Simple</li>
-                                <li>MAC</li>
-                                <li>SheaMoisture</li>
-                                <li>NARS</li>
-                                <li>e.i.f</li>
-                                <li>Huda Beauty</li>
-                            </ul>
-                            <a href="#">View all</a>
-                        </div>
-                        <div>
-                            <img src="../IMAGES/image.png" alt="Nivea Body Milk">
-                            <img src="../IMAGES/image.png" alt="Nivea Body Milk">
-                        </div>
-                    </div>
-                </li>
-
-                <li class="bath" onclick="window.location.href = '../SHOP_FOLDER/shop.html?category=bath'">Bath & Body
-                    <div class="baths">
-                        <div class="baths1">
-                            <h2>Bath & Body</h2>
-                            <ul>
-                                <li>Acne treatment</li>
-                                <li>Bath Socks and Bubble bath</li>
-                                <li>Beauty Supplements</li>
-                                <li>Body oils</li>
-                                <li>Body wash</li>
-                                <li>Moisturizers and lotion</li>
-                                <li>Essential oils</li>
-                                <li>Feet care</li>
-                                <li>Scrubs and Exfoliatants</li>
-                                <li></li>
-                            </ul>
-                        </div>
-
-                        
-                        <div class="baths1">
-                            <h2>Specific Concerns</h2>
-                            <ul>
-                                <li>Acne, Pimples and Blackheads</li>
-                                <li>Sensitive Skin</li>
-                                <li>Anti-aging</li>
-                                <li>Normal and Combination skin</li>
-                                <li>Dark Spots & hyperpigmentation</li>
-                                <li>dry Skin / Hydration</li>
-                                <li>Dull Skin</li>
-                                <li>Oily Skin</li>
-                            </ul>
-                        </div>
-
-                        <div class="baths1">
-                            <ul>
-                                <h2>Hand Care</h2>
-                                <li>Hand creams and masks</li>
-                            </ul>
-
-                            <ul>
-                                <h2>Feet Care</h2>
-                                <li>Foot creams and Exfoliatants</li>
-                            </ul>
-
-                            <ul>
-                                <h2>Oral Care</h2>
-                                <li>Tooth brushes and tooth pastes</li>
-                            </ul>
-                        </div>
-                    </div>
-                </li>
-
-                <li>Serum</li>
-
-                <li class="deal">Deals
-                    <div class="deals">
-                        <p>Under 5k</p>
-                        <p>Best Sellers</p>
-                        <p>On Sale</p>
-                        <p>Back in Stock</p>
-                        <p>Gift Cards</p>
-                    </div>
-                </li>
-
-                <li>Bundle</li>
-
-                <li onclick="window.location.href = '../SHOP_FOLDER/shop.html'">Shop all</li>
-            </ul>
-        </nav>
-    </header>
-
-
-    <div class="container">
-        <div class="page-header">
-            <h1>My Orders</h1>
-            <div class="order-stats" id="orderStats">
+        <!-- DASHBOARD SECTION -->
+        <section id="dashboard" class="section active">
+            <div class="grid-4">
                 <div class="stat-card">
-                    <div class="stat-value" id="totalOrders">0</div>
                     <div class="stat-label">Total Orders</div>
+                    <div class="stat-value" id="totalOrders">0</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-value" id="deliveredOrders">0</div>
-                    <div class="stat-label">Delivered</div>
+                    <div class="stat-label">Wishlist</div>
+                    <div class="stat-value" id="wishlistCount">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Pending</div>
+                    <div class="stat-value" id="pendingOrders">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Total Spent</div>
+                    <div class="stat-value" id="totalSpent">₦0</div>
                 </div>
             </div>
-        </div>
-        
-        <div class="recent-orders">
-            <table class="orders-table" id="allOrdersTable">
-                <thead>
-                    <tr>
-                        <th>Order ID</th>
-                        <th>Date</th>
-                        <th>Total</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody id="ordersTableBody">
-                    <tr>
-                        <td colspan="5" class="loading-skeleton">
-                            <div class="skeleton-loader"></div>
-                            <div style="color: var(--primary-color);">Loading your orders...</div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+            <div class="profile-section">
+                <div class="profile-avatar-large" id="profileAvatar">
+                    <span id="profileInitial">U</span>
+                    <img id="profileAvatarImg" style="display: none;">
+                </div>
+                <div class="profile-details">
+                    <h2 id="displayName">Loading...</h2>
+                    <p id="displayEmail">loading@email.com</p>
+                    <p style="font-size: 0.75rem; margin-top: 4px;" id="memberSince">Member since</p>
+                </div>
+                <a href="#" class="edit-link" onclick="switchSection('settings'); return false;">Edit profile →</a>
+            </div>
+
+            <div class="content-card">
+                <div class="card-header">
+                    <h3>Recent Orders</h3>
+                    <a href="#" onclick="switchSection('orders'); return false;" style="color: var(--primary-color); font-size: 0.875rem; text-decoration: none;">View all</a>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Date</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="recentOrdersBody">
+                        <tr>
+                            <td colspan="5" class="loading-skeleton">
+                                <div class="skeleton-loader"></div>
+                                <div>Loading your orders...</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ORDERS SECTION -->
+        <section id="orders" class="section">
+            <div class="content-card">
+                <div class="card-header">
+                    <h3>All Orders</h3>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Date</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="allOrdersBody">
+                        <tr>
+                            <td colspan="5" class="loading-skeleton">
+                                <div class="skeleton-loader"></div>
+                                <div>Loading your orders...</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- WISHLIST SECTION -->
+        <section id="wishlist" class="section">
+            <div class="content-card">
+                <div class="card-header">
+                    <h3>My Wishlist</h3>
+                </div>
+                <div class="empty-state">
+                    <i class='bx bx-heart'></i>
+                    <p>Your wishlist is empty</p>
+                    <a href="../SHOP_FOLDER/shop.html" class="shop-now-btn">Browse products →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROFILE SETTINGS SECTION -->
+        <section id="settings" class="section">
+            <div class="content-card">
+                <div class="card-header">
+                    <h3>Profile Settings</h3>
+                </div>
+                <div style="padding: 1.5rem;">
+                    <div class="settings-form">
+                        <div style="display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2rem;">
+                            <div class="profile-avatar-large" id="settingsAvatarPreview">
+                                <span id="settingsInitial">U</span>
+                                <img id="settingsAvatarImg" style="display: none;">
+                            </div>
+                            <div>
+                                <h4 style="font-weight: 600; margin-bottom: 4px;">Profile picture</h4>
+                                <p style="font-size: 0.75rem; color: #666; margin-bottom: 0.75rem;">JPG, PNG or GIF. Max 5MB.</p>
+                                <input type="file" id="profileFile" accept="image/*" style="display: none;">
+                                <button class="btn btn-outline" onclick="document.getElementById('profileFile').click()">Change photo</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Full name</label>
+                            <input type="text" id="fullName" placeholder="Your name">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Email address</label>
+                            <input type="email" id="email" placeholder="Your email" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Phone number</label>
+                            <input type="tel" id="phone" placeholder="Your phone number">
+                        </div>
+
+                        <button class="btn" id="saveProfileBtn">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ADDRESSES SECTION -->
+        <section id="addresses" class="section">
+            <div class="content-card">
+                <div class="card-header">
+                    <h3>Saved Addresses</h3>
+                </div>
+                <div style="padding: 1.5rem;">
+                    <div style="background: #fafafa; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                        <h4 style="font-size: 0.875rem; font-weight: 600; margin-bottom: 1rem;">Default delivery address</h4>
+                        <div class="form-group">
+                            <label>Street address</label>
+                            <input type="text" placeholder="Enter your address">
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div class="form-group">
+                                <label>City</label>
+                                <input type="text" placeholder="City">
+                            </div>
+                            <div class="form-group">
+                                <label>State</label>
+                                <input type="text" placeholder="State">
+                            </div>
+                        </div>
+                        <button class="btn" style="margin-top: 0.5rem;">Save address</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<!-- Firebase and Dashboard Logic -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { 
+        getAuth, 
+        onAuthStateChanged,
+        signOut,
+        updateProfile
+    } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+    import { 
+        getFirestore, 
+        doc, 
+        getDoc, 
+        setDoc,
+        collection,
+        getDocs,
+        query,
+        where,
+        orderBy,
+        limit
+    } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+    // Firebase Config
+    const firebaseConfig = {
+        apiKey: "AIzaSyB4Hy_sEEH1twq0GDzKi5E1CZD5dVHn4Kk",
+        authDomain: "cottage-9fa0c.firebaseapp.com",
+        projectId: "cottage-9fa0c",
+        storageBucket: "cottage-9fa0c.firebasestorage.app",
+        messagingSenderId: "346971937714",
+        appId: "1:346971937714:web:0f453c14862de16bede2ab"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // ========================================
+    // TIME-BASED GREETING
+    // ========================================
+    function getTimeBasedGreeting(name) {
+        const hour = new Date().getHours();
+        const firstName = name.split(' ')[0];
         
-        const firebaseConfig = {
-            apiKey: "AIzaSyB4Hy_sEEH1twq0GDzKi5E1CZD5dVHn4Kk",
-            authDomain: "cottage-9fa0c.firebaseapp.com",
-            projectId: "cottage-9fa0c",
-            storageBucket: "cottage-9fa0c.firebasestorage.app",
-            messagingSenderId: "346971937714",
-            appId: "1:346971937714:web:0f453c14862de16bede2ab"
-        };
-        
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                await loadAllOrders(user.uid);
+        if (hour < 12) {
+            return `Good morning, ${firstName}! Time to glow.`;
+        } else if (hour < 17) {
+            return `Good afternoon, ${firstName}! Keep shining.`;
+        } else if (hour < 20) {
+            return `Good evening, ${firstName}! Time for self-care.`;
+        } else {
+            return `Good night, ${firstName}! Rest and recharge.`;
+        }
+    }
+
+    // ========================================
+    // CHECK AUTH STATE
+    // ========================================
+    onAuthStateChanged(auth, async (user) => {
+        if (user) {
+            console.log("User logged in:", user.email);
+            await loadUserData(user);
+            await loadAllOrders(user.uid);
+        } else {
+            console.log("No user logged in, redirecting...");
+            window.location.href = '../HTML/account.html';
+        }
+    });
+
+    // ========================================
+    // LOAD USER DATA FROM FIRESTORE
+    // ========================================
+    async function loadUserData(user) {
+        try {
+            // Get user data from Firestore
+            const userRef = doc(db, "users", user.uid);
+            const userDoc = await getDoc(userRef);
+            
+            let displayName = 'User';
+            let phone = '';
+            let photoURL = null;
+            let createdAt = null;
+
+            if (userDoc.exists()) {
+                const data = userDoc.data();
+                displayName = data.name || data.displayName || user.displayName || user.email?.split('@')[0] || 'User';
+                phone = data.phone || data.phoneNumber || '';
+                photoURL = data.profilePicture || user.photoURL || null;
+                createdAt = data.createdAt;
             } else {
-                window.location.href = '../HTML/account.html';
+                displayName = user.displayName || user.email?.split('@')[0] || 'User';
+                
+                // Create user document
+                await setDoc(userRef, {
+                    name: displayName,
+                    email: user.email,
+                    createdAt: new Date().toISOString(),
+                    emailVerified: user.emailVerified,
+                    cart: [],
+                    orders: [],
+                    wishlist: []
+                });
             }
-        });
+
+            // Update UI
+            document.getElementById('displayName').textContent = displayName;
+            document.getElementById('displayEmail').textContent = user.email;
+            
+            // Set time-based greeting
+            document.getElementById('greeting').textContent = getTimeBasedGreeting(displayName);
+            
+            // Update form fields
+            document.getElementById('fullName').value = displayName;
+            document.getElementById('email').value = user.email;
+            document.getElementById('phone').value = phone;
+
+            // Format member since date
+            if (createdAt) {
+                const date = new Date(createdAt);
+                const formattedDate = date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+                document.getElementById('memberSince').textContent = `Member since ${formattedDate}`;
+            }
+
+            // Update avatar
+            updateAvatars(displayName, photoURL);
+
+        } catch (error) {
+            console.error("Error loading user data:", error);
+            showToast({
+                type: 'error',
+                title: 'Error',
+                message: 'Failed to load user data'
+            });
+        }
+    }
+
+    // ========================================
+    // UPDATE AVATARS
+    // ========================================
+    function updateAvatars(displayName, photoURL) {
+        const initial = displayName.charAt(0).toUpperCase();
         
-        async function loadAllOrders(userId) {
-            try {
-                const ordersRef = collection(db, "orders");
-                const querySnapshot = await getDocs(ordersRef);
+        const elements = {
+            avatarInitial: document.getElementById('avatarInitial'),
+            profileInitial: document.getElementById('profileInitial'),
+            settingsInitial: document.getElementById('settingsInitial'),
+            headerAvatarImg: document.getElementById('headerAvatarImg'),
+            profileAvatarImg: document.getElementById('profileAvatarImg'),
+            settingsAvatarImg: document.getElementById('settingsAvatarImg')
+        };
+
+        if (photoURL) {
+            elements.avatarInitial.style.display = 'none';
+            elements.profileInitial.style.display = 'none';
+            elements.settingsInitial.style.display = 'none';
+            
+            elements.headerAvatarImg.style.display = 'block';
+            elements.profileAvatarImg.style.display = 'block';
+            elements.settingsAvatarImg.style.display = 'block';
+            
+            elements.headerAvatarImg.src = photoURL;
+            elements.profileAvatarImg.src = photoURL;
+            elements.settingsAvatarImg.src = photoURL;
+        } else {
+            elements.avatarInitial.style.display = 'block';
+            elements.profileInitial.style.display = 'block';
+            elements.settingsInitial.style.display = 'block';
+            elements.avatarInitial.textContent = initial;
+            elements.profileInitial.textContent = initial;
+            elements.settingsInitial.textContent = initial;
+            
+            elements.headerAvatarImg.style.display = 'none';
+            elements.profileAvatarImg.style.display = 'none';
+            elements.settingsAvatarImg.style.display = 'none';
+        }
+    }
+
+    // ========================================
+    // LOAD ALL ORDERS (FIXED VERSION)
+    // ========================================
+    async function loadAllOrders(userId) {
+        try {
+            // Try to get orders from Firestore
+            const ordersRef = collection(db, "orders");
+            const querySnapshot = await getDocs(ordersRef);
+            
+            const userOrders = [];
+            
+            querySnapshot.forEach(doc => {
+                const order = doc.data();
+                // Check multiple possible user ID fields
+                const orderUserId = order.userId || order.userTd || order.user_id || order.uid || order.customerId;
                 
-                const tableBody = document.getElementById('ordersTableBody');
-                
-                // Filter orders for this user
-                const userOrders = [];
-                querySnapshot.forEach(doc => {
-                    const order = doc.data();
-                    const orderUserId = order.userId || order.userTd || order.id || order.user_id || order.uid;
-                    
-                    if (orderUserId === userId) {
-                        userOrders.push({
-                            id: doc.id,
-                            ...order
-                        });
-                    }
-                });
-                
-                // Update stats
-                document.getElementById('totalOrders').textContent = userOrders.length;
-                document.getElementById('deliveredOrders').textContent = 
-                    userOrders.filter(o => o.status === 'paid' || o.paymentStatus === 'success').length;
-                
-                if (userOrders.length === 0) {
-                    tableBody.innerHTML = `
-                        <tr>
-                            <td colspan="5" class="empty-state">
-                                <div class="empty-state-content">
-                                    <i class='bx bx-package'></i>
-                                    <p>No orders found</p>
-                                    <a href="shop.html" class="shop-now-btn">Start Shopping</a>
-                                </div>
-                            </td>
-                        </tr>
-                    `;
-                    return;
+                if (orderUserId === userId) {
+                    userOrders.push({
+                        id: doc.id,
+                        ...order
+                    });
                 }
-                
-                // Sort by date
-                userOrders.sort((a, b) => {
-                    const dateA = a.createdAt || a.orderDate || 0;
-                    const dateB = b.createdAt || b.orderDate || 0;
-                    return new Date(dateB) - new Date(dateA);
-                });
-                
-                let html = '';
-                userOrders.forEach(order => {
-                    // Format date
-                    let date = 'N/A';
-                    const dateField = order.createdAt || order.orderDate || order.createdat;
-                    if (dateField) {
-                        try {
-                            const dateObj = dateField.toDate ? dateField.toDate() : new Date(dateField);
-                            date = dateObj.toLocaleDateString('en-US', {
-                                year: 'numeric',
-                                month: 'short',
-                                day: 'numeric'
-                            });
-                        } catch (e) {}
-                    }
-                    
-                    // Determine status
-                    let statusClass = 'processing';
-                    let statusText = 'Processing';
-                    const orderStatus = order.status || order.paymentStatus;
-                    
-                    if (orderStatus === 'paid' || orderStatus === 'success' || orderStatus === 'delivered') {
-                        statusClass = 'delivered';
-                        statusText = 'Delivered';
-                    } else if (orderStatus === 'pending') {
-                        statusClass = 'pending';
-                        statusText = 'Pending';
-                    } else if (orderStatus === 'failed' || orderStatus === 'cancelled') {
-                        statusClass = 'cancelled';
-                        statusText = 'Failed';
-                    }
-                    
-                    // Calculate total
-                    let total = order.total || 0;
-                    if (!total && order.items) {
-                        total = order.items.reduce((sum, item) => {
-                            return sum + ((item.price || 0) * (item.quantity || 1));
-                        }, 0);
-                    }
-                    
-                    html += `
-                        <tr>
-                            <td><span class="order-id">#${(order.orderNumber || order.id).toString().substring(0, 8)}</span></td>
-                            <td><i class='bx bx-calendar'></i> ${date}</td>
-                            <td><span class="order-price">₦${Number(total).toLocaleString()}</span></td>
-                            <td><span class="status-badge ${statusClass}">${statusText}</span></td>
-                            <td>
-                                <a href="order-details.html?id=${order.id}" class="view-btn">
-                                    View <i class='bx bx-right-arrow-alt'></i>
-                                </a>
-                            </td>
-                        </tr>
-                    `;
-                });
-                
-                tableBody.innerHTML = html;
-                
-            } catch (error) {
-                console.error("Error:", error);
-                document.getElementById('ordersTableBody').innerHTML = `
+            });
+
+            // Update stats
+            document.getElementById('totalOrders').textContent = userOrders.length;
+            document.getElementById('deliveredOrders').textContent = 
+                userOrders.filter(o => o.status === 'delivered' || o.paymentStatus === 'success' || o.status === 'paid').length;
+            
+            // Calculate pending orders
+            const pendingCount = userOrders.filter(o => 
+                o.status === 'pending' || o.status === 'processing' || o.paymentStatus === 'pending'
+            ).length;
+            document.getElementById('pendingOrders').textContent = pendingCount;
+            
+            // Calculate total spent
+            const totalSpent = userOrders.reduce((sum, order) => {
+                let orderTotal = order.total || 0;
+                if (!orderTotal && order.items) {
+                    orderTotal = order.items.reduce((itemSum, item) => 
+                        itemSum + ((item.price || 0) * (item.quantity || 1)), 0
+                    );
+                }
+                return sum + orderTotal;
+            }, 0);
+            document.getElementById('totalSpent').textContent = `₦${totalSpent.toLocaleString()}`;
+
+            // Sort orders by date (newest first)
+            userOrders.sort((a, b) => {
+                const dateA = a.createdAt || a.orderDate || a.date || 0;
+                const dateB = b.createdAt || b.orderDate || b.date || 0;
+                return new Date(dateB) - new Date(dateA);
+            });
+
+            // Generate HTML for all orders
+            let allOrdersHtml = '';
+            
+            if (userOrders.length === 0) {
+                allOrdersHtml = `
                     <tr>
                         <td colspan="5" class="empty-state">
-                            <div class="empty-state-content">
-                                <i class='bx bx-error-circle'></i>
-                                <p>Error loading orders. Please refresh.</p>
-                            </div>
+                            <i class='bx bx-package'></i>
+                            <p>No orders found</p>
+                            <a href="../SHOP_FOLDER/shop.html" class="shop-now-btn">Start Shopping</a>
                         </td>
                     </tr>
                 `;
+            } else {
+                userOrders.forEach(order => {
+                    allOrdersHtml += formatOrderRow(order);
+                });
             }
+
+            // Generate HTML for recent orders (first 3)
+            let recentOrdersHtml = '';
+            if (userOrders.length === 0) {
+                recentOrdersHtml = `
+                    <tr>
+                        <td colspan="5" class="empty-state">
+                            <i class='bx bx-package'></i>
+                            <p>No orders yet</p>
+                        </td>
+                    </tr>
+                `;
+            } else {
+                const recentOrders = userOrders.slice(0, 3);
+                recentOrders.forEach(order => {
+                    recentOrdersHtml += formatOrderRow(order, true);
+                });
+            }
+
+            document.getElementById('allOrdersBody').innerHTML = allOrdersHtml;
+            document.getElementById('recentOrdersBody').innerHTML = recentOrdersHtml;
+
+        } catch (error) {
+            console.error("Error loading orders:", error);
+            showToast({
+                type: 'error',
+                title: 'Error',
+                message: 'Failed to load orders'
+            });
         }
-    </script>
-    <script src="../JS/script.js"></script>
+    }
+
+    // ========================================
+    // FORMAT ORDER ROW (HELPER FUNCTION)
+    // ========================================
+    function formatOrderRow(order, hideAction = false) {
+        // Format date
+        let date = 'N/A';
+        const dateField = order.createdAt || order.orderDate || order.date;
+        if (dateField) {
+            try {
+                const dateObj = dateField.toDate ? dateField.toDate() : new Date(dateField);
+                date = dateObj.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+            } catch (e) {}
+        }
+        
+        // Determine status
+        let statusClass = 'processing';
+        let statusText = 'Processing';
+        const orderStatus = order.status || order.paymentStatus;
+        
+        if (orderStatus === 'delivered' || orderStatus === 'paid' || orderStatus === 'success') {
+            statusClass = 'delivered';
+            statusText = 'Delivered';
+        } else if (orderStatus === 'pending') {
+            statusClass = 'pending';
+            statusText = 'Pending';
+        } else if (orderStatus === 'cancelled' || orderStatus === 'failed') {
+            statusClass = 'cancelled';
+            statusText = 'Cancelled';
+        } else if (orderStatus === 'processing') {
+            statusClass = 'processing';
+            statusText = 'Processing';
+        }
+        
+        // Calculate total
+        let total = order.total || 0;
+        if (!total && order.items) {
+            total = order.items.reduce((sum, item) => {
+                return sum + ((item.price || 0) * (item.quantity || 1));
+            }, 0);
+        }
+        
+        const orderNumber = order.orderNumber || order.id;
+        const shortId = orderNumber.toString().substring(0, 8);
+        
+        if (hideAction) {
+            return `
+                <tr>
+                    <td><span class="order-id">#${shortId}</span></td>
+                    <td><i class='bx bx-calendar' style="color: var(--icons-color);"></i> ${date}</td>
+                    <td><span class="order-price">₦${Number(total).toLocaleString()}</span></td>
+                    <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                    <td></td>
+                </tr>
+            `;
+        } else {
+            return `
+                <tr>
+                    <td><span class="order-id">#${shortId}</span></td>
+                    <td><i class='bx bx-calendar' style="color: var(--icons-color);"></i> ${date}</td>
+                    <td><span class="order-price">₦${Number(total).toLocaleString()}</span></td>
+                    <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                    <td>
+                        <a href="order-details.html?id=${order.id}" class="view-btn">
+                            View <i class='bx bx-right-arrow-alt'></i>
+                        </a>
+                    </td>
+                </tr>
+            `;
+        }
+    }
+
+    // ========================================
+    // SAVE PROFILE
+    // ========================================
+    document.getElementById('saveProfileBtn').addEventListener('click', async function() {
+        const user = auth.currentUser;
+        if (!user) return;
+
+        const saveBtn = this;
+        const originalText = saveBtn.textContent;
+        
+        const newName = document.getElementById('fullName').value.trim();
+        const newPhone = document.getElementById('phone').value.trim();
+
+        if (!newName) {
+            showToast({
+                type: 'error',
+                title: 'Error',
+                message: 'Please enter your name'
+            });
+            return;
+        }
+
+        try {
+            saveBtn.textContent = 'Saving...';
+            saveBtn.disabled = true;
+
+            // Update Firebase Auth profile
+            await updateProfile(user, {
+                displayName: newName
+            });
+
+            // Update Firestore
+            const userRef = doc(db, "users", user.uid);
+            await setDoc(userRef, {
+                name: newName,
+                displayName: newName,
+                phoneNumber: newPhone,
+                updatedAt: new Date().toISOString()
+            }, { merge: true });
+
+            // Reload user data
+            await loadUserData(user);
+
+            showToast({
+                type: 'success',
+                title: 'Success',
+                message: 'Profile updated successfully!'
+            });
+
+        } catch (error) {
+            console.error('Error saving profile:', error);
+            showToast({
+                type: 'error',
+                title: 'Error',
+                message: error.message || 'Failed to save profile'
+            });
+        } finally {
+            saveBtn.textContent = originalText;
+            saveBtn.disabled = false;
+        }
+    });
+
+    // ========================================
+    // LOGOUT FUNCTION
+    // ========================================
+    document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+        e.preventDefault();
+        
+        try {
+            await signOut(auth);
+            localStorage.removeItem('userName');
+            localStorage.removeItem('userEmail');
+            window.location.href = '../HTML/account.html';
+        } catch (error) {
+            console.error('Logout error:', error);
+            showToast({
+                type: 'error',
+                title: 'Error',
+                message: 'Failed to sign out'
+            });
+        }
+    });
+
+    // ========================================
+    // PROFILE PICTURE PREVIEW
+    // ========================================
+    document.getElementById('profileFile').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const previewUrl = event.target.result;
+                
+                document.getElementById('avatarInitial').style.display = 'none';
+                document.getElementById('profileInitial').style.display = 'none';
+                document.getElementById('settingsInitial').style.display = 'none';
+                
+                document.getElementById('headerAvatarImg').style.display = 'block';
+                document.getElementById('profileAvatarImg').style.display = 'block';
+                document.getElementById('settingsAvatarImg').style.display = 'block';
+                
+                document.getElementById('headerAvatarImg').src = previewUrl;
+                document.getElementById('profileAvatarImg').src = previewUrl;
+                document.getElementById('settingsAvatarImg').src = previewUrl;
+                
+                showToast({
+                    type: 'success',
+                    title: 'Preview Ready',
+                    message: 'Photo preview updated! Save profile to keep changes.'
+                });
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // ========================================
+    // TOAST NOTIFICATION
+    // ========================================
+    function showToast({ type, title, message, duration = 3000 }) {
+        const container = document.getElementById('toastContainer');
+        if (!container) return;
+        
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        
+        const icons = {
+            success: '✓',
+            error: '✕',
+            warning: '⚠',
+            info: 'ℹ'
+        };
+        
+        toast.innerHTML = `
+            <div class="toast-icon">${icons[type] || 'ℹ'}</div>
+            <div class="toast-content">
+                <div class="toast-title">${title}</div>
+                <div class="toast-message">${message}</div>
+            </div>
+            <button class="toast-close">×</button>
+        `;
+        
+        container.appendChild(toast);
+        
+        toast.querySelector('.toast-close').addEventListener('click', () => {
+            toast.remove();
+        });
+        
+        setTimeout(() => {
+            if (toast.parentNode) {
+                toast.remove();
+            }
+        }, duration);
+    }
+
+    // ========================================
+    // SECTION SWITCHING
+    // ========================================
+    window.switchSection = function(sectionId) {
+        document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+        document.querySelector(`[data-section="${sectionId}"]`).classList.add('active');
+        
+        document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+        document.getElementById(sectionId).classList.add('active');
+        
+        const titles = {
+            'dashboard': 'Dashboard',
+            'orders': 'My Orders',
+            'wishlist': 'Wishlist',
+            'settings': 'Profile Settings',
+            'addresses': 'Addresses'
+        };
+        document.getElementById('pageTitle').textContent = titles[sectionId];
+    };
+
+    // Initialize navigation
+    document.querySelectorAll('.nav-item[data-section]').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchSection(link.dataset.section);
+        });
+    });
+
+    window.showToast = showToast;
+
+</script>
+
+<script src="../JS/script.js"></script>
 </body>
-</html>/
+</html>

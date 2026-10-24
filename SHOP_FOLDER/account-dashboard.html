@@ -1,408 +1,1372 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="account-dashboard.css">
-    <link rel="stylesheet" href="../CSS/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <title>Account Dashboard - Cottage Cosmetics</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cottage Cosmetics • Dashboard</title>
+  
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f5f3f7;
+      color: #1a1a1a;
+    }
+
+    :root {
+      --primary: #5d1bb3;
+      --primary-light: #7b3fe4;
+      --accent: #8424e3;
+      --soft-bg: #f0e8fa;
+      --gray-50: #fafafa;
+      --gray-100: #f5f5f5;
+      --gray-200: #eeeeee;
+      --gray-600: #666666;
+      --gray-900: #1a1a1a;
+      --border: #eaeaea;
+    }
+
+    .layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 240px;
+      background: white;
+      border-right: 1px solid var(--border);
+      padding: 2rem 0;
+      position: fixed;
+      height: 100vh;
+    }
+
+    .sidebar-header {
+      padding: 0 1.5rem 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sidebar-header img {
+        width: 150px;
+        cursor: pointer;
+    }   
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0.875rem 1.5rem;
+      color: var(--gray-600);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+      border-left: 3px solid transparent;
+    }
+
+    .nav-item i {
+      font-size: 1.3rem;
+      color: var(--gray-600);
+    }
+
+    .nav-item:hover {
+      background: var(--soft-bg);
+      color: var(--primary);
+    }
+
+    .nav-item:hover i {
+      color: var(--primary);
+    }
+
+    .nav-item.active {
+      background: var(--soft-bg);
+      color: var(--primary);
+      border-left-color: var(--primary);
+    }
+
+    .nav-item.active i {
+      color: var(--primary);
+    }
+
+    .nav-footer {
+      position: absolute;
+      bottom: 2rem;
+      width: 100%;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .main {
+      flex: 1;
+      margin-left: 240px;
+      padding: 2rem;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      background: white;
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .page-title h1 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--gray-900);
+    }
+
+    .page-title p {
+      font-size: 0.875rem;
+      color: var(--gray-600);
+      margin-top: 2px;
+    }
+
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 40px;
+      background: var(--soft-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 1.1rem;
+      border: 2px solid white;
+      box-shadow: 0 2px 8px rgba(93,27,179,0.1);
+      overflow: hidden;
+    }
+
+    .avatar-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 40px;
+      object-fit: cover;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+
+    .stat-label {
+      font-size: 0.875rem;
+      color: var(--gray-600);
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-value {
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .profile-section {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .profile-avatar-large {
+      width: 64px;
+      height: 64px;
+      border-radius: 64px;
+      background: var(--soft-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 1.5rem;
+      overflow: hidden;
+    }
+
+    .profile-avatar-large img {
+      width: 64px;
+      height: 64px;
+      border-radius: 64px;
+      object-fit: cover;
+    }
+
+    .profile-details h2 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .profile-details p {
+      font-size: 0.875rem;
+      color: var(--gray-600);
+    }
+
+    .edit-link {
+      margin-left: auto;
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .content-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-header h3 {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th {
+      text-align: left;
+      padding: 1rem 1.5rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--gray-600);
+      background: var(--gray-50);
+      border-bottom: 1px solid var(--border);
+    }
+
+    td {
+      padding: 1rem 1.5rem;
+      font-size: 0.875rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .order-id {
+      background: var(--primary);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      display: inline-block;
+    }
+
+    .status-badge {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      display: inline-block;
+    }
+
+    .status-badge.delivered, .status-badge.paid {
+      background: #e3f2e9;
+      color: #1e7b4c;
+    }
+
+    .status-badge.processing {
+      background: #fff3e0;
+      color: #b45b0b;
+    }
+
+    .status-badge.pending {
+      background: #fff3e0;
+      color: #b45b0b;
+    }
+
+    .status-badge.cancelled {
+      background: #fee9e7;
+      color: #b3261e;
+    }
+
+    .order-price {
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .view-btn {
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 0.8rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .settings-form {
+      max-width: 500px;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: var(--gray-900);
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .form-group input:read-only {
+      background: var(--gray-100);
+      color: var(--gray-600);
+    }
+
+    .btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn:hover {
+      background: var(--primary-light);
+    }
+
+    .btn-outline {
+      background: white;
+      color: var(--primary);
+      border: 1px solid var(--border);
+    }
+
+    .btn-outline:hover {
+      background: var(--soft-bg);
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      color: var(--gray-600);
+    }
+
+    .empty-state i {
+      font-size: 3rem;
+      color: var(--border);
+      margin-bottom: 1rem;
+    }
+
+    .shop-now-btn {
+      background: var(--primary);
+      color: white;
+      padding: 8px 20px;
+      border-radius: 20px;
+      text-decoration: none;
+      font-size: 0.875rem;
+      display: inline-block;
+      margin-top: 1rem;
+    }
+
+    .toast-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+    }
+
+    .toast {
+      background: white;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 300px;
+      border-left: 4px solid var(--primary);
+      animation: slideIn 0.3s ease;
+    }
+
+    .toast.success { border-left-color: #10b981; }
+    .toast.error { border-left-color: #ef4444; }
+    .toast.warning { border-left-color: #f59e0b; }
+
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @media(max-width:768px){
+    /* Mobile Layout - Only applies below 768px */
+    
+    .layout {
+        display: block;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding: 1rem;
+    }
+
+    .sidebar-header {
+        padding: 0 0 1rem 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .menu-toggle {
+        /* display: block !important;
+        font-size: 28px;
+        cursor: pointer;
+        color: var(--primary);
+        background: var(--soft-bg);
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center; */
+    }
+
+    .sidebar nav {
+        display: none;
+    }
+
+    .sidebar nav.show {
+        display: block;
+        margin-top: 1rem;
+    }
+
+    .nav-footer {
+        position: static;
+        margin-top: 1rem;
+        padding-top: 1rem;
+    }
+
+    .main {
+        margin-left: 0;
+        padding: 1rem;
+    }
+
+    .top-bar {
+        margin-bottom: 1rem;
+        padding: 0.75rem 1rem;
+    }
+
+    .page-title h1 {
+        font-size: 1.1rem;
+    }
+
+    .page-title p {
+        font-size: 0.7rem;
+    }
+
+    .grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+    }
+
+    .stat-card {
+        padding: 0.75rem;
+    }
+
+    .stat-label {
+        font-size: 0.65rem;
+    }
+
+    .stat-value {
+        font-size: 1.1rem;
+    }
+
+    .profile-section {
+        padding: 1rem;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+    }
+
+    .profile-avatar-large {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+
+    .profile-avatar-large img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .profile-details h2 {
+        font-size: 0.9rem;
+    }
+
+    .profile-details p {
+        font-size: 0.7rem;
+    }
+
+    .edit-link {
+        font-size: 0.7rem;
+        padding: 0.4rem 0.6rem;
+    }
+
+    .content-card {
+        margin-bottom: 1rem;
+    }
+
+    .card-header {
+        padding: 0.75rem 1rem;
+    }
+
+    .card-header h3 {
+        font-size: 0.9rem;
+    }
+
+    th, td {
+        padding: 0.75rem;
+        font-size: 0.7rem;
+    }
+
+    .order-id {
+        padding: 3px 8px;
+        font-size: 0.65rem;
+    }
+
+    .status-badge {
+        padding: 3px 8px;
+        font-size: 0.65rem;
+    }
+
+    .form-group input {
+        padding: 0.6rem 0.75rem;
+        font-size: 0.8rem;
+    }
+
+    .btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.8rem;
+    }
+
+    .empty-state {
+        padding: 2rem 1rem;
+    }
+
+    .empty-state i {
+        font-size: 2rem;
+    }
+
+    .toast-container {
+        left: 10px;
+        right: 10px;
+    }
+
+    .toast {
+        min-width: auto;
+        width: 100%;
+    }
+}
+
+/* Very small phones */
+@media(max-width:480px){
+    .grid-4 {
+        gap: 0.5rem;
+    }
+
+    .stat-card {
+        padding: 0.6rem;
+    }
+
+    .stat-value {
+        font-size: 1rem;
+    }
+
+    .profile-section {
+        flex-wrap: wrap;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .profile-avatar-large {
+        margin: 0 auto;
+    }
+
+    .profile-details {
+        text-align: center;
+        width: 100%;
+    }
+
+    .edit-link {
+        margin: 0 auto;
+        width: auto;
+    }
+
+    table {
+        min-width: 400px;
+    }
+}
+  </style>
 </head>
 <body>
-    <header>
-        <nav class="faq">
-            <ul class="list">
-                <li><a href="#">FAQ</a></li>
-                <li><a href="#">About COTTAGE</a></li>
-                <li><a href="#">Become a Distributor</a></li>
-                <li><a href="#">Contact Helpdesk</a></li>
-                <li><a href="#">Support Center</a></li>
-            </ul>
-        </nav>
 
-        <nav class="navbar">
-            <div class="nav-links">
-                <div class="close-icon">&times;</div>
-                <div class="nav-links-img">
-                    <img class="brandName" src="../IMAGES/brand name.svg" alt="">
-                </div>
-                <div class="nav-links-text">
-                    <h4>MAIN MENU</h4>
-                    <ul>
-                        <li>Brands</li>
-                        <li>Bath & Body</li>
-                        <li>Serum</li>
-                        <li>Bundles</li>
-                        <li>Yet</li>
-                    </ul>
-                </div>
-                <p>@ 2026 Cottage Cosmetics / All Rights Reserved</p>
-            </div>
-            <div class="overlay"></div> 
-            <i class='bx bx-menu' id="menu-icon"></i>
-        </nav>
-
-        <nav class="nav2">
-            <div class="brand-img" onclick="window.location.href = '../HTML/index.html'">
-                <img class="brandName" src="../IMAGES/brand name.svg" alt="">
-            </div>
-
-            <div class="brand-search">
-                <span><input type="text" name="search" placeholder="Search for products" id="name"></span>
-                <span><button type="submit"><i class='bx bx-search'></i></button></span>
-            </div>
-
-            <div class="user-cart">
-                <span id="accountIcon"><i class='bx bx-user-circle'></i></span>
-                <span>Sign in <span>Account</span></span>
-                <span id="addToCart" class="cart-icon"><i class='bx bx-cart-alt' ></i>
-                    <span id="cartCount" class="cart-count">0</span>
-                </span>
-            </div>
-        </nav>
-
-        <nav class="nav3">
-            <ul class="navbar-list">
-                <li class="brand">Brands
-                    <div class="brands">
-                        <div class="brandss">
-                            <h2>Brands</h2>
-                            <ul>
-                                <li>CeraVe</li>
-                                <li>Zaron</li>
-                                <li>Dior</li>
-                                <li>RevLon</li>
-                                <li>Maybelline</li>
-                                <li>Sukin</li>
-                                <li>Dr. Teal's</li>
-                                <li>Nutrogena</li>
-                                <li>Cetaphil</li>
-                                <li>Simple</li>
-                                <li>MAC</li>
-                                <li>SheaMoisture</li>
-                                <li>NARS</li>
-                                <li>e.i.f</li>
-                                <li>Huda Beauty</li>
-                            </ul>
-                            <a href="#">View all</a>
-                        </div>
-                        <div>
-                            <img src="../IMAGES/image.png" alt="Nivea Body Milk">
-                            <img src="../IMAGES/image.png" alt="Nivea Body Milk">
-                        </div>
-                    </div>
-                </li>
-
-                <li class="bath">Bath & Body
-                    <div class="baths">
-                        <div class="baths1">
-                            <h2>Bath & Body</h2>
-                            <ul>
-                                <li>Acne treatment</li>
-                                <li>Bath Socks and Bubble bath</li>
-                                <li>Beauty Supplements</li>
-                                <li>Body oils</li>
-                                <li>Body wash</li>
-                                <li>Moisturizers and lotion</li>
-                                <li>Essential oils</li>
-                                <li>Feet care</li>
-                                <li>Scrubs and Exfoliatants</li>
-                                <li></li>
-                            </ul>
-                        </div>
-
-                        <div class="baths1">
-                            <h2>Specific Concerns</h2>
-                            <ul>
-                                <li>Acne, Pimples and Blackheads</li>
-                                <li>Sensitive Skin</li>
-                                <li>Anti-aging</li>
-                                <li>Normal and Combination skin</li>
-                                <li>Dark Spots & hyperpigmentation</li>
-                                <li>dry Skin / Hydration</li>
-                                <li>Dull Skin</li>
-                                <li>Oily Skin</li>
-                            </ul>
-                        </div>
-
-                        <div class="baths1">
-                            <ul>
-                                <h2>Hand Care</h2>
-                                <li>Hand creams and masks</li>
-                            </ul>
-                            <ul>
-                                <h2>Feet Care</h2>
-                                <li>Foot creams and Exfoliatants</li>
-                            </ul>
-                            <ul>
-                                <h2>Oral Care</h2>
-                                <li>Tooth brushes and tooth pastes</li>
-                            </ul>
-                        </div>
-                    </div>
-                </li>
-
-                <li>Serum</li>
-
-                <li class="deal">Deals
-                    <div class="deals">
-                        <p>Under 5k</p>
-                        <p>Best Sellers</p>
-                        <p>On Sale</p>
-                        <p>Back in Stock</p>
-                        <p>Gift Cards</p>
-                    </div>
-                </li>
-
-                <li>Bundle</li>
-                <li>Yet</li>
-            </ul>
-        </nav>
-    </header>
-
-    <!-- Profile Picture Modal -->
-    <div id="profilePicModal" class="profile-modal">
-        <div class="profile-modal-content">
-            <div class="profile-modal-header">
-                <h2>Profile Picture</h2>
-                <span class="profile-modal-close" onclick="closeProfilePictureModal()">&times;</span>
-            </div>
-            
-            <div class="profile-preview-container">
-                <img id="profilePreview" src="../IMAGES/default-avatar.svg" alt="Profile Preview" class="profile-preview">
-            </div>
-
-            <div class="profile-upload-options">
-                <button class="profile-upload-btn" onclick="document.getElementById('profileFileInput').click()">
-                    <i class='bx bx-upload'></i> Upload Photo
-                </button>
-                
-                <input type="file" id="profileFileInput" accept="image/*" style="display: none;">
-                
-                <button class="profile-remove-btn" onclick="removeProfilePicture()">
-                    <i class='bx bx-trash'></i> Remove Photo
-                </button>
-            </div>
-
-            <div class="profile-upload-info">
-                <p><i class='bx bx-info-circle'></i> Max file size: 5MB</p>
-                <p><i class='bx bx-image'></i> Supported formats: JPG, PNG, GIF</p>
-            </div>
-        </div>
+<div class="layout">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+        <img class="brandName" src="../IMAGES/brand name.svg" alt="">
     </div>
+    
+    <nav>
+      <a href="#" class="nav-item active" data-section="dashboard">
+        <i class='bx bx-home-alt'></i>
+        Dashboard
+      </a>
+      <a href="#" class="nav-item" data-section="orders">
+        <i class='bx bx-package'></i>
+        Orders
+      </a>
+      <a href="#" class="nav-item" data-section="wishlist">
+        <i class='bx bx-heart'></i>
+        Wishlist
+      </a>
+      <a href="#" class="nav-item" data-section="settings">
+        <i class='bx bx-user'></i>
+        Profile
+      </a>
+      <a href="#" class="nav-item" data-section="addresses">
+        <i class='bx bx-map'></i>
+        Addresses
+      </a>
+    </nav>
 
-    <!-- Test Storage Button (remove after testing) -->
-
-    <div class="container">
-        <!-- Welcome Section -->
-        <div class="welcome-section" id="welcomeSection">
-            <div class="welcome-content">
-                <!-- Make the entire wrapper clickable -->
-                <div class="profile-picture-wrapper" id="profilePictureWrapper">
-                    <div class="profile-picture" id="profilePicture">
-                        <!-- Default icon (visible when no photo) -->
-                        <i class='bx bx-user' id="profileIconDefault"></i>
-                        <!-- Profile image (hidden by default) -->
-                        <img id="profileImg" class="profile-picture-img" src="" alt="Profile" style="display: none;">
-                    </div>
-                    <div class="profile-picture-overlay">
-                        <i class='bx bx-camera'></i>
-                        <span>Change Photo</span>
-                    </div>
-                </div>
-                
-                <div class="welcome-text">
-                    <h2>Welcome back, <span id="userName">Loading...</span>! ✨</h2>
-                    <p id="userMessage">We're so happy to see you again.</p>
-                    <p class="email" id="userEmail"></p>
-                    <div class="member-since" id="memberSince"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Stats Grid -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <i class='bx bx-package'></i>
-                </div>
-                <div class="stat-info">
-                    <h3 id="orderCount">0</h3>
-                    <p>Total Orders</p>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <i class='bx bx-cart'></i>
-                </div>
-                <div class="stat-info">
-                    <h3 id="cartCount">0</h3>
-                    <p>Items in Cart</p>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <i class='bx bx-heart'></i>
-                </div>
-                <div class="stat-info">
-                    <h3 id="wishlistCount">0</h3>
-                    <p>Wishlist Items</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Quick Actions -->
-        <div class="quick-actions">
-            <h3>Quick Actions</h3>
-            <div class="actions-grid">
-                <a href="../SHOP_FOLDER/shop.html" class="action-card">
-                    <i class='bx bx-store'></i>
-                    <h4>Continue Shopping</h4>
-                    <p>Browse our latest products</p>
-                </a>
-                <a href="../SHOP_FOLDER/cart.html" class="action-card">
-                    <i class='bx bx-cart-alt'></i>
-                    <h4>View Cart</h4>
-                    <p>Check your items</p>
-                </a>
-                <a href="#" class="action-card" onclick="viewOrders()">
-                    <i class='bx bx-history'></i>
-                    <h4>Order History</h4>
-                    <p>Track your orders</p>
-                </a>
-                <a href="#" class="action-card" onclick="editProfile()">
-                    <i class='bx bx-user-circle'></i>
-                    <h4>Edit Profile</h4>
-                    <p>Update your information</p>
-                </a>
-            </div>
-        </div>
-
-        <!-- Recent Orders -->
-        <div class="recent-orders">
-            <h3>Recent Orders</h3>
-            <table class="orders-table">
-                <thead>
-                    <tr>
-                        <th>Order ID</th>
-                        <th>Date</th>
-                        <th>Total</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody id="ordersTableBody">
-                    <tr>
-                        <td colspan="4" style="text-align: center; color: #8b6b6b;">No orders yet</td>
-                    </tr>
-                </tbody>
-            </table>
-            <a href="#" class="view-all-link" onclick="viewAllOrders(); return false;">
-                View All Orders <i class='bx bx-right-arrow-alt'></i>
-            </a>
-        </div>
-    </div>
-
-    <!-- Logout Button -->
-    <button class="logout-btn" onclick="logout()">
+    <div class="nav-footer">
+      <a href="#" class="nav-item" id="logoutBtn">
         <i class='bx bx-log-out'></i>
-        Logout
-    </button>
-
-    <!-- Home Button -->
-    <button class="home-btn" onclick="window.location.href='../HTML/index.html'">
-        <i class='bx bx-home'></i>
-        Go to Homepage
-    </button>
-
-    <!-- Edit Profile Modal -->
-    <div id="editProfileModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h2>Edit Profile</h2>
-            <form id="editProfileForm">
-                <div class="form-group">
-                    <label for="editName">Full Name</label>
-                    <input type="text" id="editName" name="name" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="editPhone">Phone Number</label>
-                    <input type="tel" id="editPhone" name="phone">
-                </div>
-                
-                <div class="form-group">
-                    <label for="editEmail">Email</label>
-                    <input type="email" id="editEmail" name="email" readonly disabled>
-                    <small>Email cannot be changed</small>
-                </div>
-                
-                <div class="form-actions">
-                    <button type="submit" class="save-btn">Save Changes</button>
-                    <button type="button" class="cancel-btn">Cancel</button>
-                </div>
-            </form>
-        </div>
+        Sign out
+      </a>
     </div>
+  </aside>
 
-    <footer>
-        <section class="footer1">
-            <div class="cottage-cosmetics">
-                <img class="brandName" src="../IMAGES/brand name.svg" alt="">
-                <p>Cottage Cosmetics | Premium Skincare & Beauty Essentials in Nigeria
-                    We curate authentic skincare and beauty products, sourced directly from trusted manufacturers and certified distributors to ensure exceptional quality, safety, and results you can rely on</p>
-            </div>
+  <!-- Main Content -->
+  <main class="main">
+    <div id="toastContainer" class="toast-container"></div>
 
-            <div class="numbers-links">
-                <div>
-                    <h4>Quick Actions</h4>
-                    <ul>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">Book a Consultation</a></li>
-                        <li><a href="#">Shipping</a></li>
-                        <li><a href="#">FAQs</a></li>
-                        <li><a href="#">Store Locator</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4>Categories</h4>
-                    <ul>
-                        <li><a href="#">Brands</a></li>
-                        <li><a href="#">Baths & Body</a></li>
-                        <li><a href="#">Skincare</a></li>
-                        <li><a href="#">Baby Skin</a></li>
-                        <li><a href="#">Body oil</a></li>
-                        <li><a href="#">Face</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4>Contact</h4>
-                    <ul>
-                        <li><a href="#">hello@cottagecosmetics.com</a></li>
-                        <li><a href="#">Wholesale (+234)8154969674</a></li>
-                        <li><a href="#">(+234)0704095243</a></li>
-                        <li><a href="#">(+234)9049953986</a></li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <hr>
-
-        <div class="footer2">
-            <p>2026, All Rights Reserved</p>
-            <ul>
-                <li><a href="#">Terms</a></li>
-                <li><a href="#">Refunds</a></li>
-                <li><a href="#">Privacys</a></li>
-                <li><span>Designed by</span> <a href="#">Ema</a></li>
-            </ul>
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <div class="page-title">
+        <h1 id="pageTitle">Dashboard</h1>
+        <p id="greeting">Welcome back</p>
+      </div>
+      <div class="user-menu">
+        <i class='bx bx-bell' style="color: #666; font-size: 1.25rem; cursor: pointer;"></i>
+        <div class="avatar" id="headerAvatar">
+          <span id="avatarInitial">U</span>
+          <img id="headerAvatarImg" style="display: none;" class="avatar-img">
         </div>
-    </footer>
+      </div>
+    </div>
+    
 
-    <script type="module" src="account-dashboard.js"></script>
+    <!-- DASHBOARD SECTION -->
+    <section id="dashboard" class="section active">
+      <div class="grid-4">
+        <div class="stat-card">
+          <div class="stat-label">Total Orders</div>
+          <div class="stat-value" id="totalOrders">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Wishlist</div>
+          <div class="stat-value" id="wishlistCount">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Pending</div>
+          <div class="stat-value" id="pendingOrders">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Spent</div>
+          <div class="stat-value" id="totalSpent">₦0</div>
+        </div>
+      </div>
+
+      <div class="profile-section">
+        <div class="profile-avatar-large" id="profileAvatar">
+          <span id="profileInitial">U</span>
+          <img id="profileAvatarImg" style="display: none;">
+        </div>
+        <div class="profile-details">
+          <h2 id="displayName">Loading...</h2>
+          <p id="displayEmail">loading@email.com</p>
+          <p style="font-size: 0.75rem; margin-top: 4px;" id="memberSince">Member since</p>
+        </div>
+        <a href="#" class="edit-link" onclick="switchSection('settings'); return false;">Edit profile →</a>
+      </div>
+
+      <div class="content-card">
+        <div class="card-header">
+          <h3>Recent Orders</h3>
+          <a href="#" onclick="switchSection('orders'); return false;" style="color: var(--primary); font-size: 0.875rem; text-decoration: none;">View all</a>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Order</th>
+              <th>Date</th>
+              <th>Total</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="recentOrdersBody">
+            <tr>
+              <td colspan="4" class="empty-state">
+                <i class='bx bx-package'></i>
+                <p>No orders yet</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ORDERS SECTION -->
+    <section id="orders" class="section">
+      <div class="content-card">
+        <div class="card-header">
+          <h3>All Orders</h3>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Date</th>
+              <th>Total</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="allOrdersBody">
+            <tr>
+              <td colspan="4" class="empty-state">
+                <i class='bx bx-package'></i>
+                <p>No orders found</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- WISHLIST SECTION -->
+    <section id="wishlist" class="section">
+      <div class="content-card">
+        <div class="card-header">
+          <h3>My Wishlist</h3>
+        </div>
+        <div class="empty-state">
+          <i class='bx bx-heart'></i>
+          <p>Your wishlist is empty</p>
+          <a href="../SHOP_FOLDER/shop.html" style="color: var(--primary); font-size: 0.875rem; text-decoration: none; display: inline-block; margin-top: 1rem;">Browse products →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROFILE SETTINGS SECTION -->
+    <section id="settings" class="section">
+      <div class="content-card">
+        <div class="card-header">
+          <h3>Profile Settings</h3>
+        </div>
+        <div style="padding: 1.5rem;">
+          <div class="settings-form">
+            <div style="display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2rem;">
+              <div class="profile-avatar-large" id="settingsAvatarPreview">
+                <span id="settingsInitial">U</span>
+                <img id="settingsAvatarImg" style="display: none;">
+              </div>
+              <div>
+                <h4 style="font-weight: 600; margin-bottom: 4px;">Profile picture</h4>
+                <p style="font-size: 0.75rem; color: var(--gray-600); margin-bottom: 0.75rem;">JPG, PNG or GIF. Max 5MB.</p>
+                <input type="file" id="profileFile" accept="image/*" style="display: none;">
+                <button class="btn btn-outline" onclick="document.getElementById('profileFile').click()">Change photo</button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Full name</label>
+              <input type="text" id="fullName" placeholder="Your name">
+            </div>
+
+            <div class="form-group">
+              <label>Email address</label>
+              <input type="email" id="email" placeholder="Your email" readonly>
+            </div>
+
+            <div class="form-group">
+              <label>Phone number</label>
+              <input type="tel" id="phone" placeholder="Your phone number">
+            </div>
+
+            <button class="btn" id="saveProfileBtn" onclick="saveProfile()">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ADDRESSES SECTION -->
+    <section id="addresses" class="section">
+      <div class="content-card">
+        <div class="card-header">
+          <h3>Saved Addresses</h3>
+        </div>
+        <div style="padding: 1.5rem;">
+          <div style="background: var(--gray-50); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+            <h4 style="font-size: 0.875rem; font-weight: 600; margin-bottom: 1rem;">Default delivery address</h4>
+            <div class="form-group">
+              <label>Street address</label>
+              <input type="text" placeholder="Enter your address">
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div class="form-group">
+                <label>City</label>
+                <input type="text" placeholder="City">
+              </div>
+              <div class="form-group">
+                <label>State</label>
+                <input type="text" placeholder="State">
+              </div>
+            </div>
+            <button class="btn" style="margin-top: 0.5rem;">Save address</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- Firebase and Dashboard Logic -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+  import { 
+    getAuth, 
+    onAuthStateChanged,
+    signOut,
+    updateProfile
+  } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+  import { 
+    getFirestore, 
+    doc, 
+    getDoc, 
+    setDoc,
+    collection,
+    getDocs
+  } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+  // Firebase Config
+  const firebaseConfig = {
+    apiKey: "AIzaSyB4Hy_sEEH1twq0GDzKi5E1CZD5dVHn4Kk",
+    authDomain: "cottage-9fa0c.firebaseapp.com",
+    projectId: "cottage-9fa0c",
+    storageBucket: "cottage-9fa0c.firebasestorage.app",
+    messagingSenderId: "346971937714",
+    appId: "1:346971937714:web:0f453c14862de16bede2ab"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  // ========================================
+  // TIME-BASED GREETING
+  // ========================================
+  function getTimeBasedGreeting(name) {
+    const hour = new Date().getHours();
+    const firstName = name.split(' ')[0];
+    
+    if (hour < 12) return `Good morning, ${firstName}! ☀️`;
+    if (hour < 17) return `Good afternoon, ${firstName}! 🌤️`;
+    if (hour < 20) return `Good evening, ${firstName}! 🌙 Time for self-care.`;
+    return `Good night, ${firstName}! 💤 Rest well.`;
+  }
+
+  // ========================================
+  // CHECK AUTH STATE - UNCOMMENTED AND WORKING
+  // ========================================
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      console.log("✅ User logged in:", user.email);
+      await loadUserData(user);
+      await loadOrders(user.uid);
+    } else {
+      console.log("❌ No user logged in, redirecting...");
+      window.location.href = '../HTML/account.html';
+    }
+  });
+
+  // ========================================
+  // LOAD USER DATA
+  // ========================================
+  async function loadUserData(user) {
+    try {
+      const userRef = doc(db, "users", user.uid);
+      const userDoc = await getDoc(userRef);
+      
+      let displayName = 'User';
+      let phone = '';
+      let photoURL = null;
+      let createdAt = null;
+
+      if (userDoc.exists()) {
+        const data = userDoc.data();
+        displayName = data.name || data.displayName || user.displayName || 'User';
+        phone = data.phone || data.phoneNumber || '';
+        photoURL = data.profilePicture || user.photoURL || null;
+        createdAt = data.createdAt;
+      } else {
+        displayName = user.displayName || user.email?.split('@')[0] || 'User';
+        await setDoc(userRef, {
+          name: displayName,
+          email: user.email,
+          createdAt: new Date().toISOString(),
+          emailVerified: user.emailVerified,
+          cart: [],
+          orders: [],
+          wishlist: []
+        });
+      }
+
+      const firstName = displayName.split(' ')[0];
+
+      // Update UI
+      document.getElementById('displayName').textContent = displayName;
+      document.getElementById('displayEmail').textContent = user.email;
+      document.getElementById('greeting').textContent = getTimeBasedGreeting(displayName);
+      document.getElementById('fullName').value = displayName;
+      document.getElementById('email').value = user.email;
+      document.getElementById('phone').value = phone;
+
+      if (createdAt) {
+        const date = new Date(createdAt);
+        const formattedDate = date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+        document.getElementById('memberSince').textContent = `Member since ${formattedDate}`;
+      }
+
+      updateAvatars(displayName, photoURL);
+
+    } catch (error) {
+      console.error("Error loading user data:", error);
+      showToast({ type: 'error', title: 'Error', message: 'Failed to load user data' });
+    }
+  }
+
+  // ========================================
+  // UPDATE AVATARS
+  // ========================================
+  function updateAvatars(displayName, photoURL) {
+    const initial = displayName.charAt(0).toUpperCase();
+    
+    const elements = {
+      avatarInitial: document.getElementById('avatarInitial'),
+      profileInitial: document.getElementById('profileInitial'),
+      settingsInitial: document.getElementById('settingsInitial'),
+      headerAvatarImg: document.getElementById('headerAvatarImg'),
+      profileAvatarImg: document.getElementById('profileAvatarImg'),
+      settingsAvatarImg: document.getElementById('settingsAvatarImg')
+    };
+
+    if (photoURL) {
+      elements.avatarInitial.style.display = 'none';
+      elements.profileInitial.style.display = 'none';
+      elements.settingsInitial.style.display = 'none';
+      
+      elements.headerAvatarImg.style.display = 'block';
+      elements.profileAvatarImg.style.display = 'block';
+      elements.settingsAvatarImg.style.display = 'block';
+      
+      elements.headerAvatarImg.src = photoURL;
+      elements.profileAvatarImg.src = photoURL;
+      elements.settingsAvatarImg.src = photoURL;
+    } else {
+      elements.avatarInitial.style.display = 'block';
+      elements.profileInitial.style.display = 'block';
+      elements.settingsInitial.style.display = 'block';
+      elements.avatarInitial.textContent = initial;
+      elements.profileInitial.textContent = initial;
+      elements.settingsInitial.textContent = initial;
+      
+      elements.headerAvatarImg.style.display = 'none';
+      elements.profileAvatarImg.style.display = 'none';
+      elements.settingsAvatarImg.style.display = 'none';
+    }
+  }
+
+  // ========================================
+  // LOAD ORDERS
+  // ========================================
+  async function loadOrders(userId) {
+    try {
+      console.log("Loading orders for user:", userId);
+      
+      const ordersRef = collection(db, "orders");
+      const querySnapshot = await getDocs(ordersRef);
+      
+      const userOrders = [];
+      
+      querySnapshot.forEach(doc => {
+        const order = doc.data();
+        if (order.userId === userId) {
+          userOrders.push({ id: doc.id, ...order });
+        }
+      });
+
+      console.log(`Found ${userOrders.length} orders for user`);
+
+      // Update stats
+      document.getElementById('totalOrders').textContent = userOrders.length;
+      
+      const pendingCount = userOrders.filter(o => 
+        o.status === 'pending' || 
+        o.status === 'pending_payment' || 
+        o.payment?.status === 'pending'
+      ).length;
+      document.getElementById('pendingOrders').textContent = pendingCount;
+      
+      const totalSpent = userOrders.reduce((sum, order) => {
+        return sum + (order.summary?.total || order.total || 0);
+      }, 0);
+      document.getElementById('totalSpent').textContent = `₦${totalSpent.toLocaleString()}`;
+
+      // Sort by date
+      userOrders.sort((a, b) => {
+        const dateA = a.createdAt?.toDate?.() || new Date(a.createdAt) || 0;
+        const dateB = b.createdAt?.toDate?.() || new Date(b.createdAt) || 0;
+        return dateB - dateA;
+      });
+
+      // Generate HTML
+      let allOrdersHtml = '';
+      let recentOrdersHtml = '';
+      
+      if (userOrders.length === 0) {
+        const emptyHtml = `
+          <tr>
+            <td colspan="4" class="empty-state">
+              <i class='bx bx-package'></i>
+              <p>No orders found</p>
+              <a href="../SHOP_FOLDER/shop.html" class="shop-now-btn">Start Shopping</a>
+            </td>
+          </tr>
+        `;
+        allOrdersHtml = emptyHtml;
+        recentOrdersHtml = emptyHtml;
+      } else {
+        userOrders.forEach(order => {
+          allOrdersHtml += formatOrderRow(order);
+        });
+        
+        userOrders.slice(0, 3).forEach(order => {
+          recentOrdersHtml += formatOrderRow(order);
+        });
+      }
+
+      document.getElementById('allOrdersBody').innerHTML = allOrdersHtml;
+      document.getElementById('recentOrdersBody').innerHTML = recentOrdersHtml;
+
+    } catch (error) {
+      console.error("Error loading orders:", error);
+      showToast({ type: 'error', title: 'Error', message: 'Failed to load orders' });
+    }
+  }
+
+  // ========================================
+  // FORMAT ORDER ROW
+  // ========================================
+  function formatOrderRow(order) {
+    let date = 'N/A';
+    if (order.createdAt) {
+      try {
+        const dateObj = order.createdAt.toDate ? order.createdAt.toDate() : new Date(order.createdAt);
+        date = dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+      } catch (e) {}
+    }
+    
+    let statusClass = 'processing';
+    let statusText = 'Processing';
+    
+    if (order.payment?.status === 'successful' || order.status === 'paid' || order.status === 'delivered') {
+      statusClass = 'delivered';
+      statusText = 'Delivered';
+    } else if (order.payment?.status === 'pending' || order.status === 'pending_payment') {
+      statusClass = 'pending';
+      statusText = 'Pending';
+    } else if (order.status === 'cancelled') {
+      statusClass = 'cancelled';
+      statusText = 'Cancelled';
+    }
+    
+    const total = order.summary?.total || order.total || 0;
+    const orderNumber = order.orderNumber || order.id;
+    const shortId = orderNumber.toString().substring(0, 8);
+    
+    return `
+      <tr>
+        <td><span class="order-id">#${shortId}</span></td>
+        <td><i class='bx bx-calendar' style="color: var(--icons-color);"></i> ${date}</td>
+        <td><span class="order-price">₦${Number(total).toLocaleString()}</span></td>
+        <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+      </tr>
+    `;
+  }
+
+  // ========================================
+  // SAVE PROFILE
+  // ========================================
+  window.saveProfile = async function() {
+    const user = auth.currentUser;
+    if (!user) return;
+
+    const saveBtn = document.getElementById('saveProfileBtn');
+    const originalText = saveBtn.textContent;
+    
+    const newName = document.getElementById('fullName').value.trim();
+    const newPhone = document.getElementById('phone').value.trim();
+
+    if (!newName) {
+      showToast({ type: 'error', title: 'Error', message: 'Please enter your name' });
+      return;
+    }
+
+    try {
+      saveBtn.textContent = 'Saving...';
+      saveBtn.disabled = true;
+
+      await updateProfile(user, { displayName: newName });
+
+      const userRef = doc(db, "users", user.uid);
+      await setDoc(userRef, {
+        name: newName,
+        displayName: newName,
+        phoneNumber: newPhone,
+        updatedAt: new Date().toISOString()
+      }, { merge: true });
+
+      await loadUserData(user);
+      showToast({ type: 'success', title: 'Success', message: 'Profile updated successfully!' });
+
+    } catch (error) {
+      console.error('Error saving profile:', error);
+      showToast({ type: 'error', title: 'Error', message: error.message || 'Failed to save profile' });
+    } finally {
+      saveBtn.textContent = originalText;
+      saveBtn.disabled = false;
+    }
+  };
+
+  // ========================================
+  // LOGOUT
+  // ========================================
+  document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+    e.preventDefault();
+    try {
+      await signOut(auth);
+      localStorage.removeItem('userName');
+      localStorage.removeItem('userEmail');
+      window.location.href = '../HTML/account.html';
+    } catch (error) {
+      console.error('Logout error:', error);
+      showToast({ type: 'error', title: 'Error', message: 'Failed to sign out' });
+    }
+  });
+
+  // ========================================
+  // PROFILE PICTURE PREVIEW
+  // ========================================
+  document.getElementById('profileFile').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const previewUrl = event.target.result;
+        
+        document.getElementById('avatarInitial').style.display = 'none';
+        document.getElementById('profileInitial').style.display = 'none';
+        document.getElementById('settingsInitial').style.display = 'none';
+        
+        document.getElementById('headerAvatarImg').style.display = 'block';
+        document.getElementById('profileAvatarImg').style.display = 'block';
+        document.getElementById('settingsAvatarImg').style.display = 'block';
+        
+        document.getElementById('headerAvatarImg').src = previewUrl;
+        document.getElementById('profileAvatarImg').src = previewUrl;
+        document.getElementById('settingsAvatarImg').src = previewUrl;
+        
+        showToast({ type: 'success', title: 'Preview Ready', message: 'Photo preview updated!' });
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  // ========================================
+  // TOAST NOTIFICATION
+  // ========================================
+  function showToast({ type, title, message, duration = 3000 }) {
+    const container = document.getElementById('toastContainer');
+    if (!container) return;
+    
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    
+    const icons = { success: '✓', error: '✕', warning: '⚠', info: 'ℹ' };
+    
+    toast.innerHTML = `
+      <div class="toast-icon">${icons[type] || 'ℹ'}</div>
+      <div class="toast-content">
+        <div class="toast-title">${title}</div>
+        <div class="toast-message">${message}</div>
+      </div>
+      <button class="toast-close">×</button>
+    `;
+    
+    container.appendChild(toast);
+    
+    toast.querySelector('.toast-close').addEventListener('click', () => toast.remove());
+    setTimeout(() => toast.remove(), duration);
+  }
+
+  // ========================================
+  // SECTION SWITCHING
+  // ========================================
+  window.switchSection = function(sectionId) {
+    document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+    document.querySelector(`[data-section="${sectionId}"]`).classList.add('active');
+    
+    document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+    document.getElementById(sectionId).classList.add('active');
+    
+    const titles = { dashboard: 'Dashboard', orders: 'Orders', wishlist: 'Wishlist', settings: 'Profile', addresses: 'Addresses' };
+    document.getElementById('pageTitle').textContent = titles[sectionId];
+  };
+
+  // Initialize navigation
+  document.querySelectorAll('.nav-item[data-section]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      switchSection(link.dataset.section);
+    });
+  });
+
+  window.showToast = showToast;
+</script>
+
+<!-- Mobile menu toggle - Keep this outside module -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const menuToggle = document.createElement('div');
+    menuToggle.className = 'menu-toggle';
+    menuToggle.innerHTML = '<i class="bx bx-menu"></i>';
+    menuToggle.style.cssText = 'display: none; position: absolute; top: 1rem; right: 1rem; font-size: 28px; cursor: pointer; color: var(--primary);';
+    
+    const sidebarHeader = document.querySelector('.sidebar-header');
+    if (sidebarHeader) {
+      sidebarHeader.style.position = 'relative';
+      sidebarHeader.appendChild(menuToggle);
+    }
+    
+    const sidebar = document.querySelector('.sidebar');
+    const nav = document.querySelector('.sidebar nav');
+    const navFooter = document.querySelector('.nav-footer');
+    
+    function checkMobile() {
+      if (window.innerWidth < 768) {
+        menuToggle.style.display = 'block';
+        if (!nav.classList.contains('show')) {
+          nav.style.display = 'none';
+          if (navFooter) navFooter.style.display = 'none';
+        }
+      } else {
+        menuToggle.style.display = 'none';
+        nav.style.display = 'block';
+        if (navFooter) navFooter.style.display = 'block';
+        nav.classList.remove('show');
+      }
+    }
+    
+    menuToggle.addEventListener('click', function() {
+      if (nav.style.display === 'none' || nav.style.display === '') {
+        nav.style.display = 'block';
+        if (navFooter) navFooter.style.display = 'block';
+        menuToggle.innerHTML = '<i class="bx bx-x"></i>';
+      } else {
+        nav.style.display = 'none';
+        if (navFooter) navFooter.style.display = 'none';
+        menuToggle.innerHTML = '<i class="bx bx-menu"></i>';
+      }
+    });
+    
+    window.addEventListener('resize', checkMobile);
+    checkMobile();
+  });
+</script>
+
+<script src="../SHOP_FOLDER/account-dashboard.js"></script>
+
 </body>
 </html>
